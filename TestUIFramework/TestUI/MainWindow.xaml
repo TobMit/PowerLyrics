@@ -55,6 +55,10 @@
                            Margin="5"
                            Grid.Column="1"
                            Style="{StaticResource ModernTextbox}"/>
+
+                <ContentControl Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="10"/>
             </Grid>
     </Border>
 </Window>
