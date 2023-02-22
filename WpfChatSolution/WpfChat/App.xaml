@@ -7,6 +7,7 @@
          <ResourceDictionary>
              <ResourceDictionary.MergedDictionaries>
                  <ResourceDictionary Source="./Themes/ContactCard.xaml"/>
+                 <ResourceDictionary Source="./Themes/ChatItem.xaml.xaml.xaml"/>
              </ResourceDictionary.MergedDictionaries>
          </ResourceDictionary>
     </Application.Resources>
