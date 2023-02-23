@@ -96,11 +96,11 @@
                    Margin="8,0,0,0"/>
 
             <ListView ItemsSource="{Binding Contacts}"
-                      SelectedItems="{Binding SelectedContact}"
+                      SelectedItem="{Binding SelectedContact}"
                       Background="Transparent"
                       BorderThickness="0"
                       Grid.Row="1"
-                      ItemContainerStyle="{StaticResource ContactCard}"/>
+                      ItemContainerStyle="{StaticResource ContactCard}" />
 
             <StackPanel Grid.Row="2"
                         Orientation="Horizontal"
