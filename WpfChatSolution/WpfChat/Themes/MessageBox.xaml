@@ -23,7 +23,7 @@
                                        Margin="8,0,0,0"
                                        Text="{Binding Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox.InputBindings>
-                                    <KeyBinding Command="{Binding SendComand}" Key="Return"/>
+                                    <KeyBinding Command="{Binding SendCommand}" Key="Return"/>
                                 </TextBox.InputBindings>
                             </TextBox>
 
