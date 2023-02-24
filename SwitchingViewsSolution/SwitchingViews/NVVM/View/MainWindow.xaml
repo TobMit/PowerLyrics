@@ -1,0 +1,31 @@
+﻿<Window x:Class="SwitchingViews.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="0">
+            <Button Content="Home"
+                    Height="25"
+                    Command="{Binding NavigateToHomeCommand}"/>
+            <Button Content="Settings"
+                    Height="25"
+                    Command="{Binding NavigateToSettingsCommand}"/>
+            
+        </StackPanel>
+        
+        <ContentControl Grid.Column="1"
+                        Content="{Binding Navigation.CurrentView}">
+            
+        </ContentControl>
+        
+
+    </Grid>
+</Window>
