@@ -43,6 +43,12 @@ namespace TwoFromWPF
         private WindowForm2()
         {
             InitializeComponent();
+            var desktopWorkingArea = System.Windows.SystemParameters.WorkArea;
+            this.Left = desktopWorkingArea.Right - this.Width;
+            this.Top = 0;
         }
+        
+        
+        
     }
 }

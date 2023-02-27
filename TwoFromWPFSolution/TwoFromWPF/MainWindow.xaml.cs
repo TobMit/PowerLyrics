@@ -50,5 +50,11 @@ namespace TwoFromWPF
             
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            windowForm2.Close();
+            windowForm2=null;
+            base.OnClosed(e);
+        }
     }
 }
