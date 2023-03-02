@@ -22,8 +22,6 @@ namespace PowerLyrics
     public partial class MainWindow : Window
     {
 
-        public String Sirka { get; set; }
-        public String Vyska { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -31,8 +29,8 @@ namespace PowerLyrics
         }
         protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Vyska = "Vyska: " + e.NewSize.Height.ToString();
-            Sirka = "Sirka: " + e.NewSize.Width.ToString();
+            Vyska.Content = "Vyska: " + e.NewSize.Height.ToString();
+            Sirka.Content = "Sirka: " + e.NewSize.Width.ToString();
         }
 
     }

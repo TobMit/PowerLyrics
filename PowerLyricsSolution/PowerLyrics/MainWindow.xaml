@@ -8,7 +8,8 @@
         Title="PowerLyics" Height="720" Width="1280"
         MinHeight="650" MinWidth="1100"
         Background="#474747">
-    
+
+
     <Grid>
         
         <Grid.ColumnDefinitions>
@@ -17,15 +18,91 @@
             <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="70"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Border
             Grid.ColumnSpan="3"
-            BorderThickness="3"
-            BorderBrush="Aqua">
-            <DockPanel></DockPanel>
+            BorderThickness="0,0,0,3"
+            BorderBrush="Black">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1" 
+                            Orientation="Horizontal"
+                            Margin="0,1,0,0" >
+                    <StackPanel.Resources>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Margin" Value="0,0,10,0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <RadioButton
+                                Foreground="White"
+                                FontSize="14"
+                                Style="{StaticResource MenuButtonTheme}"
+                                IsChecked="True">
+                                <Image Source="Images/playIcon.png"/>
+                            </RadioButton>
+                            <RadioButton
+                                Foreground="White"
+                                FontSize="14"
+                                Style="{StaticResource MenuButtonTheme}">
+                                <Image Source="Images/editIcon.png"/>
+                            </RadioButton>
+                            <RadioButton
+                                Foreground="White"
+                                FontSize="14"
+                                Style="{StaticResource MenuButtonTheme}">
+                                <Image Source="Images/playIcon.png"/>
+                            </RadioButton>
+                            <RadioButton
+                                Foreground="White"
+                                FontSize="14"
+                                Style="{StaticResource MenuButtonTheme}">
+                                <Image Source="Images/playIcon.png"/>
+                            </RadioButton>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Label Content="Show    "
+                                   HorizontalAlignment="Center"
+                                   Foreground="#c9c8cf"
+                                   Margin="0,-5,0,0"
+                                   FontSize="14"/>
+                            <Label Content="Show      "
+                                   HorizontalAlignment="Center"
+                                   Foreground="#c9c8cf"
+                                   Margin="0,-5,0,0"
+                                   FontSize="14"/>
+                            <Label Content="Show     "
+                                   HorizontalAlignment="Center"
+                                   Foreground="#c9c8cf"
+                                   Margin="0,-5,0,0"
+                                   FontSize="14"/>
+                            <Label Content="Show    "
+                                   HorizontalAlignment="Center"
+                                   Foreground="#c9c8cf"
+                                   Margin="0,-5,0,0"
+                                   FontSize="14"/>
+                        </StackPanel>
+
+                    </Grid>
+                    
+
+
+                </StackPanel>
+                
+            </Grid>
+            
         </Border>
         <Border
             Grid.Row="1"
@@ -62,8 +139,9 @@
         <StackPanel Grid.Row="1"
                     Grid.Column="1"
                     Orientation="Vertical">
-            <Label Content="{Binding Sirka}"/>
-            <Label Content="{Binding Vyska}"/>
+            <Label Name="Sirka"/>
+            <Label Name="Vyska"/>
+            <Button />
 
         </StackPanel>
     </Grid>
