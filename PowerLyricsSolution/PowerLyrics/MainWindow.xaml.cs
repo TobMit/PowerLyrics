@@ -18,13 +18,22 @@ namespace PowerLyrics
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
     public partial class MainWindow : Window
     {
+
+        public String Sirka { get; set; }
+        public String Vyska { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            this.SizeChanged += OnWindowSizeChanged;
         }
-
+        protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Vyska = "Vyska: " + e.NewSize.Height.ToString();
+            Sirka = "Sirka: " + e.NewSize.Width.ToString();
+        }
 
     }
 }

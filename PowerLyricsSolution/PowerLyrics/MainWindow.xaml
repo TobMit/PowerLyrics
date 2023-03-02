@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PowerLyrics"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280"
+        Title="PowerLyics" Height="720" Width="1280"
         MinHeight="650" MinWidth="1100"
         Background="#474747">
+    
     <Grid>
         
         <Grid.ColumnDefinitions>
@@ -24,7 +25,7 @@
             Grid.ColumnSpan="3"
             BorderThickness="3"
             BorderBrush="Aqua">
-            <Label Content="Hlavne Menu"/>
+            <DockPanel></DockPanel>
         </Border>
         <Border
             Grid.Row="1"
@@ -58,5 +59,12 @@
                 </Border>
             </Grid>
         </Border>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1"
+                    Orientation="Vertical">
+            <Label Content="{Binding Sirka}"/>
+            <Label Content="{Binding Vyska}"/>
+
+        </StackPanel>
     </Grid>
 </Window>
