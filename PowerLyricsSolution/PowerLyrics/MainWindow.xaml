@@ -33,9 +33,14 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"
+                       Content="Pravdepodobne uloženie alebo take niečo "/>
+
                 <StackPanel Grid.Column="1" 
                             Orientation="Horizontal"
-                            Margin="0,1,0,0" >
+                            Margin="0,1,0,0" 
+                            HorizontalAlignment="Center">
                     <StackPanel.Resources>
                         <Style TargetType="StackPanel">
                             <Setter Property="Margin" Value="0,0,10,0"/>
@@ -46,8 +51,15 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
                             <RadioButton
+                                Grid.Column="0"
                                 Foreground="White"
                                 FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}"
@@ -55,53 +67,83 @@
                                 <Image Source="Images/playIcon.png"/>
                             </RadioButton>
                             <RadioButton
+                                Grid.Column="1"
                                 Foreground="White"
                                 FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}">
                                 <Image Source="Images/editIcon.png"/>
                             </RadioButton>
                             <RadioButton
+                                Grid.Column="2"
                                 Foreground="White"
                                 FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}">
-                                <Image Source="Images/playIcon.png"/>
+                                <Image Source="Images/forwardIcon.png"
+                                       Height="21"
+                                       RenderTransformOrigin="0.5,0.5"
+                                       >
+                                    <Image.RenderTransform>
+                                        <ScaleTransform ScaleX="-1"/>
+                                    </Image.RenderTransform>
+                                </Image>
                             </RadioButton>
                             <RadioButton
+                                Grid.Column="3"
                                 Foreground="White"
                                 FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}">
-                                <Image Source="Images/playIcon.png"/>
+                                <Image Source="Images/forwardIcon.png" 
+                                       Height="21"/>
                             </RadioButton>
-                        </StackPanel>
-                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="Show    "
-                                   HorizontalAlignment="Center"
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Show"
+                                   Grid.Column="0"
+                                   HorizontalContentAlignment="Center"
                                    Foreground="#c9c8cf"
-                                   Margin="0,-5,0,0"
+                                   Margin="0,-6,0,0"
                                    FontSize="14"/>
-                            <Label Content="Show      "
-                                   HorizontalAlignment="Center"
+                            <Label Content="Edit"
+                                   Grid.Column="1"
+                                   HorizontalContentAlignment="Center"
                                    Foreground="#c9c8cf"
-                                   Margin="0,-5,0,0"
+                                   Margin="0,-6,0,0"
                                    FontSize="14"/>
-                            <Label Content="Show     "
-                                   HorizontalAlignment="Center"
+                            <Label Content="Prev&#x0a;Song"
+                                   Grid.Column="2"
+                                   HorizontalContentAlignment="Center"
                                    Foreground="#c9c8cf"
-                                   Margin="0,-5,0,0"
-                                   FontSize="14"/>
-                            <Label Content="Show    "
-                                   HorizontalAlignment="Center"
+                                   Margin="0,-6,0,0"
+                                   TextBlock.TextAlignment="Center"
+                                   FontSize="11"/>
+                            <Label Content="Next&#x0a;Song"
+                                   Grid.Column="3"
+                                   HorizontalContentAlignment="Center"
+                                   TextBlock.TextAlignment="Center"
                                    Foreground="#c9c8cf"
-                                   Margin="0,-5,0,0"
-                                   FontSize="14"/>
-                        </StackPanel>
+                                   Margin="0,-6,0,0"
+                                   FontSize="11"/>
+                        </Grid>
 
                     </Grid>
                     
 
 
                 </StackPanel>
-                
+
+                <CheckBox Grid.Column="2"
+                          Background="Transparent"
+                          Style="{StaticResource LiveButtonTheme}"
+                          HorizontalAlignment="Right"
+                          Margin="0,0,20,0"
+                          />
+
             </Grid>
             
         </Border>
