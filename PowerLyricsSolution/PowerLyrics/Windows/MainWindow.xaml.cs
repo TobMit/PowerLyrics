@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PowerLyrics.MVVM.View;
 
 namespace PowerLyrics.Windows
 {
@@ -21,6 +22,8 @@ namespace PowerLyrics.Windows
 
     public partial class MainWindow : Window
     {
+        
+        AudiencWindow window = AudiencWindow.Instance;
 
         public MainWindow()
         {
@@ -31,7 +34,19 @@ namespace PowerLyrics.Windows
         {
             Vyska.Content = "Vyska: " + e.NewSize.Height.ToString();
             Sirka.Content = "Sirka: " + e.NewSize.Width.ToString();
+            window.Show();
+
+            LyricViewTemplate1 lyricView = new LyricViewTemplate1();
+            Control.Content = lyricView;
+            //window.swhoContent.Content = lyricView;
+
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            window.Close();
+            window = null;
+            base.OnClosed(e);
+        }
     }
 }

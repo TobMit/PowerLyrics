@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PowerLyrics.Windows
+namespace PowerLyrics.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for AudiencWindow.xaml
+    /// Interaction logic for LyricViewTemplate1.xaml
     /// </summary>
-    public partial class AudiencWindow : Window
+    public partial class LyricViewTemplate1 : UserControl
     {
-        public AudiencWindow()
+        public LyricViewTemplate1()
         {
             InitializeComponent();
         }
