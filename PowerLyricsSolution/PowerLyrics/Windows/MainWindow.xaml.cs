@@ -23,7 +23,7 @@ namespace PowerLyrics.Windows
     public partial class MainWindow : Window
     {
         
-        AudiencWindow window = AudiencWindow.Instance;
+        AudiencWindow audieceWindow = AudiencWindow.Instance;
 
         public MainWindow()
         {
@@ -34,18 +34,18 @@ namespace PowerLyrics.Windows
         {
             Vyska.Content = "Vyska: " + e.NewSize.Height.ToString();
             Sirka.Content = "Sirka: " + e.NewSize.Width.ToString();
-            window.Show();
+            audieceWindow.Show();
 
             LyricViewTemplate1 lyricView = new LyricViewTemplate1();
             Control.Content = lyricView;
-            //window.swhoContent.Content = lyricView;
-
+            audieceWindow.showLyric(lyricView);
+            
         }
 
         protected override void OnClosed(EventArgs e)
         {
-            window.Close();
-            window = null;
+            audieceWindow.Close();
+            audieceWindow = null;
             base.OnClosed(e);
         }
     }

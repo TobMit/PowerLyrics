@@ -25,14 +25,6 @@ namespace PowerLyrics.Windows
         //user singleton pattern to make sure only one instance of this window is created
         private static AudiencWindow _instance;
 
-        private ContentControl content;
-
-        public ContentControl swhoContent
-        {
-            get { return content; }
-        }
-
-
         public static AudiencWindow Instance
         {
             get
@@ -41,15 +33,21 @@ namespace PowerLyrics.Windows
                 {
                     _instance = new AudiencWindow();
                 }
+
                 return _instance;
             }
         }
+
         private AudiencWindow()
         {
             InitializeComponent();
-            this.Left = System.Windows.SystemParameters.WorkArea.Right - this.Width; // set window to right side of screen
-            LyricViewTemplate1 lyricView = new LyricViewTemplate1();
-            this.Control.Content = lyricView;
+            this.Left = System.Windows.SystemParameters.WorkArea.Right -
+                        this.Width; // set window to right side of screen
+        }
+
+        public void showLyric(ContentControl control)
+        {
+            this.Control.Content = control;
         }
     }
 }

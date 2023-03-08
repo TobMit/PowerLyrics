@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PowerLyrics.Windows"
+        xmlns:viewModel="clr-namespace:PowerLyrics.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="PowerLyics" Height="720" Width="1280"
         MinHeight="650" MinWidth="1100"
         Background="#474747"
         >
 
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
 
     <Grid>
         

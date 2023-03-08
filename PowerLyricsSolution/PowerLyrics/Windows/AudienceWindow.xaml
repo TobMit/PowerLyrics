@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PowerLyrics.Windows"
+        xmlns:viewModel="clr-namespace:PowerLyrics.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="AudiencWindow" Height="600" Width="800"
         WindowStyle="None"
@@ -12,7 +13,12 @@
         Top="0"
         Background="Black"
         ResizeMode="CanResize">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
     <Viewbox Stretch="Uniform">
-        <ContentControl Name="Control" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <ContentControl Content="{Binding lyricContent}"/>
     </Viewbox>
 </Window>
