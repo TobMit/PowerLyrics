@@ -199,7 +199,8 @@
             ItemsSource="{Binding lyricArray}"
             ItemContainerStyle="{StaticResource SlideTheme}"
             HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
+            VerticalAlignment="Stretch"
+            x:Name="ListView1">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />

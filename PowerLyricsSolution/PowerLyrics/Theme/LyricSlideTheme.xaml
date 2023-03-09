@@ -10,7 +10,9 @@
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             Foreground="White"
-                            Background="{TemplateBinding Background}"/>
+                            Background="{TemplateBinding Background}"
+                            Command="{Binding ElementName=ListView1, Path=DataContext.test3}"
+                            CommandParameter="{Binding text}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

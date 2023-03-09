@@ -45,6 +45,7 @@ namespace PowerLyrics.MVVM.ViewModel
 
         public RelayCommand test { get; set; }
         public RelayCommand test2 { get; set; }
+        public RelayCommand test3 { get; set; }
 
         public ObservableCollection<LyricModel> lyricArray { get; set; }
 
@@ -57,7 +58,11 @@ namespace PowerLyrics.MVVM.ViewModel
             inicialiseButtons();
 
             lyricArray = new ObservableCollection<LyricModel>();
-            
+            for (int i = 0; i < 70; i++)
+            {
+                lyricArray.Add(new LyricModel() { text = "test" + i });
+            }
+
         }
 
         private void inicialiseButtons()
@@ -70,6 +75,7 @@ namespace PowerLyrics.MVVM.ViewModel
                 {
                     lyricArray.Add(new LyricModel() { text = "test" + i });
                 }
+                Debug.WriteLine("test1");
             });
 
             test2 = new RelayCommand(o =>
@@ -80,6 +86,14 @@ namespace PowerLyrics.MVVM.ViewModel
                 {
                     lyricArray.Add(new LyricModel() { text = "Toto je test" + i });
                 }
+                Debug.WriteLine("test2");
+            });
+
+            test3 = new RelayCommand(o =>
+            {
+                Debug.WriteLine(o.ToString());
+                actualLabelText = o.ToString();
+                
             });
         }
 
