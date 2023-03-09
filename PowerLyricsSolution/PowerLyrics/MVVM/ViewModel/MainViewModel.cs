@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PowerLyrics.Core;
+using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
 using PowerLyrics.Windows;
 
@@ -44,21 +46,41 @@ namespace PowerLyrics.MVVM.ViewModel
         public RelayCommand test { get; set; }
         public RelayCommand test2 { get; set; }
 
+        public ObservableCollection<LyricModel> lyricArray { get; set; }
+
         public MainViewModel()
         {
             audieceWindow = new AudiencWindow();
             audieceWindow.Show();
             LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1();
             LyricContent = tesLyricViewTemplate1;
-
             inicialiseButtons();
+
+            lyricArray = new ObservableCollection<LyricModel>();
+            
         }
 
         private void inicialiseButtons()
         {
-            test = new RelayCommand(o => { actualLabelText = "test"; });
+            test = new RelayCommand(o =>
+            {
+                actualLabelText = "test";
+                lyricArray.Clear();
+                for (int i = 0; i < 70; i++)
+                {
+                    lyricArray.Add(new LyricModel() { text = "test" + i });
+                }
+            });
 
-            test2 = new RelayCommand(o => { actualLabelText = "Toto je test"; });
+            test2 = new RelayCommand(o =>
+            {
+                actualLabelText = "Toto je test";
+                lyricArray.Clear();
+                for (int i = 0; i < 70; i++)
+                {
+                    lyricArray.Add(new LyricModel() { text = "Toto je test" + i });
+                }
+            });
         }
 
 

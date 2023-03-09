@@ -191,10 +191,21 @@
                 </Border>
             </Grid>
         </Border>
-        <StackPanel Grid.Row="1"
-                    Grid.Column="1"
-                    Orientation="Vertical">
+        <ListView 
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            Grid.Row="1"
+            Grid.Column="1"
+            Background="Transparent"
+            ItemsSource="{Binding lyricArray}"
+            ItemContainerStyle="{StaticResource SlideTheme}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
 
-        </StackPanel>
     </Grid>
 </Window>
