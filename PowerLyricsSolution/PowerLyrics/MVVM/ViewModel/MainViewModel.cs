@@ -30,6 +30,17 @@ namespace PowerLyrics.MVVM.ViewModel
             }
         }
 
+        //toto je tu kvoli tomu aby som jednoduhsie nastavoval text v labeli
+        private string actualLabelText
+        {
+            set
+            {
+                LyricViewTemplate1 tmp = new LyricViewTemplate1();
+                tmp.Label.Content = value;
+                LyricContent = tmp;
+            }
+        }
+
         public RelayCommand test { get; set; }
         public RelayCommand test2 { get; set; }
 
@@ -40,20 +51,14 @@ namespace PowerLyrics.MVVM.ViewModel
             LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1();
             LyricContent = tesLyricViewTemplate1;
 
-            test = new RelayCommand(o =>
-            {
-                LyricViewTemplate1 tesLyricViewTemplate2 = new LyricViewTemplate1();
-                tesLyricViewTemplate2.Label.Content = "test";
-                LyricContent = tesLyricViewTemplate2;
-            });
+            inicialiseButtons();
+        }
 
-            test2 = new RelayCommand(o =>
-            {
-                LyricViewTemplate1 tesLyricViewTemplate2 = new LyricViewTemplate1();
-                tesLyricViewTemplate2.Label.Content = "Toto je test";
-                LyricContent = tesLyricViewTemplate2;
-            });
+        private void inicialiseButtons()
+        {
+            test = new RelayCommand(o => { actualLabelText = "test"; });
 
+            test2 = new RelayCommand(o => { actualLabelText = "Toto je test"; });
         }
 
 
