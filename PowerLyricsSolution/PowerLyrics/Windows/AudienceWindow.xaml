@@ -14,11 +14,9 @@
         Background="Black"
         ResizeMode="CanResize">
 
-    <Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
+    
 
     <Viewbox Stretch="Uniform">
-        <ContentControl Content="{Binding lyricContent}"/>
+        <ContentControl Name="ContentControl"/>
     </Viewbox>
 </Window>

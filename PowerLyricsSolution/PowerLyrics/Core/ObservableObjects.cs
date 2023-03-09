@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PowerLyrics.Core
 {
-    class ObservableObjects : INotifyPropertyChanged
+    public class ObservableObjects : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

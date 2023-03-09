@@ -12,42 +12,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PowerLyrics.MVVM.ViewModel;
 
 namespace PowerLyrics.Windows
 {
     /// <summary>
     /// Interaction logic for AudiencWindow.xaml
-    /// Use singleton patter to make only one instance of this window, it is better in code (i do not need send instens over code)
     /// </summary>
     public partial class AudiencWindow : Window
     {
-
-        //user singleton pattern to make sure only one instance of this window is created
-        private static AudiencWindow _instance;
-
-        public static AudiencWindow Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new AudiencWindow();
-                }
-
-                return _instance;
-            }
-        }
-
-        private AudiencWindow()
+        
+        public AudiencWindow()
         {
             InitializeComponent();
-            this.Left = System.Windows.SystemParameters.WorkArea.Right -
-                        this.Width; // set window to right side of screen
-        }
-
-        public void showLyric(ContentControl control)
-        {
-            this.Control.Content = control;
+            this.Left = System.Windows.SystemParameters.WorkArea.Right - this.Width; // set window to right side of screen
         }
     }
 }

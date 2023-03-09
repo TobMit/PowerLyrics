@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PowerLyrics.Core;
 
 namespace PowerLyrics.MVVM.View
 {
@@ -20,9 +22,16 @@ namespace PowerLyrics.MVVM.View
     /// </summary>
     public partial class LyricViewTemplate1 : UserControl
     {
+
         public LyricViewTemplate1()
         {
             InitializeComponent();
+        }
+
+        public LyricViewTemplate1(LyricViewTemplate1 copy)
+        {
+            InitializeComponent();
+            Label.Content = copy.Label.Content;
         }
     }
 }
