@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Style TargetType="ListViewItem" x:Key="SlidesTheme">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <!--
+                    <Button Height="80"
+                            Width="80"
+                            Content="{Binding text}"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Foreground="White"
+                            Background="{TemplateBinding Background}"
+                            Command="{Binding ElementName=ListView1, Path=DataContext.test3}"
+                            CommandParameter="{Binding text}"/>
+                    -->
+
+                    <RadioButton
+                        GroupName="Sliders"
+                        Style="{StaticResource SlideThemeViewer}"
+                        Command="{Binding ElementName=ListView1, Path=DataContext.test3}"
+                        CommandParameter="{Binding text}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding SlideType}" Value="Divider">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+
+                            <Border Width="10000000000"
+                                    BorderThickness="0,0,0,5"
+                                    BorderBrush="Red">
+                                <Label Content="Toto je divider!"
+                                       Foreground="White"
+                                       FontSize="20"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    
+    
+</ResourceDictionary>

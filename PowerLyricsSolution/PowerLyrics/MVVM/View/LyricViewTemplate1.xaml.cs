@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,26 +13,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PowerLyrics.Core;
 
-namespace PowerLyrics
+namespace PowerLyrics.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LyricViewTemplate1.xaml
     /// </summary>
-
-    public partial class MainWindow : Window
+    public partial class LyricViewTemplate1 : UserControl
     {
 
-        public MainWindow()
+        public LyricViewTemplate1()
         {
             InitializeComponent();
-            this.SizeChanged += OnWindowSizeChanged;
-        }
-        protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            Vyska.Content = "Vyska: " + e.NewSize.Height.ToString();
-            Sirka.Content = "Sirka: " + e.NewSize.Width.ToString();
         }
 
+        public LyricViewTemplate1(LyricViewTemplate1 copy)
+        {
+            InitializeComponent();
+            Label.Content = copy.Label.Content;
+        }
+
+        public LyricViewTemplate1(string text)
+        {
+            InitializeComponent();
+            Label.Content = text;
+        }
     }
 }

@@ -1,0 +1,22 @@
+﻿<Window x:Class="PowerLyrics.Windows.AudiencWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PowerLyrics.Windows"
+        xmlns:viewModel="clr-namespace:PowerLyrics.MVVM.ViewModel"
+        mc:Ignorable="d"
+        Title="AudiencWindow" Height="600" Width="800"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="Manual"
+        Top="0"
+        Background="Black"
+        ResizeMode="CanResize">
+
+    
+
+    <Viewbox Stretch="Uniform">
+        <ContentControl Name="ContentControl"/>
+    </Viewbox>
+</Window>
