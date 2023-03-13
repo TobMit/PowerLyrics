@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace PowerLyrics.Core
 {
-    enum LyricType
+    public enum LyricType
     {
         Verse,
         Refren,
         Bridge
+    }
+
+    public enum SlideType
+    {
+        Slide,
+        Divider
     }
 }

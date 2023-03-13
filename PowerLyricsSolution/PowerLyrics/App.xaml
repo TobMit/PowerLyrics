@@ -10,7 +10,8 @@
                 <ResourceDictionary Source="Theme/LiveButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonLabelTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ButtonTheme.xaml"/>
-                <ResourceDictionary Source="Theme/LyricSlideTheme.xaml"/>
+                <ResourceDictionary Source="/Theme/SlidesStyleTheme/SlideViewerTheme.xaml"/>
+                <ResourceDictionary Source="/Theme/SlidesStyleTheme/LyricSlideTheme.xaml"/>
                 <ResourceDictionary Source="Theme/CustomScrollBar.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

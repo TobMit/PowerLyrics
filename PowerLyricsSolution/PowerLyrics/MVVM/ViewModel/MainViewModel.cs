@@ -9,6 +9,7 @@ using PowerLyrics.Core;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
 using PowerLyrics.Windows;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PowerLyrics.MVVM.ViewModel
 {
@@ -60,7 +61,12 @@ namespace PowerLyrics.MVVM.ViewModel
             lyricArray = new ObservableCollection<LyricModel>();
             for (int i = 0; i < 70; i++)
             {
-                lyricArray.Add(new LyricModel() { text = "test" + i });
+                lyricArray.Add(new LyricModel()
+                {
+                    text = "test" + i,
+                    UserControlContent = new LyricViewTemplate1("test" + i),
+                    SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
+                });
             }
 
         }
@@ -73,7 +79,13 @@ namespace PowerLyrics.MVVM.ViewModel
                 lyricArray.Clear();
                 for (int i = 0; i < 70; i++)
                 {
-                    lyricArray.Add(new LyricModel() { text = "test" + i });
+                    lyricArray.Add(new LyricModel()
+                    {
+                        text = "test" + i,
+                        UserControlContent = new LyricViewTemplate1("test" + i),
+                        SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
+
+                    });
                 }
                 Debug.WriteLine("test1");
             });
@@ -84,7 +96,13 @@ namespace PowerLyrics.MVVM.ViewModel
                 lyricArray.Clear();
                 for (int i = 0; i < 70; i++)
                 {
-                    lyricArray.Add(new LyricModel() { text = "Toto je test" + i });
+                    lyricArray.Add(new LyricModel()
+                    {
+                        text = "Toto je test" + i,
+                        UserControlContent = new LyricViewTemplate1("Toto je test" + i),
+                        SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
+
+                    });
                 }
                 Debug.WriteLine("test2");
             });

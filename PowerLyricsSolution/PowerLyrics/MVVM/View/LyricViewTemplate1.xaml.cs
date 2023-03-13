@@ -33,5 +33,11 @@ namespace PowerLyrics.MVVM.View
             InitializeComponent();
             Label.Content = copy.Label.Content;
         }
+
+        public LyricViewTemplate1(string text)
+        {
+            InitializeComponent();
+            Label.Content = text;
+        }
     }
 }

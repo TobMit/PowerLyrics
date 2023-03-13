@@ -157,9 +157,9 @@
             BorderThickness="3"
             BorderBrush="Blue">
             <StackPanel Orientation="Vertical">
-            <Label Content="Project sources"/>
-            <Label Foreground="White" Name="Sirka" Content="Sirka: 1280"/>
-            <Label Foreground="White" Name="Vyska" Content="Vyska: 720"/>
+                <Label Content="Project sources"/>
+                <Label Foreground="White" Name="Sirka" Content="Sirka: 1280"/>
+                <Label Foreground="White" Name="Vyska" Content="Vyska: 720"/>
             </StackPanel>
             
         </Border>
@@ -197,7 +197,7 @@
             Grid.Column="1"
             Background="Transparent"
             ItemsSource="{Binding lyricArray}"
-            ItemContainerStyle="{StaticResource SlideTheme}"
+            ItemContainerStyle="{StaticResource SlidesTheme}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             x:Name="ListView1">

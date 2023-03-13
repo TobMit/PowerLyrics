@@ -9,8 +9,7 @@
     <Grid  Background="Black"
            Width="400"
            Height="300">
-        <Label Content="Toto je test"
-               HorizontalAlignment="Center"
+        <Label HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Foreground="White"
                FontSize="100"
