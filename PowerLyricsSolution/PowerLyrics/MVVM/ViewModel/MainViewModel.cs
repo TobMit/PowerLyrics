@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PowerLyrics.Core;
+using PowerLyrics.Core.DataLoader;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
 using PowerLyrics.Windows;
@@ -68,6 +69,8 @@ namespace PowerLyrics.MVVM.ViewModel
                     SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
                 });
             }
+
+            DataLoader loader = new DataLoader();
 
         }
 
