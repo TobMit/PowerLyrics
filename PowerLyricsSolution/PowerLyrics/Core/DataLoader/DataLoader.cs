@@ -31,7 +31,15 @@ public class DataLoader
         foreach (string path in paths)
         {
             string loadedSong = this.loadSong(path);
-            songs.Add(this.processSong(loadedSong));
+            Song tmpSong = this.processSong(loadedSong);
+            string[] splitedPath = path.Split(@"\");
+            //z cesty vyberiem meno suboru
+            string rawName = splitedPath[splitedPath.Length - 1];
+            //rozdelim 
+            string[] splitedRawName = rawName.Split(".");
+            tmpSong.number = Int32.Parse(splitedRawName[0]);
+            tmpSong.name = splitedRawName[1].Remove(0,1);
+            songs.Add(tmpSong);
         }
 
         return songs;

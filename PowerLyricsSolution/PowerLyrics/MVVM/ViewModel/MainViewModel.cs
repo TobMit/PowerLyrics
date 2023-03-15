@@ -19,6 +19,8 @@ namespace PowerLyrics.MVVM.ViewModel
 
         private AudiencWindow audieceWindow;
 
+        private DataLoader songsLoader;
+
         private object _lyricContent;
         public object LyricContent
         {
@@ -51,13 +53,18 @@ namespace PowerLyrics.MVVM.ViewModel
 
         public ObservableCollection<LyricModel> lyricArray { get; set; }
 
+        public ObservableCollection<Song> listOfSongs { get; set; }
+
         public MainViewModel()
         {
             audieceWindow = new AudiencWindow();
             audieceWindow.Show();
+
             LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1();
             LyricContent = tesLyricViewTemplate1;
             inicialiseButtons();
+            songsLoader = new DataLoader();
+            listOfSongs = songsLoader.getSongs();
 
             lyricArray = new ObservableCollection<LyricModel>();
             for (int i = 0; i < 70; i++)
@@ -69,8 +76,6 @@ namespace PowerLyrics.MVVM.ViewModel
                     SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
                 });
             }
-
-            DataLoader loader = new DataLoader();
 
         }
 
