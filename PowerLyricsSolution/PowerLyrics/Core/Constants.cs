@@ -9,7 +9,7 @@ namespace PowerLyrics.Core
     public enum LyricType
     {
         Verse,
-        Refren,
+        Chorus,
         Bridge
     }
 
