@@ -25,7 +25,7 @@ namespace PowerLyrics.Core.TextParser
                 var tmp = new LyricModel();
                 tmp.text = "test" + i;
                 tmp.fontSize = 50;
-                tmp.LyricType = LyricType.Verse;
+                tmp.LyricType = i < 20 ? LyricType.Verse : LyricType.Chorus; 
                 tmpSlides.Add(tmp);
             }
             return tmpSlides;

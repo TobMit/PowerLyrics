@@ -122,16 +122,32 @@ namespace PowerLyrics.MVVM.ViewModel
         private ObservableCollection<Slide> getSlidesFromOpenSong()
         {
             ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
-            int i = 0;
+            int id = 0;
+            LyricType oldType = LyricType.Undefined;
             foreach (var item in opendeSong)
             {
-                tmp.Add(new Slide()
+                /*tmp.Add(new Slide()
                 {
                     UserControl = new LyricViewTemplate1(item), // TODO: change to dynamic
                     SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide,
                     id = i
-                });
-                i++;
+                });*/
+                if (oldType == LyricType.Undefined || oldType != item.LyricType)
+                {
+                    oldType = item.LyricType;
+                    tmp.Add(new Slide()
+                    {
+                        SlideType = SlideType.Divider,
+                        dividerText = item.LyricType.ToString(),
+                    });
+                    id++;
+                } 
+                Slide slide = new Slide();
+                slide.UserControl = new LyricViewTemplate1(item);
+                slide.id = id;
+                slide.SlideType = SlideType.Slide;
+                tmp.Add(slide);
+                id++;
             }
             return tmp;
         }

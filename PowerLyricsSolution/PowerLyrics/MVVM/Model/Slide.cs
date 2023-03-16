@@ -13,5 +13,6 @@ namespace PowerLyrics.MVVM.Model
         public UserControl? UserControl { get; set; }
         public SlideType SlideType { get; set; }
         public int id { get; set; }
+        public string dividerText { get; set; }
     }
 }

@@ -10,7 +10,8 @@ namespace PowerLyrics.Core
     {
         Verse,
         Chorus,
-        Bridge
+        Bridge,
+        Undefined
     }
 
     public enum SlideType
