@@ -17,7 +17,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Margin="1">
                             <Viewbox Stretch="Uniform">
-                                <ContentPresenter Content="{Binding UserControlContent}" RenderOptions.BitmapScalingMode="Fant"/>
+                                <ContentPresenter Content="{Binding UserControl}" RenderOptions.BitmapScalingMode="Fant"/>
                             </Viewbox>
 
                         </Border>

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using PowerLyrics.Core;
 using PowerLyrics.Core.DataLoader;
 using PowerLyrics.Core.TextParser;
@@ -43,9 +44,25 @@ namespace PowerLyrics.MVVM.ViewModel
         public RelayCommand test3 { get; set; }
         public RelayCommand SelectSongCommand { get; set; }
 
-        private ObservableCollection<LyricModel> _lyricArray;
 
-        public ObservableCollection<LyricModel> lyricArray
+        private List<LyricModel> _opendeSong;
+
+        private List<LyricModel> opendeSong
+        {
+            get
+            {
+                return _opendeSong;
+            }
+            set
+            {
+                _opendeSong = value;
+                lyricArray = getSlidesFromOpenSong();
+            }
+        }
+
+        private ObservableCollection<Slide> _lyricArray;
+
+        public ObservableCollection<Slide> lyricArray
         {
             get
             {
@@ -92,14 +109,31 @@ namespace PowerLyrics.MVVM.ViewModel
             test3 = new RelayCommand(o =>
             {
                 Debug.WriteLine(o.ToString());
-                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[Int32.Parse(o.ToString())].UserControlContent); // zatial takto natvrdo ten dizajn
+                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[Int32.Parse(o.ToString())].UserControl);
                 
             });
             SelectSongCommand = new RelayCommand(o =>
             {
                 Debug.WriteLine(o.ToString());
-                lyricArray = textParser.parseLyric(listOfSongs[Int32.Parse(o.ToString())-1]);
+                opendeSong = textParser.parseLyric(listOfSongs[Int32.Parse(o.ToString())-1]);
             });
+        }
+
+        private ObservableCollection<Slide> getSlidesFromOpenSong()
+        {
+            ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
+            int i = 0;
+            foreach (var item in opendeSong)
+            {
+                tmp.Add(new Slide()
+                {
+                    UserControl = new LyricViewTemplate1(item), // TODO: change to dynamic
+                    SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide,
+                    id = i
+                });
+                i++;
+            }
+            return tmp;
         }
 
 

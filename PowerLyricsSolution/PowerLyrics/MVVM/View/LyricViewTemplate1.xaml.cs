@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PowerLyrics.Core;
+using PowerLyrics.MVVM.Model;
 
 namespace PowerLyrics.MVVM.View
 {
@@ -56,6 +57,13 @@ namespace PowerLyrics.MVVM.View
             InitializeComponent();
             this.text = copy.text;
             this.fontSize = copy.fontSize;
+        }
+
+        public LyricViewTemplate1(LyricModel lyric)
+        {
+            InitializeComponent();
+            this.text = lyric.text;
+            this.fontSize = lyric.fontSize;
         }
 
         public LyricViewTemplate1(string text)

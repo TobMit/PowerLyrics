@@ -13,8 +13,5 @@ namespace PowerLyrics.MVVM.Model
         public string text { get; set; }
         public int fontSize { get; set; }
         public LyricType LyricType { get; set; }
-        public UserControl? UserControlContent { get; set; }
-        public SlideType SlideType { get; set; }
-        public int id { get; set; }
     }
 }
