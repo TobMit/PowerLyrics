@@ -20,7 +20,6 @@
                         GroupName="Sliders"
                         Style="{StaticResource SongTheme}"
                         Command="{Binding ElementName=ListViewSongs, Path=DataContext.SelectSongCommand}"
-                        Margin="8,0,0,0"
                         CommandParameter="{Binding number}" />
                 </ControlTemplate>
             </Setter.Value>

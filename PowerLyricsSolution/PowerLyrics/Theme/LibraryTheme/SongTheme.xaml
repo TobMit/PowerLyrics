@@ -16,10 +16,25 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Margin="1">
 
-                            <StackPanel Orientation="Horizontal">
-                                <Image Height="20" Source="../../Images/lyricIcon.png" RenderOptions.BitmapScalingMode="Fant"/>
-                                <Label Content="{Binding number}" ContentStringFormat=" {0}." Foreground="White"/>
-                                <Label Content="{Binding name}" Foreground="White" Margin="-5,0,0,0"/>
+                            <StackPanel 
+                                Orientation="Horizontal"
+                                Margin="8,0,0,0">
+                                <Image 
+                                    Height="20" 
+                                    Source="../../Images/lyricIcon.png" 
+                                    RenderOptions.BitmapScalingMode="Fant" 
+                                    Margin="0,0,-3,0"/>
+                                <Label 
+                                    VerticalAlignment="Center" 
+                                    Content="{Binding number}" 
+                                    ContentStringFormat=" {0}." 
+                                    Foreground="White"/>
+                                <TextBlock 
+                                    VerticalAlignment="Center" 
+                                    Width="130"  Text="{Binding name}" 
+                                    Foreground="White" 
+                                    TextTrimming="CharacterEllipsis" 
+                                    Margin="-3,0,0,0"/>
                             </StackPanel>
 
                         </Border>
