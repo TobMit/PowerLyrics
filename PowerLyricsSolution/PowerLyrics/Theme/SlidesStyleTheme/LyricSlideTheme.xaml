@@ -21,7 +21,7 @@
                         GroupName="Sliders"
                         Style="{StaticResource SlideThemeViewer}"
                         Command="{Binding ElementName=ListViewSlides, Path=DataContext.test3}"
-                        CommandParameter="{Binding text}" />
+                        CommandParameter="{Binding id}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

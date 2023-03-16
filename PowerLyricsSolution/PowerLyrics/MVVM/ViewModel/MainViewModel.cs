@@ -64,8 +64,7 @@ namespace PowerLyrics.MVVM.ViewModel
             LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1();
             LyricContent = tesLyricViewTemplate1;
             inicialiseButtons();
-            songsLoader = new DataLoader();
-            listOfSongs = songsLoader.getSongs();
+
 
             lyricArray = new ObservableCollection<LyricModel>();
             for (int i = 0; i < 70; i++)
@@ -74,9 +73,14 @@ namespace PowerLyrics.MVVM.ViewModel
                 {
                     text = "test" + i,
                     UserControlContent = new LyricViewTemplate1("test" + i),
-                    SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
+                    SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide,
+                    id = i
                 });
             }
+
+
+            songsLoader = new DataLoader();
+            listOfSongs = songsLoader.getSongs();
 
         }
 
@@ -84,42 +88,21 @@ namespace PowerLyrics.MVVM.ViewModel
         {
             test = new RelayCommand(o =>
             {
-                actualLabelText = "test";
-                lyricArray.Clear();
-                for (int i = 0; i < 70; i++)
-                {
-                    lyricArray.Add(new LyricModel()
-                    {
-                        text = "test" + i,
-                        UserControlContent = new LyricViewTemplate1("test" + i),
-                        SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
-
-                    });
-                }
+                
                 Debug.WriteLine("test1");
             });
 
             test2 = new RelayCommand(o =>
             {
-                actualLabelText = "Toto je test";
-                lyricArray.Clear();
-                for (int i = 0; i < 70; i++)
-                {
-                    lyricArray.Add(new LyricModel()
-                    {
-                        text = "Toto je test" + i,
-                        UserControlContent = new LyricViewTemplate1("Toto je test" + i),
-                        SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
-
-                    });
-                }
+                
                 Debug.WriteLine("test2");
             });
 
             test3 = new RelayCommand(o =>
             {
                 Debug.WriteLine(o.ToString());
-                actualLabelText = o.ToString();
+                //actualLabelText = o.ToString();
+                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[Int32.Parse(o.ToString())].UserControlContent); // zatial takto natvrdo
                 
             });
             test4 = new RelayCommand(o =>
