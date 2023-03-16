@@ -50,6 +50,7 @@ namespace PowerLyrics.MVVM.ViewModel
         public RelayCommand test { get; set; }
         public RelayCommand test2 { get; set; }
         public RelayCommand test3 { get; set; }
+        public RelayCommand test4 { get; set; }
 
         public ObservableCollection<LyricModel> lyricArray { get; set; }
 
@@ -120,6 +121,11 @@ namespace PowerLyrics.MVVM.ViewModel
                 Debug.WriteLine(o.ToString());
                 actualLabelText = o.ToString();
                 
+            });
+            test4 = new RelayCommand(o =>
+            {
+                Debug.WriteLine(o.ToString());
+
             });
         }
 

@@ -12,6 +12,8 @@
                 <ResourceDictionary Source="Theme/ButtonTheme.xaml"/>
                 <ResourceDictionary Source="/Theme/SlidesStyleTheme/SlideViewerTheme.xaml"/>
                 <ResourceDictionary Source="/Theme/SlidesStyleTheme/LyricSlideTheme.xaml"/>
+                <ResourceDictionary Source="Theme/LibraryTheme/SongTheme.xaml"/>
+                <ResourceDictionary Source="Theme/LibraryTheme/SongSelectorTheme.xaml"/>
                 <ResourceDictionary Source="Theme/CustomScrollBar.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

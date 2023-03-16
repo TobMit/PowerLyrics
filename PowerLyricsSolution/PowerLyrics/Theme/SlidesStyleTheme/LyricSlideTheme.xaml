@@ -20,7 +20,7 @@
                     <RadioButton
                         GroupName="Sliders"
                         Style="{StaticResource SlideThemeViewer}"
-                        Command="{Binding ElementName=ListView1, Path=DataContext.test3}"
+                        Command="{Binding ElementName=ListViewSlides, Path=DataContext.test3}"
                         CommandParameter="{Binding text}" />
                 </ControlTemplate>
             </Setter.Value>

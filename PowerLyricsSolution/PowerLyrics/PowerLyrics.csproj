@@ -12,6 +12,7 @@
     <None Remove="Images\editIcon.png" />
     <None Remove="Images\forwardIcon.png" />
     <None Remove="Images\liveIcon.png" />
+    <None Remove="Images\lyricIcon.png" />
     <None Remove="Images\notLiveIcon.png" />
     <None Remove="Images\playIcon.png" />
   </ItemGroup>
@@ -24,6 +25,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\liveIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\lyricIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\notLiveIcon.png">
