@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PowerLyrics.Core;
 using PowerLyrics.Core.DataLoader;
+using PowerLyrics.Core.TextParser;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
 using PowerLyrics.Windows;
@@ -20,6 +21,7 @@ namespace PowerLyrics.MVVM.ViewModel
         private AudiencWindow audieceWindow;
 
         private DataLoader songsLoader;
+        private TextParser textParser;
 
         private object _lyricContent;
         public object LyricContent
@@ -36,23 +38,25 @@ namespace PowerLyrics.MVVM.ViewModel
             }
         }
 
-        //toto je tu kvoli tomu aby som jednoduhsie nastavoval text v labeli
-        private string actualLabelText
-        {
-            set
-            {
-                LyricViewTemplate1 tmp = new LyricViewTemplate1();
-                tmp.Label.Content = value;
-                LyricContent = tmp;
-            }
-        }
-
         public RelayCommand test { get; set; }
         public RelayCommand test2 { get; set; }
         public RelayCommand test3 { get; set; }
-        public RelayCommand test4 { get; set; }
+        public RelayCommand SelectSongCommand { get; set; }
 
-        public ObservableCollection<LyricModel> lyricArray { get; set; }
+        private ObservableCollection<LyricModel> _lyricArray;
+
+        public ObservableCollection<LyricModel> lyricArray
+        {
+            get
+            {
+                return _lyricArray;
+            }
+            set
+            {
+                _lyricArray = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<Song> listOfSongs { get; set; }
 
@@ -65,23 +69,10 @@ namespace PowerLyrics.MVVM.ViewModel
             LyricContent = tesLyricViewTemplate1;
             inicialiseButtons();
 
-
-            lyricArray = new ObservableCollection<LyricModel>();
-            for (int i = 0; i < 70; i++)
-            {
-                lyricArray.Add(new LyricModel()
-                {
-                    text = "test" + i,
-                    UserControlContent = new LyricViewTemplate1("test" + i),
-                    SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide,
-                    id = i
-                });
-            }
-
-
             songsLoader = new DataLoader();
             listOfSongs = songsLoader.getSongs();
 
+            textParser = new TextParser();
         }
 
         private void inicialiseButtons()
@@ -101,14 +92,13 @@ namespace PowerLyrics.MVVM.ViewModel
             test3 = new RelayCommand(o =>
             {
                 Debug.WriteLine(o.ToString());
-                //actualLabelText = o.ToString();
-                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[Int32.Parse(o.ToString())].UserControlContent); // zatial takto natvrdo
+                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[Int32.Parse(o.ToString())].UserControlContent); // zatial takto natvrdo ten dizajn
                 
             });
-            test4 = new RelayCommand(o =>
+            SelectSongCommand = new RelayCommand(o =>
             {
                 Debug.WriteLine(o.ToString());
-
+                lyricArray = textParser.parseLyric(listOfSongs[Int32.Parse(o.ToString())-1]);
             });
         }
 
