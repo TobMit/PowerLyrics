@@ -20,12 +20,31 @@ namespace PowerLyrics.Core.TextParser
         public List<LyricModel> parseLyric(Song song)
         {
             var tmpSlides = new List<LyricModel>();
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < song.verse.Count; i++)
             {
                 var tmp = new LyricModel();
-                tmp.text = "test" + i;
-                tmp.fontSize = 50;
-                tmp.LyricType = i < 20 ? LyricType.Verse : LyricType.Chorus; 
+                tmp.text = song.verse[i].ToString();
+                tmp.fontSize = 20;
+                tmp.LyricType = LyricType.Verse;
+                tmp.serialNuber = i + 1;
+                tmpSlides.Add(tmp);
+            }
+            for (int i = 0; i < song.chorus.Count; i++)
+            {
+                var tmp = new LyricModel();
+                tmp.text = song.chorus[i].ToString();
+                tmp.fontSize = 20;
+                tmp.LyricType = LyricType.Chorus;
+                tmp.serialNuber = i + 1;
+                tmpSlides.Add(tmp);
+            }
+            for (int i = 0; i < song.bridge.Count; i++)
+            {
+                var tmp = new LyricModel();
+                tmp.text = song.bridge[i].ToString();
+                tmp.fontSize = 20;
+                tmp.LyricType = LyricType.Bridge;
+                tmp.serialNuber = i + 1;
                 tmpSlides.Add(tmp);
             }
             return tmpSlides;

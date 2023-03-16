@@ -13,5 +13,6 @@ namespace PowerLyrics.MVVM.Model
         public string text { get; set; }
         public int fontSize { get; set; }
         public LyricType LyricType { get; set; }
+        public int serialNuber { get; set; } // in case there are more verse or bridge...
     }
 }

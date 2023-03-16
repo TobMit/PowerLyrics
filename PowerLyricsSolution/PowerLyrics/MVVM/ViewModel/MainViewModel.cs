@@ -124,21 +124,17 @@ namespace PowerLyrics.MVVM.ViewModel
             ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
             int id = 0;
             LyricType oldType = LyricType.Undefined;
+            int oldSerialNumber = 1;
             foreach (var item in opendeSong)
             {
-                /*tmp.Add(new Slide()
-                {
-                    UserControl = new LyricViewTemplate1(item), // TODO: change to dynamic
-                    SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide,
-                    id = i
-                });*/
-                if (oldType == LyricType.Undefined || oldType != item.LyricType)
+                if (oldType == LyricType.Undefined || oldType != item.LyricType || oldSerialNumber != item.serialNuber)
                 {
                     oldType = item.LyricType;
+                    oldSerialNumber = item.serialNuber;
                     tmp.Add(new Slide()
                     {
                         SlideType = SlideType.Divider,
-                        dividerText = item.LyricType.ToString(),
+                        dividerText =item.serialNuber + ". " + item.LyricType.ToString(),
                     });
                     id++;
                 } 

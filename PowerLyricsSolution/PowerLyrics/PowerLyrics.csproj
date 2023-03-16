@@ -15,6 +15,7 @@
     <None Remove="Images\lyricIcon.png" />
     <None Remove="Images\notLiveIcon.png" />
     <None Remove="Images\playIcon.png" />
+    <None Remove="Songs\3. Už viac niesom strachu otrokom.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,11 +39,14 @@
     </Resource>
     <None Remove="Songs\test.txt" />
     <None Remove="Core\DataLoader\test.txt" />
-    <EmbeddedResource Include="Songs\2. Tma sa trasie.txt">
+    <EmbeddedResource Include="Songs\2. Si cesta.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Remove="Songs\Tma sa trasie.txt" />
     <EmbeddedResource Include="Songs\1. Tma sa trasie.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\3. Už viac niesom strachu otrokom.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
