@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PowerLyrics.Core;
+using PowerLyrics.MVVM.Model;
 
 namespace PowerLyrics.MVVM.View
 {
@@ -22,6 +23,29 @@ namespace PowerLyrics.MVVM.View
     /// </summary>
     public partial class LyricViewTemplate1 : UserControl
     {
+        public string text
+        {
+            get
+            {
+                return TextBlock.Text;
+            }
+            set
+            {
+                TextBlock.Text = value;
+            }
+        }
+
+        public double fontSize
+        {
+            get
+            {
+                return TextBlock.FontSize;
+            }
+            set
+            {
+                TextBlock.FontSize = value;
+            }
+        }
 
         public LyricViewTemplate1()
         {
@@ -31,13 +55,21 @@ namespace PowerLyrics.MVVM.View
         public LyricViewTemplate1(LyricViewTemplate1 copy)
         {
             InitializeComponent();
-            Label.Content = copy.Label.Content;
+            this.text = copy.text;
+            this.fontSize = copy.fontSize;
+        }
+
+        public LyricViewTemplate1(LyricModel lyric)
+        {
+            InitializeComponent();
+            this.text = lyric.text;
+            this.fontSize = lyric.fontSize;
         }
 
         public LyricViewTemplate1(string text)
         {
             InitializeComponent();
-            Label.Content = text;
+            this.text = text;
         }
     }
 }

@@ -9,10 +9,13 @@
     <Grid  Background="Black"
            Width="400"
            Height="300">
-        <Label HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Foreground="White"
-               FontSize="100"
-               Name="Label"/>
+        <TextBlock HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Foreground="White"
+                   FontSize="25"
+                   TextAlignment="Center"
+                   Width="250"
+                   TextWrapping="Wrap"
+                   Name="TextBlock"/>
     </Grid>
 </UserControl>

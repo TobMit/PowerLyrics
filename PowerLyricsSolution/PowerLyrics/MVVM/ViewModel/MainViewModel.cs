@@ -5,7 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using PowerLyrics.Core;
+using PowerLyrics.Core.DataLoader;
+using PowerLyrics.Core.TextParser;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
 using PowerLyrics.Windows;
@@ -17,6 +20,9 @@ namespace PowerLyrics.MVVM.ViewModel
     {
 
         private AudiencWindow audieceWindow;
+
+        private DataLoader songsLoader;
+        private TextParser textParser;
 
         private object _lyricContent;
         public object LyricContent
@@ -33,86 +39,113 @@ namespace PowerLyrics.MVVM.ViewModel
             }
         }
 
-        //toto je tu kvoli tomu aby som jednoduhsie nastavoval text v labeli
-        private string actualLabelText
-        {
-            set
-            {
-                LyricViewTemplate1 tmp = new LyricViewTemplate1();
-                tmp.Label.Content = value;
-                LyricContent = tmp;
-            }
-        }
-
         public RelayCommand test { get; set; }
         public RelayCommand test2 { get; set; }
         public RelayCommand test3 { get; set; }
+        public RelayCommand SelectSongCommand { get; set; }
 
-        public ObservableCollection<LyricModel> lyricArray { get; set; }
+
+        private List<LyricModel> _opendeSong;
+
+        private List<LyricModel> opendeSong
+        {
+            get
+            {
+                return _opendeSong;
+            }
+            set
+            {
+                _opendeSong = value;
+                lyricArray = getSlidesFromOpenSong();
+            }
+        }
+
+        private ObservableCollection<Slide> _lyricArray;
+
+        public ObservableCollection<Slide> lyricArray
+        {
+            get
+            {
+                return _lyricArray;
+            }
+            set
+            {
+                _lyricArray = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Song> listOfSongs { get; set; }
 
         public MainViewModel()
         {
             audieceWindow = new AudiencWindow();
             audieceWindow.Show();
+
             LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1();
             LyricContent = tesLyricViewTemplate1;
             inicialiseButtons();
 
-            lyricArray = new ObservableCollection<LyricModel>();
-            for (int i = 0; i < 70; i++)
-            {
-                lyricArray.Add(new LyricModel()
-                {
-                    text = "test" + i,
-                    UserControlContent = new LyricViewTemplate1("test" + i),
-                    SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
-                });
-            }
+            songsLoader = new DataLoader();
+            listOfSongs = songsLoader.getSongs();
 
+            textParser = new TextParser();
         }
 
         private void inicialiseButtons()
         {
             test = new RelayCommand(o =>
             {
-                actualLabelText = "test";
-                lyricArray.Clear();
-                for (int i = 0; i < 70; i++)
-                {
-                    lyricArray.Add(new LyricModel()
-                    {
-                        text = "test" + i,
-                        UserControlContent = new LyricViewTemplate1("test" + i),
-                        SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
-
-                    });
-                }
+                
                 Debug.WriteLine("test1");
             });
 
             test2 = new RelayCommand(o =>
             {
-                actualLabelText = "Toto je test";
-                lyricArray.Clear();
-                for (int i = 0; i < 70; i++)
-                {
-                    lyricArray.Add(new LyricModel()
-                    {
-                        text = "Toto je test" + i,
-                        UserControlContent = new LyricViewTemplate1("Toto je test" + i),
-                        SlideType = i % 20 == 0 ? SlideType.Divider : SlideType.Slide
-
-                    });
-                }
+                
                 Debug.WriteLine("test2");
             });
 
             test3 = new RelayCommand(o =>
             {
                 Debug.WriteLine(o.ToString());
-                actualLabelText = o.ToString();
+                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[Int32.Parse(o.ToString())].UserControl);
                 
             });
+            SelectSongCommand = new RelayCommand(o =>
+            {
+                Debug.WriteLine(o.ToString());
+                opendeSong = textParser.parseLyric(listOfSongs[Int32.Parse(o.ToString())-1]);
+            });
+        }
+
+        private ObservableCollection<Slide> getSlidesFromOpenSong()
+        {
+            ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
+            int id = 0;
+            LyricType oldType = LyricType.Undefined;
+            int oldSerialNumber = 1;
+            foreach (var item in opendeSong)
+            {
+                if (oldType == LyricType.Undefined || oldType != item.LyricType || oldSerialNumber != item.serialNuber)
+                {
+                    oldType = item.LyricType;
+                    oldSerialNumber = item.serialNuber;
+                    tmp.Add(new Slide()
+                    {
+                        SlideType = SlideType.Divider,
+                        dividerText =item.serialNuber + ". " + item.LyricType.ToString(),
+                    });
+                    id++;
+                } 
+                Slide slide = new Slide();
+                slide.UserControl = new LyricViewTemplate1(item);
+                slide.id = id;
+                slide.SlideType = SlideType.Slide;
+                tmp.Add(slide);
+                id++;
+            }
+            return tmp;
         }
 
 

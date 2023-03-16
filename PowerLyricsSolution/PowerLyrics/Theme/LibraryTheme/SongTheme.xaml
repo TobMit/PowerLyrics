@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
            TargetType="{x:Type RadioButton}"
-           x:Key="SlideThemeViewer">
+           x:Key="SongTheme">
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
@@ -10,15 +10,32 @@
 
                         <Border
                             Background="{TemplateBinding Background}"
-                            Height="114"
-                            Width="150"
-                            BorderThickness="5"
+                            Height="30"
                             CornerRadius="5"
+                            BorderThickness="1"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Margin="1">
-                            <Viewbox Stretch="Uniform">
-                                <ContentPresenter Content="{Binding UserControl}" RenderOptions.BitmapScalingMode="Fant"/>
-                            </Viewbox>
+
+                            <StackPanel 
+                                Orientation="Horizontal"
+                                Margin="8,0,0,0">
+                                <Image 
+                                    Height="20" 
+                                    Source="../../Images/lyricIcon.png" 
+                                    RenderOptions.BitmapScalingMode="Fant" 
+                                    Margin="0,0,-3,0"/>
+                                <Label 
+                                    VerticalAlignment="Center" 
+                                    Content="{Binding number}" 
+                                    ContentStringFormat=" {0}." 
+                                    Foreground="White"/>
+                                <TextBlock 
+                                    VerticalAlignment="Center" 
+                                    Width="130"  Text="{Binding name}" 
+                                    Foreground="White" 
+                                    TextTrimming="CharacterEllipsis" 
+                                    Margin="-3,0,0,0"/>
+                            </StackPanel>
 
                         </Border>
                     </ControlTemplate>
@@ -36,7 +53,7 @@
                 <Setter Property="BorderBrush" Value="#4f4f4f" />
             </Trigger>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="BorderBrush" Value="#cf0b43" />
+                <Setter Property="Background" Value="#636365" />
             </Trigger>
         </Style.Triggers>
     </Style>

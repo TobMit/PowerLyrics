@@ -38,8 +38,11 @@
                     <ColumnDefinition Width="400"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"
-                       Content="Pravdepodobne uloženie alebo take niečo "/>
+                <StackPanel Grid.Column="0" Orientation="Vertical">
+                    <Label Content="Pravdepodobne uloženie alebo take niečo "/>
+                    <Label Foreground="White" Name="Sirka" Content="Sirka: 1280"/>
+                    <Label Foreground="White" Name="Vyska" Content="Vyska: 720"/>
+                </StackPanel>
 
                 <StackPanel Grid.Column="1" 
                             Orientation="Horizontal"
@@ -157,10 +160,18 @@
             BorderThickness="3"
             BorderBrush="Blue">
             <StackPanel Orientation="Vertical">
-                <Label Content="Project sources"/>
-                <Label Foreground="White" Name="Sirka" Content="Sirka: 1280"/>
-                <Label Foreground="White" Name="Vyska" Content="Vyska: 720"/>
+                <Label Content="LIBRARY" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15"/>
+                <ListView
+                    Background="Transparent"
+                    ItemsSource="{Binding listOfSongs}"
+                    ItemContainerStyle="{StaticResource SongLibraryTheme}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    BorderThickness="0"
+                    x:Name="ListViewSongs" />
+
             </StackPanel>
+           
             
         </Border>
         <Border
@@ -200,7 +211,8 @@
             ItemContainerStyle="{StaticResource SlidesTheme}"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            x:Name="ListView1">
+            BorderThickness="0"
+            x:Name="ListViewSlides"><!-- toto tu je aby som vedel command bindovat -->
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
