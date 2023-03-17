@@ -89,6 +89,7 @@ public class DataLoader
                 {
                     stat = LyricType.Verse;
                 }
+                tmpSong.lyricTypeQueue.Add(stat);
             }
             else
             {

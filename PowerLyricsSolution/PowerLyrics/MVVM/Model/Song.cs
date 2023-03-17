@@ -1,4 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Windows.Documents;
+using PowerLyrics.Core;
 
 namespace PowerLyrics.MVVM.Model;
 
@@ -13,10 +16,13 @@ public class Song
     
     public ArrayList bridge { get; set; }
 
+    public List<LyricType> lyricTypeQueue { get; set; }
+
     public Song()
     {
         verse = new ArrayList();
         chorus = new ArrayList();
         bridge = new ArrayList();
+        lyricTypeQueue = new List<LyricType>();
     }
 }

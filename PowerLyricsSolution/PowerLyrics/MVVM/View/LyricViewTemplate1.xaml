@@ -14,7 +14,7 @@
                    Foreground="White"
                    FontSize="25"
                    TextAlignment="Center"
-                   Width="250"
+                   Width="350"
                    TextWrapping="Wrap"
                    Name="TextBlock"/>
     </Grid>

@@ -16,7 +16,8 @@
 
     
 
-    <Viewbox Stretch="Uniform">
+    <Viewbox Stretch="Uniform"
+             MouseDown="UIElement_OnMouseDown">
         <ContentControl Name="ContentControl"/>
     </Viewbox>
 </Window>

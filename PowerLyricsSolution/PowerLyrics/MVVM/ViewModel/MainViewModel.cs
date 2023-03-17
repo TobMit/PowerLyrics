@@ -39,7 +39,7 @@ namespace PowerLyrics.MVVM.ViewModel
             }
         }
 
-        public RelayCommand test { get; set; }
+        public RelayCommand presenting { get; set; }
         public RelayCommand test2 { get; set; }
         public RelayCommand test3 { get; set; }
         public RelayCommand SelectSongCommand { get; set; }
@@ -82,7 +82,7 @@ namespace PowerLyrics.MVVM.ViewModel
             audieceWindow = new AudiencWindow();
             audieceWindow.Show();
 
-            LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1();
+            LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1("presun ma na druhe okno");
             LyricContent = tesLyricViewTemplate1;
             inicialiseButtons();
 
@@ -94,10 +94,11 @@ namespace PowerLyrics.MVVM.ViewModel
 
         private void inicialiseButtons()
         {
-            test = new RelayCommand(o =>
+            presenting = new RelayCommand(o =>
             {
-                
-                Debug.WriteLine("test1");
+                LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1("Mladežka " + DateTime.Now.ToString("dd.mm.yyyy"));
+                LyricContent = tesLyricViewTemplate1;
+                audieceWindow.setFullScrean();
             });
 
             test2 = new RelayCommand(o =>

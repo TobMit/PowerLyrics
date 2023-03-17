@@ -115,7 +115,7 @@
                                 Foreground="White"
                                 FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
-                                Command="{Binding test}">
+                                Command="{Binding test1}">
                                 <Image Source="../Images/forwardIcon.png"
                                        Height="21"
                                        RenderTransformOrigin="0.5,0.5"
@@ -147,6 +147,7 @@
                                   Style="{StaticResource LiveButtonTheme}"
                                   HorizontalAlignment="Right"
                                   Margin="0,0,20,0"
+                                  Command="{Binding presenting}"
                         />
                     </Grid>
                 </StackPanel>

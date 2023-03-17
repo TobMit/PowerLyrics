@@ -19,4 +19,9 @@ namespace PowerLyrics.Core
         Slide,
         Divider
     }
+
+    class constants
+    {
+        public const int FONT_SIZE = 25;
+    }
 }

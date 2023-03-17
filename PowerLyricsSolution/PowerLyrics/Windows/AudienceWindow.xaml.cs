@@ -27,5 +27,18 @@ namespace PowerLyrics.Windows
             InitializeComponent();
             this.Left = System.Windows.SystemParameters.WorkArea.Right - this.Width; // set window to right side of screen
         }
+
+        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+        public void setFullScrean()
+        {
+            this.WindowState = WindowState.Maximized;
+        }
     }
 }

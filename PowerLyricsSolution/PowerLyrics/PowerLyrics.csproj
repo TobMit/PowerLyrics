@@ -16,6 +16,10 @@
     <None Remove="Images\notLiveIcon.png" />
     <None Remove="Images\playIcon.png" />
     <None Remove="Songs\3. Už viac niesom strachu otrokom.txt" />
+    <None Remove="Songs\4. Dobrá správa utláčaným.txt" />
+    <None Remove="Songs\5. Ježiš dávno to už viem.txt" />
+    <None Remove="Songs\6. Vyvyšujem teba pane.txt" />
+    <None Remove="Songs\7. Môj boh.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +48,18 @@
     </EmbeddedResource>
     <None Remove="Songs\Tma sa trasie.txt" />
     <EmbeddedResource Include="Songs\1. Tma sa trasie.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\4. Dobrá správa utláčaným.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\5. Ježiš dávno to už viem.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\7. Môj Boh.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\6. Vyvyšujem teba Pane.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Songs\3. Už viac niesom strachu otrokom.txt">
