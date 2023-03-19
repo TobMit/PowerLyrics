@@ -17,7 +17,7 @@
                     -->
 
                     <RadioButton
-                        GroupName="Sliders"
+                        GroupName="Library"
                         Style="{StaticResource SongTheme}"
                         Command="{Binding ElementName=ListViewSongs, Path=DataContext.SelectSongCommand}"
                         CommandParameter="{Binding number}" />

@@ -96,7 +96,7 @@ namespace PowerLyrics.MVVM.ViewModel
         {
             presenting = new RelayCommand(o =>
             {
-                LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1("Mladežka " + DateTime.Now.ToString("dd.mm.yyyy"));
+                LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1("Mladežka " + DateTime.Now.ToString("dd.MM.yyyy"));
                 LyricContent = tesLyricViewTemplate1;
                 audieceWindow.setFullScrean();
             });
