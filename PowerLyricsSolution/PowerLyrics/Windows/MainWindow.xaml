@@ -84,7 +84,7 @@
                                 Foreground="White"
                                 FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
-                                Command="{Binding presenting}">
+                                Command="{Binding SetAudenceFullScreanCommand}">
                                 <Image Source="../Images/fullscreanIcon.png"
                                        Height="34" />
                             </Button>
@@ -129,7 +129,7 @@
                                 Foreground="White"
                                 FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
-                                Command="{Binding test2}">
+                                Command="{Binding GoLiveCommand}">
                                 <Image Source="../Images/forwardIcon.png"
                                        Height="21"
                                        RenderTransformOrigin="0.5,0.5"
@@ -148,7 +148,7 @@
                                 Foreground="White"
                                 FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
-                                Command="{Binding test2}">
+                                Command="{Binding SelectSlideCommand}">
                                 <Image Source="../Images/forwardIcon.png" 
                                        Height="21"/>
                             </Button>
@@ -161,8 +161,8 @@
                                   Style="{StaticResource LiveButtonTheme}"
                                   HorizontalAlignment="Right"
                                   Margin="0,0,20,0"
-                                  Command="{Binding presenting}"
-                        />
+                                  Command="{Binding GoLiveCommand}"
+                                  CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
                     </Grid>
                 </StackPanel>
 

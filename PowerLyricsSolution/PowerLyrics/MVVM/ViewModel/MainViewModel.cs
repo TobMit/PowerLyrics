@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Microsoft.VisualBasic;
 using PowerLyrics.Core;
 using PowerLyrics.Core.DataLoader;
 using PowerLyrics.Core.TextParser;
@@ -23,7 +24,9 @@ namespace PowerLyrics.MVVM.ViewModel
 
         private DataLoader songsLoader;
         private TextParser textParser;
-
+        private bool isLive = false;
+        private int selectedSlide = -1;
+        
         private object _lyricContent;
         public object LyricContent
         {
@@ -39,24 +42,25 @@ namespace PowerLyrics.MVVM.ViewModel
             }
         }
 
-        public RelayCommand presenting { get; set; }
-        public RelayCommand test2 { get; set; }
-        public RelayCommand test3 { get; set; }
-        public RelayCommand SelectSongCommand { get; set; }
+        public RelayCommand SetAudenceFullScreanCommand { get; set; }
+        public RelayCommand GoLiveCommand { get; set; }
+        public RelayCommand SelectSlideCommand { get; set; }
+        public RelayCommand SelectLibrarySongCommand { get; set; }
 
 
-        private List<LyricModel> _opendeSong;
+        private List<LyricModel> _openedSong;
 
-        private List<LyricModel> opendeSong
+        private List<LyricModel> openedSong
         {
             get
             {
-                return _opendeSong;
+                return _openedSong;
             }
             set
             {
-                _opendeSong = value;
+                _openedSong = value;
                 lyricArray = getSlidesFromOpenSong();
+                OnPropertyChanged();
             }
         }
 
@@ -94,29 +98,37 @@ namespace PowerLyrics.MVVM.ViewModel
 
         private void inicialiseButtons()
         {
-            presenting = new RelayCommand(o =>
+            /**
+             * Set audience window full screan
+             */
+            SetAudenceFullScreanCommand = new RelayCommand(o =>
             {
-                LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1("Mladežka " + DateTime.Now.ToString("dd.MM.yyyy"));
-                LyricContent = tesLyricViewTemplate1;
                 audieceWindow.setFullScrean();
+                actualSlidePreviewControl();
             });
 
-            test2 = new RelayCommand(o =>
+            GoLiveCommand = new RelayCommand(o =>
             {
-                
-                Debug.WriteLine("test2");
+                isLive = (bool)o;
+                actualSlidePreviewControl();
             });
 
-            test3 = new RelayCommand(o =>
+            /**
+             * select slide form slide prewiew
+             */
+            SelectSlideCommand = new RelayCommand(o =>
             {
-                Debug.WriteLine(o.ToString());
-                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[Int32.Parse(o.ToString())].UserControl);
-                
+                selectedSlide = Int32.Parse(o.ToString());
+                actualSlidePreviewControl();
             });
-            SelectSongCommand = new RelayCommand(o =>
+            /**
+             * Select song from library
+             */
+            SelectLibrarySongCommand = new RelayCommand(o =>
             {
-                Debug.WriteLine(o.ToString());
-                opendeSong = textParser.parseLyric(listOfSongs[Int32.Parse(o.ToString())-1]);
+                openedSong = textParser.parseLyric(listOfSongs[Int32.Parse(o.ToString())-1]);
+                selectedSlide = -1;
+                actualSlidePreviewControl();
             });
         }
 
@@ -126,7 +138,7 @@ namespace PowerLyrics.MVVM.ViewModel
             int id = 0;
             LyricType oldType = LyricType.Undefined;
             int oldSerialNumber = 1;
-            foreach (var item in opendeSong)
+            foreach (var item in openedSong)
             {
                 if (oldType == LyricType.Undefined || oldType != item.LyricType || oldSerialNumber != item.serialNuber)
                 {
@@ -147,6 +159,25 @@ namespace PowerLyrics.MVVM.ViewModel
                 id++;
             }
             return tmp;
+        }
+
+        private void actualSlidePreviewControl()
+        {
+            if (isLive)                                                                                                            
+            {                                                                                                                      
+                if (selectedSlide != -1)                                                                                          
+                {                                                                                                                  
+                    LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[selectedSlide].UserControl);  
+                }                                                                                                                  
+                else                                                                                                               
+                {                                                                                                                  
+                    LyricContent = new LyricViewTemplate1();                                                                       
+                }                                                                                                                  
+            }                                                                                                                      
+            else                                                                                                                   
+            {                                                                                                                      
+                LyricContent = new LyricViewTemplate1(constants.DEFAULT_TEXT);
+            }                                                                                                                      
         }
 
 
