@@ -122,14 +122,36 @@
                             <ColumnDefinition Width="0.25*"/>
                             <ColumnDefinition Width="0.25*"/>
                             <ColumnDefinition Width="0.25*"/>
+                            <ColumnDefinition Width="0.25*"/>
+                            <ColumnDefinition Width="0.25*"/>
                         </Grid.ColumnDefinitions>
-                        
-                        <StackPanel Grid.Column="0">
+                        <CheckBox Grid.Column="4"
+                                  Background="Transparent"
+                                  Style="{StaticResource LiveButtonTheme}"
+                                  HorizontalAlignment="Right"
+                                  Margin="0,0,20,0"
+                                  Command="{Binding GoLiveCommand}"
+                                  CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+                        <StackPanel Grid.Column="3">
                             <Button
                                 Foreground="White"
                                 FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
-                                Command="{Binding GoLiveCommand}">
+                                Command="{Binding NextSongInPlaylistCommand}">
+                                <Image Source="../Images/forwardIcon.png" 
+                                       Height="21"/>
+                            </Button>
+                            <Label Content="Next&#x0a;Song"
+                                   FontSize="11"
+                                   Style="{StaticResource LabelButtonTheme}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="2">
+                            <Button
+                                Foreground="White"
+                                FontSize="14"
+                                Style="{StaticResource MenuButtonTheme}" 
+                                Command="{Binding PrewSongInPlaylistCommand}">
                                 <Image Source="../Images/forwardIcon.png"
                                        Height="21"
                                        RenderTransformOrigin="0.5,0.5"
@@ -143,26 +165,35 @@
                                    FontSize="11"
                                    Style="{StaticResource LabelButtonTheme}"/>
                         </StackPanel>
+                        
                         <StackPanel Grid.Column="1">
                             <Button
                                 Foreground="White"
                                 FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
-                                Command="{Binding SelectSlideCommand}">
-                                <Image Source="../Images/forwardIcon.png" 
+                                Command="{Binding RemoveSongFromPlayListCommand}">
+                                <Image Source="../Images/minusIcon.png" 
                                        Height="21"/>
                             </Button>
-                            <Label Content="Next&#x0a;Song"
+                            <Label Content="Remov&#x0a; Song"
+                                   FontSize="11"
+                                   HorizontalContentAlignment="Center"
+                                   Style="{StaticResource LabelButtonTheme}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="0">
+                            <Button
+                                Foreground="White"
+                                FontSize="14"
+                                Style="{StaticResource MenuButtonTheme}" 
+                                Command="{Binding AddSongToPlayListCommand}">
+                                <Image Source="../Images/plusIcon.png" 
+                                       Height="21"/>
+                            </Button>
+                            <Label Content="Add&#x0a;Song"
                                    FontSize="11"
                                    Style="{StaticResource LabelButtonTheme}"/>
                         </StackPanel>
-                        <CheckBox Grid.Column="2"
-                                  Background="Transparent"
-                                  Style="{StaticResource LiveButtonTheme}"
-                                  HorizontalAlignment="Right"
-                                  Margin="0,0,20,0"
-                                  Command="{Binding GoLiveCommand}"
-                                  CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
                     </Grid>
                 </StackPanel>
 
@@ -183,7 +214,7 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     BorderThickness="0"
-                    x:Name="ListViewSongs" />
+                    x:Name="ListViewLibrary" />
 
             </StackPanel>
            
@@ -213,7 +244,18 @@
                     BorderThickness="3"
                     BorderBrush="Bisque"
                     >
-                    <Label Content="Playlist"/>
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="PLAYLIST" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15"/>
+                        <ListView
+                            Background="Transparent"
+                            ItemsSource="{Binding listOfSongsInPlayList}"
+                            ItemContainerStyle="{StaticResource SongPlayListTheme}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            BorderThickness="0"
+                            x:Name="ListViewPlaylist" />
+
+                    </StackPanel>
                 </Border>
             </Grid>
         </Border>

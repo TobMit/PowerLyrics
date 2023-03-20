@@ -26,6 +26,8 @@ namespace PowerLyrics.MVVM.ViewModel
         private TextParser textParser;
         private bool isLive = false;
         private int selectedSlide = -1;
+        private int selectedSongFromLibrary = -1;
+        private int selectedSongFromPlaylist = -1;
         
         private object _lyricContent;
         public object LyricContent
@@ -41,11 +43,42 @@ namespace PowerLyrics.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-
+        /**
+         * Set audience window full screan
+         */
         public RelayCommand SetAudenceFullScreanCommand { get; set; }
+        /**
+         * Set status to live
+         */
         public RelayCommand GoLiveCommand { get; set; }
+        /**
+         * select slide form slide prewiew
+         */
         public RelayCommand SelectSlideCommand { get; set; }
+        /**
+         * Select song from library
+         */
         public RelayCommand SelectLibrarySongCommand { get; set; }
+        /**
+         * Select song from playlist
+         */
+        public RelayCommand SelectPlaylistSongCommand { get; set; }
+        /**
+         * Add song from library to playlist
+         */
+        public RelayCommand AddSongToPlayListCommand { get; set; }
+        /**
+         * Remove song from playlist
+         */
+        public RelayCommand RemoveSongFromPlayListCommand { get; set; }
+        /**
+         * Fast forward selected slide to first slide on next song
+         */
+        public RelayCommand NextSongInPlaylistCommand { get; set; }
+        /**
+         * Fast rewind selected slide to first slide previous song
+         */
+        public RelayCommand PrewSongInPlaylistCommand { get; set; }
 
 
         private List<LyricModel> _openedSong;
@@ -80,27 +113,27 @@ namespace PowerLyrics.MVVM.ViewModel
         }
 
         public ObservableCollection<Song> listOfSongs { get; set; }
+        public ObservableCollection<Song> listOfSongsInPlayList { get; set; }
 
         public MainViewModel()
         {
             audieceWindow = new AudiencWindow();
             audieceWindow.Show();
 
-            LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1("presun ma na druhe okno");
+            LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1("Presun ma na druhe okno");
             LyricContent = tesLyricViewTemplate1;
             inicialiseButtons();
 
             songsLoader = new DataLoader();
             listOfSongs = songsLoader.getSongs();
+            listOfSongsInPlayList = new ObservableCollection<Song>();
 
             textParser = new TextParser();
         }
 
         private void inicialiseButtons()
         {
-            /**
-             * Set audience window full screan
-             */
+            
             SetAudenceFullScreanCommand = new RelayCommand(o =>
             {
                 audieceWindow.setFullScrean();
@@ -112,24 +145,50 @@ namespace PowerLyrics.MVVM.ViewModel
                 isLive = (bool)o;
                 actualSlidePreviewControl();
             });
-
-            /**
-             * select slide form slide prewiew
-             */
+            
             SelectSlideCommand = new RelayCommand(o =>
             {
                 selectedSlide = Int32.Parse(o.ToString());
                 actualSlidePreviewControl();
             });
-            /**
-             * Select song from library
-             */
+            
             SelectLibrarySongCommand = new RelayCommand(o =>
             {
-                openedSong = textParser.parseLyric(listOfSongs[Int32.Parse(o.ToString())-1]);
+                selectedSongFromLibrary = Int32.Parse(o.ToString()) - 1;
+                openedSong = textParser.parseLyric(listOfSongs[selectedSongFromLibrary]);
                 selectedSlide = -1;
                 actualSlidePreviewControl();
             });
+            
+            SelectPlaylistSongCommand = new RelayCommand(o =>
+            {
+                selectedSongFromPlaylist = Int32.Parse(o.ToString()) - 1;
+                openedSong = textParser.parseLyric(listOfSongs[selectedSongFromPlaylist]);
+                selectedSlide = -1;
+                actualSlidePreviewControl();
+            });
+            
+            AddSongToPlayListCommand = new RelayCommand(o =>
+            {
+                if (selectedSongFromLibrary != -1)
+                {
+                    listOfSongsInPlayList.Add(listOfSongs[selectedSongFromLibrary]);
+                    selectedSlide = -1;
+                    actualSlidePreviewControl();
+                }
+            });
+            RemoveSongFromPlayListCommand = new RelayCommand(o =>
+            {
+                if (selectedSongFromPlaylist != -1 && selectedSongFromPlaylist < listOfSongsInPlayList.Count)
+                {
+                    listOfSongsInPlayList.RemoveAt(selectedSongFromPlaylist); //todo opravit aby nepadalo
+                    selectedSlide = -1;
+                    actualSlidePreviewControl();
+                }
+            });
+            //todo pridat este forward a prev + atribút na označenie ktorý slide je selected v triede Song a slide aby sa spravil design
+            
+            
         }
 
         private ObservableCollection<Slide> getSlidesFromOpenSong()
