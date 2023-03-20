@@ -9,7 +9,7 @@
                         GroupName="Library"
                         Style="{StaticResource SongTheme}"
                         Command="{Binding ElementName=ListViewLibrary, Path=DataContext.SelectLibrarySongCommand}"
-                        CommandParameter="{Binding number}" />
+                        CommandParameter="{Binding id}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

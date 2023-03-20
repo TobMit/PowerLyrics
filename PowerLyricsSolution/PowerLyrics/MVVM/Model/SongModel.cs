@@ -8,6 +8,8 @@ namespace PowerLyrics.MVVM.Model;
 public class Song
 {
     public int number { get; set; }
+    
+    public int id { get; set; }
 
     public string name { get; set; }
     public ArrayList verse { get; set; }
@@ -17,6 +19,8 @@ public class Song
     public ArrayList bridge { get; set; }
 
     public List<LyricType> lyricTypeQueue { get; set; }
+    
+    public bool isSelected { get; set; }
 
     public Song()
     {
@@ -24,5 +28,6 @@ public class Song
         chorus = new ArrayList();
         bridge = new ArrayList();
         lyricTypeQueue = new List<LyricType>();
+        isSelected = false;
     }
 }

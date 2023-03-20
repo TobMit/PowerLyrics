@@ -7,11 +7,16 @@
 
                     <RadioButton
                         GroupName="Library"
-                        Style="{StaticResource SongTheme}"
+                        Style="{StaticResource SongPlTheme}"
                         Command="{Binding ElementName=ListViewLibrary, Path=DataContext.SelectPlaylistSongCommand}"
-                        CommandParameter="{Binding number}" />
+                        CommandParameter="{Binding id}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding isSelected}" Value="true">
+                <Setter Property="Background" Value="#636365" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

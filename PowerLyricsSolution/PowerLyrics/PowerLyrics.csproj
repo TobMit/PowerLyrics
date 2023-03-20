@@ -73,4 +73,12 @@
     <Resource Include="Images\fullscreanIcon.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Theme\PlayListTheme\SongPlaylistTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>

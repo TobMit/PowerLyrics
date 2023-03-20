@@ -5,18 +5,6 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <!--
-                    <Button Height="80"
-                            Width="80"
-                            Content="{Binding text}"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Foreground="White"
-                            Background="{TemplateBinding Background}"
-                            Command="{Binding ElementName=ListView1, Path=DataContext.test3}"
-                            CommandParameter="{Binding text}"/>
-                    -->
-
                     <RadioButton
                         GroupName="Sliders"
                         Style="{StaticResource SlideThemeViewer}"

@@ -29,15 +29,20 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="IsChecked" Value="False"/>
         </Style.Setters>
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" Value="#4f4f4f" />
             </Trigger>
+            <!--
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="BorderBrush" Value="#cf0b43" />
-            </Trigger>
+            </Trigger> -->
+            <DataTrigger Binding="{Binding isSelected}" Value="true">
+                <Setter Property="BorderBrush" Value="#cf0b43"/>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>
