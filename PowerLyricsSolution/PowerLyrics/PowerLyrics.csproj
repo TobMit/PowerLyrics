@@ -65,6 +65,20 @@
     <EmbeddedResource Include="Songs\3. Už viac niesom strachu otrokom.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Remove="Images\plusIcon.png" />
+    <Resource Include="Images\plusIcon.png" />
+    <None Remove="Images\minusIcon.png" />
+    <Resource Include="Images\minusIcon.png" />
+    <None Remove="Images\fullscreanIcon.png" />
+    <Resource Include="Images\fullscreanIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Theme\PlayListTheme\SongPlaylistTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

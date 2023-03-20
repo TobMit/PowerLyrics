@@ -1,17 +1,22 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style TargetType="ListViewItem" x:Key="SongLibraryTheme">
+    <Style TargetType="ListViewItem" x:Key="SongPlayListTheme">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
 
                     <RadioButton
                         GroupName="Library"
-                        Style="{StaticResource SongTheme}"
-                        Command="{Binding ElementName=ListViewLibrary, Path=DataContext.SelectLibrarySongCommand}"
+                        Style="{StaticResource SongPlTheme}"
+                        Command="{Binding ElementName=ListViewLibrary, Path=DataContext.SelectPlaylistSongCommand}"
                         CommandParameter="{Binding id}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding isSelected}" Value="true">
+                <Setter Property="Background" Value="#636365" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

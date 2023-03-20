@@ -14,5 +14,7 @@ namespace PowerLyrics.MVVM.Model
         public SlideType SlideType { get; set; }
         public int id { get; set; }
         public string dividerText { get; set; }
+
+        public bool isSelected { get; set; }
     }
 }

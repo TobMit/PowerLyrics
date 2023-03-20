@@ -28,6 +28,7 @@ public class DataLoader
     public ObservableCollection<Song> getSongs()
     {
         ObservableCollection<Song> songs = new ObservableCollection<Song>();
+        int id = 0;
         foreach (string path in paths)
         {
             string loadedSong = this.loadSong(path);
@@ -39,6 +40,7 @@ public class DataLoader
             string[] splitedRawName = rawName.Split(".");
             tmpSong.number = Int32.Parse(splitedRawName[0]);
             tmpSong.name = splitedRawName[1].Remove(0,1);
+            tmpSong.id = id++;
             songs.Add(tmpSong);
         }
 
