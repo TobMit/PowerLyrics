@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PowerLyrics.MVVM.ViewModel;
+using WpfScreenHelper;
+using WpfScreenHelper.Enum;
 
 namespace PowerLyrics.Windows
 {
@@ -25,7 +27,9 @@ namespace PowerLyrics.Windows
         public AudiencWindow()
         {
             InitializeComponent();
-            this.Left = System.Windows.SystemParameters.WorkArea.Right - this.Width; // set window to right side of screen
+            //this.Left = System.Windows.SystemParameters.WorkArea.Right - this.Width; // set window to right side of screen
+            this.WindowState = WindowState.Minimized;
+
         }
 
         private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -38,7 +42,13 @@ namespace PowerLyrics.Windows
 
         public void setFullScrean()
         {
-            this.WindowState = WindowState.Maximized;
+            //this.WindowState = WindowState.Maximized;
+            var screens = Screen.AllScreens.ToArray();
+            if (screens.Length > 1)
+            {
+                this.WindowState = WindowState.Normal;
+                this.SetWindowPosition(WindowPositions.Maximize, screens.ElementAt(1));
+            }
         }
     }
 }

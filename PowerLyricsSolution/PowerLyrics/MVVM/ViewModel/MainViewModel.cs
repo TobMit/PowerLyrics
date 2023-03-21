@@ -13,6 +13,7 @@ using PowerLyrics.Core.TextParser;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
 using PowerLyrics.Windows;
+using WpfScreenHelper;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace PowerLyrics.MVVM.ViewModel
@@ -199,8 +200,16 @@ namespace PowerLyrics.MVVM.ViewModel
             
             SetAudenceFullScreanCommand = new RelayCommand(o =>
             {
-                audieceWindow.setFullScrean();
-                actualSlidePreviewControl();
+                if (Screen.AllScreens.ToArray().Length > 1)
+                {
+                    audieceWindow.setFullScrean();
+                    actualSlidePreviewControl();
+                }
+                else
+                {
+                    LyricContent = new LyricViewTemplate1("Pre správne fungovanie potrebujete rozširiť obrazovku.");
+                }
+                
             });
 
             GoLiveCommand = new RelayCommand(o =>
