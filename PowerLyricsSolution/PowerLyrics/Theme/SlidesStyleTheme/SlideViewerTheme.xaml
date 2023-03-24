@@ -40,6 +40,12 @@
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="BorderBrush" Value="#cf0b43" />
             </Trigger> -->
+            <DataTrigger Binding="{Binding LyricType}" Value="Chorus">
+                <Setter Property="BorderBrush" Value="#56cf0b43"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LyricType}" Value="Bridge">
+                <Setter Property="BorderBrush" Value="#296cff6c"/>
+            </DataTrigger>
             <DataTrigger Binding="{Binding isSelected}" Value="true">
                 <Setter Property="BorderBrush" Value="#cf0b43"/>
             </DataTrigger>

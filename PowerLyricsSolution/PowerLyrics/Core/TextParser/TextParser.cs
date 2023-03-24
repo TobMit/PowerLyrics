@@ -17,20 +17,20 @@ namespace PowerLyrics.Core.TextParser
             
         }
 
-        public List<LyricModel> parseLyric(Song song)
+        public List<LyricModel> parseLyric(SongModel songModel)
         {
             var tmpSlides = new List<LyricModel>();
             int verse = 0;
             int bridge = 0;
             int chorus = 0;
 
-            for (int i = 0; i < song.lyricTypeQueue.Count; i++)
+            for (int i = 0; i < songModel.lyricTypeQueue.Count; i++)
             {
                 var tmp = new LyricModel();
-                switch (song.lyricTypeQueue[i])
+                switch (songModel.lyricTypeQueue[i])
                 {
                     case LyricType.Verse:
-                        tmp.text = song.verse[verse].ToString();
+                        tmp.text = songModel.verse[verse].ToString();
                         tmp.fontSize = constants.FONT_SIZE;
                         tmp.LyricType = LyricType.Verse;
                         tmp.serialNuber = verse + 1; // iba kvoli vypisu
@@ -38,7 +38,7 @@ namespace PowerLyrics.Core.TextParser
                         tmpSlides.Add(tmp);
                         break;
                     case LyricType.Chorus:
-                        tmp.text = song.chorus[chorus].ToString();
+                        tmp.text = songModel.chorus[chorus].ToString();
                         tmp.fontSize = constants.FONT_SIZE;
                         tmp.LyricType = LyricType.Chorus;
                         tmp.serialNuber = chorus + 1;
@@ -46,7 +46,7 @@ namespace PowerLyrics.Core.TextParser
                         tmpSlides.Add(tmp);
                         break;
                     case LyricType.Bridge:
-                        tmp.text = song.bridge[bridge].ToString();
+                        tmp.text = songModel.bridge[bridge].ToString();
                         tmp.fontSize = constants.FONT_SIZE;
                         tmp.LyricType = LyricType.Bridge;
                         tmp.serialNuber = bridge + 1;
@@ -56,36 +56,39 @@ namespace PowerLyrics.Core.TextParser
 
                 }
             }
-            /* old parser
-            for (int i = 0; i < song.verse.Count; i++)
-            {
-                var tmp = new LyricModel();
-                tmp.text = song.verse[i].ToString();
-                tmp.fontSize = 20;
-                tmp.LyricType = LyricType.Verse;
-                tmp.serialNuber = i + 1;
-                tmpSlides.Add(tmp);
-            }
-            for (int i = 0; i < song.chorus.Count; i++)
-            {
-                var tmp = new LyricModel();
-                tmp.text = song.chorus[i].ToString();
-                tmp.fontSize = 20;
-                tmp.LyricType = LyricType.Chorus;
-                tmp.serialNuber = i + 1;
-                tmpSlides.Add(tmp);
-            }
-            for (int i = 0; i < song.bridge.Count; i++)
-            {
-                var tmp = new LyricModel();
-                tmp.text = song.bridge[i].ToString();
-                tmp.fontSize = 20;
-                tmp.LyricType = LyricType.Bridge;
-                tmp.serialNuber = i + 1;
-                tmpSlides.Add(tmp);
-            }
-            */
             return tmpSlides;
+        }
+        public ObservableCollection<Slide> getSlidesFromOpenSong(List<LyricModel> song)
+        {
+            ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
+            int id = 0;
+            LyricType oldType = LyricType.Undefined;
+            int oldSerialNumber = 1;
+            foreach (var item in song)
+            {
+                /*if (oldType == LyricType.Undefined || oldType != item.LyricType || oldSerialNumber != item.serialNuber)
+                {
+                    oldType = item.LyricType;
+                    oldSerialNumber = item.serialNuber;
+                    tmp.Add(new Slide()
+                    {
+                        SlideType = SlideType.Divider,
+                        dividerText = item.serialNuber + ". " + item.LyricType.ToString(),
+                    });
+
+
+                    id++;
+                }*/
+                Slide slide = new Slide();
+                slide.UserControl = new LyricViewTemplate1(item);
+                slide.id = id;
+                slide.SlideType = SlideType.Slide;
+                slide.LyricType = item.LyricType;
+                slide.isSelected = false;
+                tmp.Add(slide);
+                id++;
+            }
+            return tmp;
         }
     }
 }

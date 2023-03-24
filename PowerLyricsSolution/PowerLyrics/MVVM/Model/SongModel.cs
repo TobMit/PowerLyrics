@@ -5,7 +5,7 @@ using PowerLyrics.Core;
 
 namespace PowerLyrics.MVVM.Model;
 
-public class Song
+public class SongModel
 {
     public int number { get; set; }
     
@@ -22,21 +22,25 @@ public class Song
     
     public bool isSelected { get; set; }
 
-    public Song()
+    public List<LyricModel> LyricModels { get; set; }
+
+    public SongModel()
     {
         verse = new ArrayList();
         chorus = new ArrayList();
         bridge = new ArrayList();
         lyricTypeQueue = new List<LyricType>();
+        LyricModels = new List<LyricModel>();
         isSelected = false;
     }
 
-    public Song(Song copy)
+    public SongModel(SongModel copy)
     {
         verse = new ArrayList(copy.verse);
         chorus = new ArrayList(copy.chorus);
         bridge = new ArrayList(copy.bridge);
         lyricTypeQueue = new List<LyricType>(copy.lyricTypeQueue);
+        LyricModels = new List<LyricModel>(copy.LyricModels);
         id = copy.id;
         number = copy.number;
         name = copy.name;

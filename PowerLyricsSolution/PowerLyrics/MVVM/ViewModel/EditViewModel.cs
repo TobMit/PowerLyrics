@@ -6,11 +6,44 @@ using PowerLyrics.Windows;
 using System;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
+using System.Windows.Controls;
 
 namespace PowerLyrics.MVVM.ViewModel;
 
 public class EditViewModel : ObservableObjects
 {
+    private TextParser textParser;
+
+
+    private SongModel _openSong;
+    public SongModel openSong
+    {
+        get
+        {
+            return _openSong;
+        }
+        set
+        {
+            _openSong = value;
+            selectedSlideNumber = -1;
+            openSongSlides = textParser.getSlidesFromOpenSong(_openSong.LyricModels);
+        }
+    }
+
+    private ObservableCollection<Slide> _openSongSlides;
+    public ObservableCollection<Slide> openSongSlides
+    {
+        get
+        {
+            return _openSongSlides;
+        }
+        set
+        {
+            _openSongSlides = value;
+            OnPropertyChanged();
+        }
+    }
+
     private int _selectedSlideNumber = -1;
     private int selectedSlideNumber
     {
@@ -35,27 +68,14 @@ public class EditViewModel : ObservableObjects
             else
             {
                 _selectedSlideNumber = value;
+                LyricContent = null;
             }
         }
 
     }
-
-    private ObservableCollection<Slide> _openSongSlides;
-    public ObservableCollection<Slide> openSongSlides
-    {
-        get
-        {
-            return _openSongSlides;
-        }
-        set
-        {
-            _openSongSlides = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private object _lyricContent;
-    public object LyricContent
+    
+    private LyricViewTemplate1 _lyricContent;
+    public LyricViewTemplate1 LyricContent
     {
         get
         {
@@ -68,11 +88,16 @@ public class EditViewModel : ObservableObjects
         }
     }
 
+
+    
     public RelayCommand SelectSlideCommand { get; set; }
+
+
 
 
     public EditViewModel()
     {
+        textParser = new TextParser();
         openSongSlides = new ObservableCollection<Slide>();
         inicialiseButtons();
     }
@@ -82,20 +107,26 @@ public class EditViewModel : ObservableObjects
 
         SelectSlideCommand = new RelayCommand(o =>
         {
-            selectedSlideNumber = Int32.Parse(o.ToString());
-            LyricContent = new LyricViewTemplate1((LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl);
+            if (selectedSlideNumber == -1)
+            {
+                selectedSlideNumber = Int32.Parse(o.ToString());
+                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl);
+            }
+            else
+            {
+                openSong.LyricModels[selectedSlideNumber].text = LyricContent.text;
+                openSong.LyricModels[selectedSlideNumber].fontSize = (int)LyricContent.fontSize;
+                openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+                selectedSlideNumber = Int32.Parse(o.ToString());
+                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl);
+            }
+            
         });
         
     }
 
-    public ObservableCollection<Slide> getEditedSong()
+    public SongModel getEditedSong()
     {
-        // to je preto aby sa mi vybraty slide neobjavil aj v presenting mode
-        ObservableCollection<Slide> tmp = new ObservableCollection<Slide>(openSongSlides);
-        foreach (Slide slide in tmp)
-        {
-            slide.isSelected = false;
-        }
-        return tmp;
+        return new SongModel(openSong); ;
     }
 }
