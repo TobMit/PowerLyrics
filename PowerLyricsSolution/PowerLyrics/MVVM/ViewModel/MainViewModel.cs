@@ -10,6 +10,7 @@ namespace PowerLyrics.MVVM.ViewModel
         private PresentingView _presentingView;
         private EditViewModel _editViewModel;
         private EditView _editView;
+        private bool presenting = true;
         /**
          * Set audience window full screan
          */
@@ -75,32 +76,48 @@ namespace PowerLyrics.MVVM.ViewModel
 
             GoLiveCommand = new RelayCommand(o =>
             {
-                _presentingViewModel.GoLive((bool)o);
+                if (presenting) {
+                    _presentingViewModel.GoLive((bool)o);
+                }
             });
             
             AddSongToPlayListCommand = new RelayCommand(o =>
             {
-                _presentingViewModel.AddSongToPlayList();
+                if (presenting)
+                {
+                    _presentingViewModel.AddSongToPlayList();
+                }
             });
             RemoveSongFromPlayListCommand = new RelayCommand(o =>
             {
-                _presentingViewModel.RemoveSongFromPlayList();
+                if (presenting)
+                {
+                    _presentingViewModel.RemoveSongFromPlayList();
+                }
             });
             NextSongInPlaylistCommand = new RelayCommand(o =>
             {
-                _presentingViewModel.NextSongInPlaylist();
+                if (presenting)
+                {
+                    _presentingViewModel.NextSongInPlaylist();
+                }
             });
             PrewSongInPlaylistCommand = new RelayCommand(o =>
             {
-                _presentingViewModel.PrevSongInPlaylist();
+                if (presenting)
+                {
+                    _presentingViewModel.PrevSongInPlaylist();
+                }
             });
             SetPresentingPageCommand = new RelayCommand(o =>
             {
                 _UserControl = _presentingView;
+                presenting = true;
             });
             SetEditPageCommand = new RelayCommand(o =>
             {
                 _UserControl = _editView;
+                presenting = false;
             });
             
         }
