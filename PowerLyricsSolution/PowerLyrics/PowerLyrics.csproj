@@ -15,11 +15,16 @@
     <None Remove="Images\lyricIcon.png" />
     <None Remove="Images\notLiveIcon.png" />
     <None Remove="Images\playIcon.png" />
+    <None Remove="Songs\10. Keď v Teba dúfam.txt" />
+    <None Remove="Songs\11. Nádej.txt" />
+    <None Remove="Songs\12. El Šadaj, El Šadaj.txt" />
     <None Remove="Songs\3. Už viac niesom strachu otrokom.txt" />
     <None Remove="Songs\4. Dobrá správa utláčaným.txt" />
     <None Remove="Songs\5. Ježiš dávno to už viem.txt" />
     <None Remove="Songs\6. Vyvyšujem teba pane.txt" />
     <None Remove="Songs\7. Môj boh.txt" />
+    <None Remove="Songs\8. Slávny Boh.txt" />
+    <None Remove="Songs\9. Ty si jediný Boh.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +48,15 @@
     </Resource>
     <None Remove="Songs\test.txt" />
     <None Remove="Core\DataLoader\test.txt" />
+    <EmbeddedResource Include="Songs\10. Keď v Teba dúfam.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\11. Nádej.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\12. El Šadaj, El Šadaj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Songs\2. Si cesta.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -63,6 +77,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Songs\3. Už viac niesom strachu otrokom.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\8. Slávny Boh.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\9. Ty si jediný Boh.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Remove="Images\plusIcon.png" />
