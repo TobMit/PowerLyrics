@@ -22,9 +22,14 @@
             Grid.Row="1"
             BorderThickness="3"
             BorderBrush="Blue">
-            <StackPanel Orientation="Vertical">
-                <Label Content="LIBRARY" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="LIBRARY" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15"/>
                 <ListView
+                    Grid.Row="1"
                     Background="Transparent"
                     ItemsSource="{Binding listOfSongs}"
                     ItemContainerStyle="{StaticResource SongLibraryTheme}"
@@ -33,7 +38,7 @@
                     BorderThickness="0"
                     x:Name="ListViewLibrary" />
 
-            </StackPanel>
+            </Grid>
            
             
         </Border>
@@ -61,9 +66,14 @@
                     BorderThickness="3"
                     BorderBrush="Bisque"
                     >
-                    <StackPanel Orientation="Vertical">
-                        <Label Content="PLAYLIST" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Content="PLAYLIST" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15"/>
                         <ListView
+                            Grid.Row="1"
                             Background="Transparent"
                             ItemsSource="{Binding listOfSongsInPlayList}"
                             ItemContainerStyle="{StaticResource SongPlayListTheme}"
@@ -72,7 +82,7 @@
                             BorderThickness="0"
                             x:Name="ListViewPlaylist" />
 
-                    </StackPanel>
+                    </Grid>
                 </Border>
             </Grid>
         </Border>

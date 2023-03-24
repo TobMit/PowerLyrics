@@ -6,12 +6,89 @@
              xmlns:local="clr-namespace:PowerLyrics.MVVM.View"
              xmlns:viewModel="clr-namespace:PowerLyrics.MVVM.ViewModel"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="650" d:DesignWidth="1280"
              Background="Transparent">
     <UserControl.DataContext>
         <viewModel:EditViewModel x:Name="editDataContext"/>
     </UserControl.DataContext>
     <Grid>
-        <Label Content="toto je edit page" Foreground="White"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+
+        <Border
+            Grid.Row="1"
+            BorderThickness="3"
+            BorderBrush="Blue">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" 
+                       Content="SLIDES" 
+                       Foreground="#c9c8cf" 
+                       FontWeight="Bold" 
+                       FontSize="15"/>
+                <ListView 
+                    Grid.Row="2"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    Background="Transparent"
+                    ItemsSource="{Binding openSongSlides}"
+                    ItemContainerStyle="{StaticResource SlidesTheme}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    BorderThickness="0"
+                    x:Name="ListViewSlides">
+                    <!-- toto tu je aby som vedel command bindovat -->
+                    
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+
+            </Grid>
+
+
+        </Border>
+        <Border
+            Grid.Row="1"
+            Grid.Column="2"
+            BorderThickness="3"
+            BorderBrush="Black">
+            <StackPanel Orientation="Vertical">
+                <Label Content="EDIT TOOLS" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15" Margin="0,0,0,2"/>
+                <Label Content="Text" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,0,0,2"/>
+                <Border
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    BorderBrush="#c9c8cf"
+                    Margin="3">
+                    <TextBox 
+                        Padding="2"
+                        Text="{Binding LyricContent.text, Mode=TwoWay}" 
+                        Background="Transparent" 
+                        Foreground="White" 
+                        FontSize="20"
+                        Height="300" 
+                        TextWrapping="Wrap"
+                        BorderThickness="0"
+                        Margin="0,0,0,2"
+                        AcceptsReturn="True"/>
+                </Border>
+
+            </StackPanel>
+        </Border>
+
+        <Viewbox Grid.Column="1" Stretch="Uniform">
+            <ContentControl Content="{Binding LyricContent}"/>
+        </Viewbox>
+
     </Grid>
 </UserControl>

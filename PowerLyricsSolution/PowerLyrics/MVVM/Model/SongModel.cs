@@ -30,4 +30,16 @@ public class Song
         lyricTypeQueue = new List<LyricType>();
         isSelected = false;
     }
+
+    public Song(Song copy)
+    {
+        verse = new ArrayList(copy.verse);
+        chorus = new ArrayList(copy.chorus);
+        bridge = new ArrayList(copy.bridge);
+        lyricTypeQueue = new List<LyricType>(copy.lyricTypeQueue);
+        id = copy.id;
+        number = copy.number;
+        name = copy.name;
+        isSelected = false;
+    }
 }

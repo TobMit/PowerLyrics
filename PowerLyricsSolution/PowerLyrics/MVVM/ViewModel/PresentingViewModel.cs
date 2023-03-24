@@ -146,7 +146,7 @@ public class PresentingViewModel : ObservableObjects
         audieceWindow = new AudiencWindow();
         audieceWindow.Show();
 
-        LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1("Presun ma na druhe okno");
+        LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1("Pre začatie prezentovania stlačte Fullsc tlačídko!");
         LyricContent = tesLyricViewTemplate1;
         inicialiseButtons();
 
@@ -156,34 +156,35 @@ public class PresentingViewModel : ObservableObjects
 
 
         textParser = new TextParser();
+        lyricArray = new ObservableCollection<Slide>();
     }
     
     private void inicialiseButtons()
+    {
+        
+        SelectSlideCommand = new RelayCommand(o =>
         {
-            
-            SelectSlideCommand = new RelayCommand(o =>
-            {
-                selectedSlide = Int32.Parse(o.ToString());
-                actualSlidePreviewControl();
-            });
-            
-            SelectLibrarySongCommand = new RelayCommand(o =>
-            {
-                selectedSongFromLibrary = Int32.Parse(o.ToString());
-                openedSong = textParser.parseLyric(listOfSongs[selectedSongFromLibrary]);
-                selectedSlide = -1;
-                actualSlidePreviewControl();
-            });
-            
-            SelectPlaylistSongCommand = new RelayCommand(o =>
-            {
-                SelectedSongFromPlaylist = Int32.Parse(o.ToString()); // mam info o id 
-                openedSong = textParser.parseLyric(listOfSongsInPlayList[SelectedSongFromPlaylist]);
-                selectedSlide = -1;
-                actualSlidePreviewControl();
-            });
-            
-        }
+            selectedSlide = Int32.Parse(o.ToString());
+            actualSlidePreviewControl();
+        });
+        
+        SelectLibrarySongCommand = new RelayCommand(o =>
+        {
+            selectedSongFromLibrary = Int32.Parse(o.ToString());
+            openedSong = textParser.parseLyric(listOfSongs[selectedSongFromLibrary]);
+            selectedSlide = -1;
+            actualSlidePreviewControl();
+        });
+        
+        SelectPlaylistSongCommand = new RelayCommand(o =>
+        {
+            SelectedSongFromPlaylist = Int32.Parse(o.ToString()); // mam info o id 
+            openedSong = textParser.parseLyric(listOfSongsInPlayList[SelectedSongFromPlaylist]);
+            selectedSlide = -1;
+            actualSlidePreviewControl();
+        });
+        
+    }
 
     public void PrevSongInPlaylist()
     {
@@ -209,7 +210,7 @@ public class PresentingViewModel : ObservableObjects
     {
         if (SelectedSongFromPlaylist != -1 && SelectedSongFromPlaylist < listOfSongsInPlayList.Count)
         {
-            listOfSongsInPlayList.RemoveAt(SelectedSongFromPlaylist); //todo opravit aby nepadalo
+            listOfSongsInPlayList.RemoveAt(SelectedSongFromPlaylist);
             for (int i = 0; i < listOfSongsInPlayList.Count; i++)
             {
                 listOfSongsInPlayList[i].id = i;
@@ -244,7 +245,7 @@ public class PresentingViewModel : ObservableObjects
     {
         if (selectedSongFromLibrary != -1)
         {
-            listOfSongsInPlayList.Add(listOfSongs[selectedSongFromLibrary]);
+            listOfSongsInPlayList.Add(new Song(listOfSongs[selectedSongFromLibrary]) );
             listOfSongsInPlayList[listOfSongsInPlayList.Count - 1].id =
                 listOfSongsInPlayList.Count - 1; //aby som vedel spravne mazat z listu
             selectedSlide = -1;
@@ -253,56 +254,69 @@ public class PresentingViewModel : ObservableObjects
     }
 
     private ObservableCollection<Slide> getSlidesFromOpenSong()
+    {
+        ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
+        int id = 0;
+        LyricType oldType = LyricType.Undefined;
+        int oldSerialNumber = 1;
+        foreach (var item in openedSong)
         {
-            ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
-            int id = 0;
-            LyricType oldType = LyricType.Undefined;
-            int oldSerialNumber = 1;
-            foreach (var item in openedSong)
+            if (oldType == LyricType.Undefined || oldType != item.LyricType || oldSerialNumber != item.serialNuber)
             {
-                if (oldType == LyricType.Undefined || oldType != item.LyricType || oldSerialNumber != item.serialNuber)
+                oldType = item.LyricType;
+                oldSerialNumber = item.serialNuber;
+                tmp.Add(new Slide()
                 {
-                    oldType = item.LyricType;
-                    oldSerialNumber = item.serialNuber;
-                    tmp.Add(new Slide()
-                    {
-                        SlideType = SlideType.Divider,
-                        dividerText =item.serialNuber + ". " + item.LyricType.ToString(),
-                    });
-                    id++;
-                } 
-                Slide slide = new Slide();
-                slide.UserControl = new LyricViewTemplate1(item);
-                slide.id = id;
-                slide.SlideType = SlideType.Slide;
-                slide.isSelected = false;
-                tmp.Add(slide);
-                id++;
-            }
-            return tmp;
-        }
+                    SlideType = SlideType.Divider,
+                    dividerText =item.serialNuber + ". " + item.LyricType.ToString(),
+                });
 
-        private void actualSlidePreviewControl()
-        {
-            if (isLive)                                                                                                            
-            {                                                                                                                      
-                if (selectedSlide != -1)
-                {
-                    LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[selectedSlide].UserControl);
-                }                                                                                                                  
-                else                                                                                                               
-                {                                                                                                                  
-                    LyricContent = new LyricViewTemplate1();                                                                       
-                }                                                                                                                  
-            }                                                                                                                      
-            else                                                                                                                   
-            {                                                                                                                      
-                LyricContent = new LyricViewTemplate1(constants.DEFAULT_TEXT);
-            }                                                                                                                      
+
+                id++;
+            } 
+            Slide slide = new Slide();
+            slide.UserControl = new LyricViewTemplate1(item);
+            slide.id = id;
+            slide.SlideType = SlideType.Slide;
+            slide.isSelected = false;
+            tmp.Add(slide);
+            id++;
         }
+        return tmp;
+    }
+
+    private void actualSlidePreviewControl()
+    {
+        if (isLive)                                                                                                            
+        {                                                                                                                      
+            if (selectedSlide != -1)
+            {
+                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[selectedSlide].UserControl);
+            }                                                                                                                  
+            else                                                                                                               
+            {                                                                                                                  
+                LyricContent = new LyricViewTemplate1();                                                                       
+            }                                                                                                                  
+        }                                                                                                                      
+        else                                                                                                                   
+        {                                                                                                                      
+            LyricContent = new LyricViewTemplate1(constants.DEFAULT_TEXT);
+        }                                                                                                                      
+    }
         
-        public void closeWindow()
+    public void closeWindow()
+    {
+        audieceWindow.Close();
+    }
+
+    public ObservableCollection<Slide> getOpenSong()
+    {
+        // to je preto aby sa mi vybraty slide neobjavil aj v edit mode
+        ObservableCollection<Slide> tmp = new ObservableCollection<Slide>(lyricArray);
+        foreach (Slide slide in tmp)
         {
-            audieceWindow.Close();
+            slide.isSelected = false;
         }
+        return tmp;
+    }
 }
