@@ -7,12 +7,14 @@ using System;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace PowerLyrics.MVVM.ViewModel;
 
 public class EditViewModel : ObservableObjects
 {
     private TextParser textParser;
+    private DispatcherTimer timer;
 
 
     private SongModel _openSong;
@@ -100,6 +102,14 @@ public class EditViewModel : ObservableObjects
         textParser = new TextParser();
         openSongSlides = new ObservableCollection<Slide>();
         inicialiseButtons();
+        timer = new DispatcherTimer();
+        timer.Interval = new TimeSpan(0, 0, 1);
+        timer.Tick += new EventHandler(timer_Tick);
+    }
+
+    private void timer_Tick(object? sender, EventArgs e)
+    {
+        this.applyChanges();
     }
 
     private void inicialiseButtons()
@@ -107,27 +117,35 @@ public class EditViewModel : ObservableObjects
 
         SelectSlideCommand = new RelayCommand(o =>
         {
-            if (selectedSlideNumber == -1)
-            {
-                selectedSlideNumber = Int32.Parse(o.ToString());
-                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl);
-            }
-            else
-            {
-                applyChanges();
-                selectedSlideNumber = Int32.Parse(o.ToString());
-                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl);
-            }
-            
+            applyChanges();
+            selectedSlideNumber = Int32.Parse(o.ToString());
+            LyricContent = new LyricViewTemplate1((LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl);
+
         });
         
     }
 
     private void applyChanges()
     {
-        openSong.LyricModels[selectedSlideNumber].text = LyricContent.text;
-        openSong.LyricModels[selectedSlideNumber].fontSize = (int)LyricContent.fontSize;
-        openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+        // zmeny sa môžu aplikovať iba keď je niečo vybraté
+        if (selectedSlideNumber != -1)
+        {
+            openSong.LyricModels[selectedSlideNumber].text = LyricContent.text;
+            openSong.LyricModels[selectedSlideNumber].fontSize = (int)LyricContent.fontSize;
+            ObservableCollection<Slide> tmp = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+            tmp[selectedSlideNumber].isSelected = true;
+            openSongSlides = tmp;
+        }
+    }
+
+    public void startTimer()
+    {
+        timer.Start();
+    }
+
+    public void stopTimer() 
+    {
+        timer.Stop();
     }
 
     public SongModel getEditedSong()
