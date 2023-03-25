@@ -8,11 +8,13 @@ namespace PowerLyrics.MVVM.View;
 public partial class EditView : UserControl
 {
     private Regex number;
+
     public EditView()
     {
         InitializeComponent();
         number = new Regex("[^0-9]+");
     }
+
     public EditViewModel getDataContext()
     {
         return this.editDataContext;

@@ -275,6 +275,5 @@ public class PresentingViewModel : ObservableObjects
     public SongModel getOpenSong()
     {
         return OpenedSongModel!= null ? new SongModel(OpenedSongModel) : new SongModel();
-        ;
     }
 }

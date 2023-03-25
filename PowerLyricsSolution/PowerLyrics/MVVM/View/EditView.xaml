@@ -5,17 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PowerLyrics.MVVM.View"
              xmlns:viewModel="clr-namespace:PowerLyrics.MVVM.ViewModel"
+             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d"
              d:DesignHeight="650" d:DesignWidth="1280"
              Background="Transparent">
+
     <UserControl.DataContext>
-        <viewModel:EditViewModel x:Name="editDataContext"/>
+        <viewModel:EditViewModel x:Name="editDataContext" />
     </UserControl.DataContext>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="180" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
 
         <Border
@@ -24,15 +28,15 @@
             BorderBrush="Blue">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="30" />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" 
-                       Content="SLIDES" 
-                       Foreground="#c9c8cf" 
-                       FontWeight="Bold" 
-                       FontSize="15"/>
-                <ListView 
+                <Label Grid.Row="0"
+                       Content="SLIDES"
+                       Foreground="#c9c8cf"
+                       FontWeight="Bold"
+                       FontSize="15" />
+                <ListView
                     Grid.Row="2"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     Background="Transparent"
@@ -43,7 +47,7 @@
                     BorderThickness="0"
                     x:Name="ListViewSlides">
                     <!-- toto tu je aby som vedel command bindovat -->
-                    
+
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel />
@@ -61,36 +65,44 @@
             BorderThickness="3"
             BorderBrush="Black">
             <StackPanel Orientation="Vertical">
-                <Label Content="EDIT TOOLS" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15" Margin="0,0,0,2"/>
-                <Label Content="Text" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,0,0,2"/>
+                <Label Content="EDIT TOOLS" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15" Margin="0,0,0,2" />
+                <Label Content="Text" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,0,0,2" />
                 <Border
                     BorderThickness="1"
                     CornerRadius="5"
                     BorderBrush="#c9c8cf"
-                    Margin="3"
-                    >
-                    <TextBox 
+                    Margin="3">
+                    <TextBox
                         Padding="2"
-                        Text="{Binding LyricContent.text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                        Background="Transparent" 
-                        Foreground="White" 
+                        Text="{Binding LyricContent.text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         FontSize="20"
-                        Height="250" 
+                        Height="250"
                         TextWrapping="Wrap"
                         BorderThickness="0"
                         Margin="0,0,0,2"
                         AcceptsReturn="True"
-                        />
+                        SpellCheck.IsEnabled="True"/>
                 </Border>
-                <Label Content="Font" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,2,0,2"/>
-                <StackPanel Orientation="Horizontal">
+                <Label Content="Font" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,2,0,2" />
+                <StackPanel Orientation="Horizontal"
+                            Margin="2,0,0,0">
+                    <ComboBox x:Name="fontSelector"
+                              Background="Transparent"
+                              ItemsSource="{x:Static Fonts.SystemFontFamilies}"
+                              Width="200"
+                              Height="30"
+                              BorderThickness="0"
+                              IsEditable="True" 
+                              MaxDropDownHeight="220"
+                              Margin="3"
+                              FontSize="14"/>
                     <Border
                         BorderThickness="1"
                         CornerRadius="5"
                         BorderBrush="#c9c8cf"
                         Margin="3"
                         Padding="2">
-                        <TextBox 
+                        <TextBox
                             Width="25"
                             FontSize="18"
                             Text="{Binding LyricContent.fontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -98,25 +110,27 @@
                             BorderThickness="0"
                             TextAlignment="Right"
                             Foreground="White"
-                            PreviewTextInput="UIElement_OnPreviewTextInput"/>
+                            PreviewTextInput="UIElement_OnPreviewTextInput" />
                     </Border>
                     <Button
                         Foreground="White"
                         Width="30"
                         Height="35"
-                        Style="{StaticResource MenuButtonTheme}" 
-                        Command="{Binding IncreaseFontCommand}">
-                        <Image Source="/Images/increaseFontIcon.png" 
-                               Height="25"/>
+                        Style="{StaticResource MenuButtonTheme}"
+                        Command="{Binding IncreaseFontCommand}"
+                        Margin="3,0,0,0">
+                        <Image Source="/Images/increaseFontIcon.png"
+                               Height="25" />
                     </Button>
                     <Button
                         Foreground="White"
                         Width="30"
                         Height="35"
-                        Style="{StaticResource MenuButtonTheme}" 
-                        Command="{Binding DecreaseFontCommand}">
-                        <Image Source="/Images/decreaseFontIcon.png" 
-                               Height="25"/>
+                        Style="{StaticResource MenuButtonTheme}"
+                        Command="{Binding DecreaseFontCommand}"
+                        Margin="3,0,0,0">
+                        <Image Source="/Images/decreaseFontIcon.png"
+                               Height="25" />
                     </Button>
 
                 </StackPanel>
@@ -126,7 +140,7 @@
         </Border>
 
         <Viewbox Grid.Column="1" Stretch="Uniform">
-            <ContentControl Content="{Binding LyricContent}"/>
+            <ContentControl Content="{Binding LyricContent}" />
         </Viewbox>
 
     </Grid>

@@ -165,7 +165,7 @@ public class EditViewModel : ObservableObjects
     public SongModel getEditedSong()
     {
         applyChanges();
-        return new SongModel(openSong);
+        return openSong != null ? new SongModel(openSong) : new SongModel();
         ;
     }
 }

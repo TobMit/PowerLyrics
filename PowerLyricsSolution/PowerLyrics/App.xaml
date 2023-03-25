@@ -6,6 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/TextBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/MainNavigationButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/LiveButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/LabelButtonTheme.xaml"/>
@@ -17,6 +18,7 @@
                 <ResourceDictionary Source="Theme/CustomScrollBar.xaml"/>
                 <ResourceDictionary Source="Theme/PlayListTheme/SongPlaylistTheme.xaml"/>
                 <ResourceDictionary Source="Theme/PlayListTheme/PlaylistSongSelectorTheme.xaml"/>
+                <ResourceDictionary Source="/Theme/ComboBoxTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
