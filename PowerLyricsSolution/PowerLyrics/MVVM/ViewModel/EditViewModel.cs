@@ -114,9 +114,7 @@ public class EditViewModel : ObservableObjects
             }
             else
             {
-                openSong.LyricModels[selectedSlideNumber].text = LyricContent.text;
-                openSong.LyricModels[selectedSlideNumber].fontSize = (int)LyricContent.fontSize;
-                openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+                applyChanges();
                 selectedSlideNumber = Int32.Parse(o.ToString());
                 LyricContent = new LyricViewTemplate1((LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl);
             }
@@ -125,8 +123,17 @@ public class EditViewModel : ObservableObjects
         
     }
 
+    private void applyChanges()
+    {
+        openSong.LyricModels[selectedSlideNumber].text = LyricContent.text;
+        openSong.LyricModels[selectedSlideNumber].fontSize = (int)LyricContent.fontSize;
+        openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+    }
+
     public SongModel getEditedSong()
     {
+        applyChanges();
         return new SongModel(openSong); ;
     }
+
 }
