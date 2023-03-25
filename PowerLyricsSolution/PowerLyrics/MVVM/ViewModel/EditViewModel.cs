@@ -6,6 +6,7 @@ using PowerLyrics.Windows;
 using System;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
@@ -88,6 +89,7 @@ public class EditViewModel : ObservableObjects
     public RelayCommand SelectSlideCommand { get; set; }
     public RelayCommand IncreaseFontCommand { get; set; }
     public RelayCommand DecreaseFontCommand { get; set; }
+    public RelayCommand SetTextAligmentCommand { get; set; }
 
 
     public EditViewModel()
@@ -130,6 +132,15 @@ public class EditViewModel : ObservableObjects
                 LyricContent.fontSize -= 2;
             }
         });
+
+        SetTextAligmentCommand = new RelayCommand(o =>
+        {
+            // zmeny sa môžu aplikovať iba keď je niečo vybraté
+            if (isSelectedSlide())
+            {
+                LyricContent.textAligment = (TextAlignment)Enum.Parse(typeof(TextAlignment), o.ToString());
+            }
+        });
     }
 
     private void applyChanges()
@@ -141,6 +152,7 @@ public class EditViewModel : ObservableObjects
             openSong.LyricModels[selectedSlideNumber].text = LyricContent.text;
             openSong.LyricModels[selectedSlideNumber].fontSize = (int)LyricContent.fontSize;
             openSong.LyricModels[selectedSlideNumber].fontFamily = LyricContent.fontFamily;
+            openSong.LyricModels[selectedSlideNumber].textAligment = LyricContent.textAligment;
             ObservableCollection<Slide> tmp = textParser.getSlidesFromOpenSong(openSong.LyricModels);
             tmp[selectedSlideNumber].isSelected = true;
             openSongSlides = tmp;
@@ -168,6 +180,5 @@ public class EditViewModel : ObservableObjects
     {
         applyChanges();
         return openSong != null ? new SongModel(openSong) : new SongModel();
-        ;
     }
 }

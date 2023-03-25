@@ -50,6 +50,7 @@ namespace PowerLyrics.Core.TextParser
                 }
                 tmp.fontSize= constants.FONT_SIZE;
                 tmp.fontFamily = constants.FOUNT_FAMILY;
+                tmp.textAligment = constants.DEFAULT_TEXT_ALIGNMENT;
                 tmpSlides.Add(tmp);
             }
             return tmpSlides;

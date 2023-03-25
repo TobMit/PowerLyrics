@@ -82,22 +82,22 @@
                         BorderThickness="0"
                         Margin="0,0,0,2"
                         AcceptsReturn="True"
-                        SpellCheck.IsEnabled="True"/>
+                        SpellCheck.IsEnabled="True" />
                 </Border>
                 <Label Content="Font" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,2,0,2" />
                 <StackPanel Orientation="Horizontal"
-                            Margin="2,0,0,0">
+                            Margin="2,0,0,2">
                     <ComboBox x:Name="fontSelector"
                               Background="Transparent"
                               ItemsSource="{x:Static Fonts.SystemFontFamilies}"
                               SelectedItem="{Binding LyricContent.fontFamily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Width="200"
+                              Width="250"
                               Height="30"
                               BorderThickness="0"
-                              IsEditable="True" 
+                              IsEditable="True"
                               MaxDropDownHeight="220"
                               Margin="3"
-                              FontSize="14"/>
+                              FontSize="14" />
                     <Border
                         BorderThickness="1"
                         CornerRadius="5"
@@ -135,6 +135,53 @@
                                Height="25" />
                     </Button>
 
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center" 
+                            Margin="2,0,0,2">
+                    <RadioButton
+                        Grid.Column="1"
+                        Foreground="White"
+                        Style="{StaticResource MainNavigationButtonTheme}"
+                        Command="{Binding SetTextAligmentCommand}"
+                        CommandParameter="Left">
+                        <Image Source="/Images/leftTextIcon.png"/>
+                        <!--
+                        <RadioButton.Resources>
+                            <Style TargetType="RadioButton">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding LyricContent.fontSize}" Value="25">
+                                        <Setter Property="Background" Value="Black"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </RadioButton.Resources> -->
+                    </RadioButton>
+                    <RadioButton
+                        Grid.Column="1"
+                        Foreground="White"
+                        Style="{StaticResource MainNavigationButtonTheme}"
+                        Command="{Binding SetTextAligmentCommand}"
+                        CommandParameter="Center">
+                        <Image Source="/Images/centerTextIcon.png"/>
+
+                    </RadioButton>
+                    <RadioButton
+                        Grid.Column="1"
+                        Foreground="White"
+                        Style="{StaticResource MainNavigationButtonTheme}"
+                        Command="{Binding SetTextAligmentCommand}"
+                        CommandParameter="Right">
+                        <Image Source="/Images/rightTextIcon.png"/>
+                    </RadioButton>
+                    <RadioButton
+                        Grid.Column="1"
+                        Foreground="White"
+                        Style="{StaticResource MainNavigationButtonTheme}"
+                        Command="{Binding SetTextAligmentCommand}"
+                        CommandParameter="Justify">
+                        <Image Source="/Images/justifyTextIcon.png"/>
+                    </RadioButton>
                 </StackPanel>
 
 

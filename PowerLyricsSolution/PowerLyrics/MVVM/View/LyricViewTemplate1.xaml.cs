@@ -41,6 +41,12 @@ namespace PowerLyrics.MVVM.View
             set { TextBlock.FontSize = value; }
         }
 
+        public TextAlignment textAligment
+        {
+            get { return TextBlock.TextAlignment; }
+            set { TextBlock.TextAlignment = value; }
+        }
+
         public LyricViewTemplate1()
         {
             InitializeComponent();
@@ -55,6 +61,7 @@ namespace PowerLyrics.MVVM.View
             {
                 this.fontFamily = copy.fontFamily;
             }
+            this.textAligment = copy.textAligment;
         }
 
         public LyricViewTemplate1(LyricModel lyric)
@@ -63,6 +70,7 @@ namespace PowerLyrics.MVVM.View
             this.text = lyric.text;
             this.fontSize = lyric.fontSize;
             this.fontFamily = lyric.fontFamily;
+            this.textAligment = lyric.textAligment;
         }
 
         public LyricViewTemplate1(string text)

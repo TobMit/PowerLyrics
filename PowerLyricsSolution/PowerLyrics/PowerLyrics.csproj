@@ -9,14 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\centerTextIcon.png" />
     <None Remove="Images\decreaseFontIcon.png" />
     <None Remove="Images\editIcon.png" />
     <None Remove="Images\forwardIcon.png" />
     <None Remove="Images\increaseFontIcon.png" />
+    <None Remove="Images\justifyTextIcon.png" />
+    <None Remove="Images\leftTextIcon.png" />
     <None Remove="Images\liveIcon.png" />
     <None Remove="Images\lyricIcon.png" />
     <None Remove="Images\notLiveIcon.png" />
     <None Remove="Images\playIcon.png" />
+    <None Remove="Images\rightTextIcon.png" />
     <None Remove="Songs\10. Keď v Teba dúfam.txt" />
     <None Remove="Songs\11. Nádej.txt" />
     <None Remove="Songs\12. El Šadaj, El Šadaj.txt" />
@@ -30,6 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\centerTextIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\decreaseFontIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -40,6 +47,12 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\increaseFontIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\justifyTextIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\leftTextIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\liveIcon.png">
@@ -101,6 +114,9 @@
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="WpfScreenHelper" Version="2.1.0" />
     <Resource Include="Images\fullscreanIcon.png" />
+    <Resource Include="Images\rightTextIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

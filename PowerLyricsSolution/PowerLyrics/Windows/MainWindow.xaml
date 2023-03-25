@@ -67,7 +67,6 @@
                             <RadioButton
                                 Grid.Column="0"
                                 Foreground="White"
-                                FontSize="14"
                                 Style="{StaticResource MainNavigationButtonTheme}"
                                 IsChecked="True"
                                 Command="{Binding SetPresentingPageCommand}">
@@ -76,7 +75,6 @@
                             <RadioButton
                                 Grid.Column="1"
                                 Foreground="White"
-                                FontSize="14"
                                 Style="{StaticResource MainNavigationButtonTheme}"
                                 Command="{Binding SetEditPageCommand}">
                                 <Image Source="../Images/editIcon.png"/>
@@ -84,7 +82,6 @@
                             <Button
                                 Grid.Column="3"
                                 Foreground="White"
-                                FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
                                 Command="{Binding SetAudenceFullScreanCommand}">
                                 <Image Source="../Images/fullscreanIcon.png"
