@@ -171,7 +171,6 @@
                         <StackPanel Grid.Column="1">
                             <Button
                                 Foreground="White"
-                                FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
                                 Command="{Binding RemoveSongFromPlayListCommand}">
                                 <Image Source="../Images/minusIcon.png" 
@@ -186,7 +185,6 @@
                         <StackPanel Grid.Column="0">
                             <Button
                                 Foreground="White"
-                                FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
                                 Command="{Binding AddSongToPlayListCommand}">
                                 <Image Source="../Images/plusIcon.png" 

@@ -23,6 +23,6 @@ namespace PowerLyrics.Core
     class constants
     {
         public const int FONT_SIZE = 25;
-        public static string DEFAULT_TEXT = "Mladežka " + DateTime.Now.ToString("dd.MM.yyyy");
+        public static string DEFAULT_TEXT = "Mládežka " + DateTime.Now.ToString("dd.MM.yyyy");
     }
 }

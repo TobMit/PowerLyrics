@@ -8,8 +8,8 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
 
-                        <Grid Width="60"
-                              Height="30"
+                        <Grid Width="{TemplateBinding Width}"
+                              Height="{TemplateBinding Height}"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center">
                             <Border
@@ -24,7 +24,8 @@
 
                 </Setter.Value>
             </Setter>
-
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
 

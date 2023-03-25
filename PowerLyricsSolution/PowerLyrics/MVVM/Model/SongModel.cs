@@ -36,14 +36,17 @@ public class SongModel
 
     public SongModel(SongModel copy)
     {
-        verse = new ArrayList(copy.verse);
-        chorus = new ArrayList(copy.chorus);
-        bridge = new ArrayList(copy.bridge);
-        lyricTypeQueue = new List<LyricType>(copy.lyricTypeQueue);
-        LyricModels = new List<LyricModel>(copy.LyricModels);
-        id = copy.id;
-        number = copy.number;
-        name = copy.name;
-        isSelected = false;
+        if (copy != null)
+        {
+            verse = copy.verse != null ? new ArrayList(copy.verse) : new ArrayList();
+            chorus = copy.chorus != null ? new ArrayList(copy.chorus) : new ArrayList();
+            bridge = copy.bridge != null ? new ArrayList(copy.bridge) : new ArrayList();
+            lyricTypeQueue = copy.lyricTypeQueue != null ? new List<LyricType>(copy.lyricTypeQueue) : new List<LyricType>();
+            LyricModels = copy.LyricModels != null ? new List<LyricModel>(copy.LyricModels) : new List<LyricModel>();
+            id = copy.id;
+            number = copy.number;
+            name = copy.name;
+            isSelected = false;
+        }
     }
 }

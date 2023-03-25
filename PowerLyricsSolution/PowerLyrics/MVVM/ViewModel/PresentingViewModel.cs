@@ -23,12 +23,10 @@ public class PresentingViewModel : ObservableObjects
     private int selectedSongFromLibrary = -1;
 
     private int _selectedSlide = -1;
+
     private int selectedSlide
     {
-        get
-        {
-            return _selectedSlide;
-        }
+        get { return _selectedSlide; }
         set
         {
             if (value != -1)
@@ -49,22 +47,20 @@ public class PresentingViewModel : ObservableObjects
                 _selectedSlide = value;
             }
         }
-
     }
+
     private int _selectedSongFromPlaylist = -1;
+
     private int SelectedSongFromPlaylist
     {
-        get
-        {
-            return _selectedSongFromPlaylist;
-        }
+        get { return _selectedSongFromPlaylist; }
         set
         {
-
             if (_selectedSongFromPlaylist != -1)
             {
                 listOfSongsInPlayList[_selectedSongFromPlaylist].isSelected = false;
             }
+
             _selectedSongFromPlaylist = value;
             listOfSongsInPlayList[_selectedSongFromPlaylist].isSelected = true;
             listOfSongsInPlayList = new ObservableCollection<SongModel>(listOfSongsInPlayList);
@@ -75,12 +71,10 @@ public class PresentingViewModel : ObservableObjects
      * For audience view and for preview
      */
     private object _lyricContent;
+
     public object LyricContent
     {
-        get
-        {
-            return _lyricContent;
-        }
+        get { return _lyricContent; }
         set
         {
             _lyricContent = value;
@@ -88,13 +82,12 @@ public class PresentingViewModel : ObservableObjects
             OnPropertyChanged();
         }
     }
+
     private SongModel _openedSongModel;
+
     public SongModel OpenedSongModel
     {
-        get
-        {
-            return _openedSongModel;
-        }
+        get { return _openedSongModel; }
         set
         {
             _openedSongModel = value;
@@ -104,12 +97,10 @@ public class PresentingViewModel : ObservableObjects
     }
 
     private ObservableCollection<Slide> _lyricArray;
+
     public ObservableCollection<Slide> lyricArray
     {
-        get
-        {
-            return _lyricArray;
-        }
+        get { return _lyricArray; }
         set
         {
             _lyricArray = value;
@@ -118,38 +109,41 @@ public class PresentingViewModel : ObservableObjects
     }
 
     /**
-         * select slide form slide prewiew
-         */
+     * select slide form slide prewiew
+     */
     public RelayCommand SelectSlideCommand { get; set; }
+
     /**
-         * Select song from library
-         */
+     * Select song from library
+     */
     public RelayCommand SelectLibrarySongCommand { get; set; }
+
     /**
-         * Select song from playlist
-         */
+     * Select song from playlist
+     */
     public RelayCommand SelectPlaylistSongCommand { get; set; }
+
     public ObservableCollection<SongModel> listOfSongs { get; set; }
 
     private ObservableCollection<SongModel> _listOfSongsInPlayList;
+
     public ObservableCollection<SongModel> listOfSongsInPlayList
     {
-        get
-        {
-            return _listOfSongsInPlayList;
-        }
+        get { return _listOfSongsInPlayList; }
         set
         {
             _listOfSongsInPlayList = value;
             OnPropertyChanged();
         }
     }
+
     public PresentingViewModel()
     {
         audieceWindow = new AudiencWindow();
         audieceWindow.Show();
 
-        LyricViewTemplate1 tesLyricViewTemplate1 = new LyricViewTemplate1("Pre začatie prezentovania stlačte Fullsc tlačídko!");
+        LyricViewTemplate1 tesLyricViewTemplate1 =
+            new LyricViewTemplate1("Pre začatie prezentovania stlačte Fullsc tlačídko!");
         LyricContent = tesLyricViewTemplate1;
         inicialiseButtons();
 
@@ -164,7 +158,6 @@ public class PresentingViewModel : ObservableObjects
 
     private void inicialiseButtons()
     {
-
         SelectSlideCommand = new RelayCommand(o =>
         {
             selectedSlide = Int32.Parse(o.ToString());
@@ -186,7 +179,6 @@ public class PresentingViewModel : ObservableObjects
             selectedSlide = -1;
             actualSlidePreviewControl();
         });
-
     }
 
     public void PrevSongInPlaylist()
@@ -282,6 +274,7 @@ public class PresentingViewModel : ObservableObjects
 
     public SongModel getOpenSong()
     {
-        return new SongModel(OpenedSongModel); ;
+        return OpenedSongModel!= null ? new SongModel(OpenedSongModel) : new SongModel();
+        ;
     }
 }

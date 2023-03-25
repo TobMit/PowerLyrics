@@ -18,12 +18,10 @@ public class EditViewModel : ObservableObjects
 
 
     private SongModel _openSong;
+
     public SongModel openSong
     {
-        get
-        {
-            return _openSong;
-        }
+        get { return _openSong; }
         set
         {
             _openSong = value;
@@ -33,12 +31,10 @@ public class EditViewModel : ObservableObjects
     }
 
     private ObservableCollection<Slide> _openSongSlides;
+
     public ObservableCollection<Slide> openSongSlides
     {
-        get
-        {
-            return _openSongSlides;
-        }
+        get { return _openSongSlides; }
         set
         {
             _openSongSlides = value;
@@ -47,17 +43,15 @@ public class EditViewModel : ObservableObjects
     }
 
     private int _selectedSlideNumber = -1;
+
     private int selectedSlideNumber
     {
-        get
-        {
-            return _selectedSlideNumber;
-        }
+        get { return _selectedSlideNumber; }
         set
         {
             if (value != -1)
             {
-                if (_selectedSlideNumber != -1)
+                if (isSelectedSlide())
                 {
                     openSongSlides[_selectedSlideNumber].isSelected = false;
                 }
@@ -65,7 +59,8 @@ public class EditViewModel : ObservableObjects
                 _selectedSlideNumber = value;
                 openSongSlides[_selectedSlideNumber].isSelected = true;
                 openSongSlides =
-                    new ObservableCollection<Slide>(openSongSlides); //! takto to je aby som forsol aktualizaciu obrazovky
+                    new ObservableCollection<Slide>(
+                        openSongSlides); //! takto to je aby som forsol aktualizaciu obrazovky
             }
             else
             {
@@ -73,16 +68,13 @@ public class EditViewModel : ObservableObjects
                 LyricContent = null;
             }
         }
-
     }
-    
+
     private LyricViewTemplate1 _lyricContent;
+
     public LyricViewTemplate1 LyricContent
     {
-        get
-        {
-            return _lyricContent;
-        }
+        get { return _lyricContent; }
         set
         {
             _lyricContent = value;
@@ -90,11 +82,12 @@ public class EditViewModel : ObservableObjects
         }
     }
 
-
-    
+    /**
+     * Select song from playlist
+     */
     public RelayCommand SelectSlideCommand { get; set; }
-
-
+    public RelayCommand IncreaseFontCommand { get; set; }
+    public RelayCommand DecreaseFontCommand { get; set; }
 
 
     public EditViewModel()
@@ -114,21 +107,37 @@ public class EditViewModel : ObservableObjects
 
     private void inicialiseButtons()
     {
-
         SelectSlideCommand = new RelayCommand(o =>
         {
             applyChanges();
             selectedSlideNumber = Int32.Parse(o.ToString());
             LyricContent = new LyricViewTemplate1((LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl);
-
         });
-        
+
+        IncreaseFontCommand = new RelayCommand(o =>
+        {
+            if (isSelectedSlide())
+            {
+                LyricContent.fontSize += 2;
+                LyricContent = new LyricViewTemplate1(LyricContent); // to force update
+            }
+        });
+
+        DecreaseFontCommand = new RelayCommand(o =>
+        {
+            // zmeny sa môžu aplikovať iba keď je niečo vybraté
+            if (isSelectedSlide())
+            {
+                LyricContent.fontSize -= 2;
+                LyricContent = new LyricViewTemplate1(LyricContent); // to force update
+            }
+        });
     }
 
     private void applyChanges()
     {
         // zmeny sa môžu aplikovať iba keď je niečo vybraté
-        if (selectedSlideNumber != -1)
+        if (isSelectedSlide())
         {
             openSong.LyricModels[selectedSlideNumber].text = LyricContent.text;
             openSong.LyricModels[selectedSlideNumber].fontSize = (int)LyricContent.fontSize;
@@ -138,12 +147,17 @@ public class EditViewModel : ObservableObjects
         }
     }
 
+    private bool isSelectedSlide()
+    {
+        return selectedSlideNumber != -1;
+    }
+
     public void startTimer()
     {
         timer.Start();
     }
 
-    public void stopTimer() 
+    public void stopTimer()
     {
         timer.Stop();
     }
@@ -151,7 +165,7 @@ public class EditViewModel : ObservableObjects
     public SongModel getEditedSong()
     {
         applyChanges();
-        return new SongModel(openSong); ;
+        return new SongModel(openSong);
+        ;
     }
-
 }

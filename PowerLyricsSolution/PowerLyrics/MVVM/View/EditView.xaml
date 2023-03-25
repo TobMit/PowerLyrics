@@ -67,7 +67,8 @@
                     BorderThickness="1"
                     CornerRadius="5"
                     BorderBrush="#c9c8cf"
-                    Margin="3">
+                    Margin="3"
+                    >
                     <TextBox 
                         Padding="2"
                         Text="{Binding LyricContent.text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -78,8 +79,48 @@
                         TextWrapping="Wrap"
                         BorderThickness="0"
                         Margin="0,0,0,2"
-                        AcceptsReturn="True"/>
+                        AcceptsReturn="True"
+                        />
                 </Border>
+                <Label Content="Font" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,2,0,2"/>
+                <StackPanel Orientation="Horizontal">
+                    <Border
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        BorderBrush="#c9c8cf"
+                        Margin="3"
+                        Padding="2">
+                        <TextBox 
+                            Width="25"
+                            FontSize="18"
+                            Text="{Binding LyricContent.fontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            TextAlignment="Right"
+                            Foreground="White"
+                            PreviewTextInput="UIElement_OnPreviewTextInput"/>
+                    </Border>
+                    <Button
+                        Foreground="White"
+                        Width="30"
+                        Height="35"
+                        Style="{StaticResource MenuButtonTheme}" 
+                        Command="{Binding IncreaseFontCommand}">
+                        <Image Source="/Images/increaseFontIcon.png" 
+                               Height="25"/>
+                    </Button>
+                    <Button
+                        Foreground="White"
+                        Width="30"
+                        Height="35"
+                        Style="{StaticResource MenuButtonTheme}" 
+                        Command="{Binding DecreaseFontCommand}">
+                        <Image Source="/Images/decreaseFontIcon.png" 
+                               Height="25"/>
+                    </Button>
+
+                </StackPanel>
+
 
             </StackPanel>
         </Border>
