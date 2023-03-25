@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace PowerLyrics.Core
 {
@@ -24,5 +25,6 @@ namespace PowerLyrics.Core
     {
         public const int FONT_SIZE = 25;
         public static string DEFAULT_TEXT = "Mládežka " + DateTime.Now.ToString("dd.MM.yyyy");
+        public static FontFamily FOUNT_FAMILY = new FontFamily("Segoe UI");
     }
 }

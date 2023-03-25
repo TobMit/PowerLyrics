@@ -31,30 +31,26 @@ namespace PowerLyrics.Core.TextParser
                 {
                     case LyricType.Verse:
                         tmp.text = songModel.verse[verse].ToString();
-                        tmp.fontSize = constants.FONT_SIZE;
                         tmp.LyricType = LyricType.Verse;
                         tmp.serialNuber = verse + 1; // iba kvoli vypisu
                         verse++;
-                        tmpSlides.Add(tmp);
                         break;
                     case LyricType.Chorus:
                         tmp.text = songModel.chorus[chorus].ToString();
-                        tmp.fontSize = constants.FONT_SIZE;
                         tmp.LyricType = LyricType.Chorus;
                         tmp.serialNuber = chorus + 1;
                         chorus++;
-                        tmpSlides.Add(tmp);
                         break;
                     case LyricType.Bridge:
                         tmp.text = songModel.bridge[bridge].ToString();
-                        tmp.fontSize = constants.FONT_SIZE;
                         tmp.LyricType = LyricType.Bridge;
                         tmp.serialNuber = bridge + 1;
                         bridge++;
-                        tmpSlides.Add(tmp);
                         break;
-
                 }
+                tmp.fontSize= constants.FONT_SIZE;
+                tmp.fontFamily = constants.FOUNT_FAMILY;
+                tmpSlides.Add(tmp);
             }
             return tmpSlides;
         }

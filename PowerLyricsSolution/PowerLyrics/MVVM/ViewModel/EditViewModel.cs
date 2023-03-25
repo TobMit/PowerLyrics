@@ -96,7 +96,7 @@ public class EditViewModel : ObservableObjects
         openSongSlides = new ObservableCollection<Slide>();
         inicialiseButtons();
         timer = new DispatcherTimer();
-        timer.Interval = new TimeSpan(0, 0, 1);
+        timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
         timer.Tick += new EventHandler(timer_Tick);
     }
 
@@ -119,7 +119,6 @@ public class EditViewModel : ObservableObjects
             if (isSelectedSlide())
             {
                 LyricContent.fontSize += 2;
-                LyricContent = new LyricViewTemplate1(LyricContent); // to force update
             }
         });
 
@@ -129,7 +128,6 @@ public class EditViewModel : ObservableObjects
             if (isSelectedSlide())
             {
                 LyricContent.fontSize -= 2;
-                LyricContent = new LyricViewTemplate1(LyricContent); // to force update
             }
         });
     }
@@ -139,11 +137,15 @@ public class EditViewModel : ObservableObjects
         // zmeny sa môžu aplikovať iba keď je niečo vybraté
         if (isSelectedSlide())
         {
+            // prenesenie zmien z view do modelu
             openSong.LyricModels[selectedSlideNumber].text = LyricContent.text;
             openSong.LyricModels[selectedSlideNumber].fontSize = (int)LyricContent.fontSize;
+            openSong.LyricModels[selectedSlideNumber].fontFamily = LyricContent.fontFamily;
             ObservableCollection<Slide> tmp = textParser.getSlidesFromOpenSong(openSong.LyricModels);
             tmp[selectedSlideNumber].isSelected = true;
             openSongSlides = tmp;
+
+            LyricContent = new LyricViewTemplate1(LyricContent);// to force update
         }
     }
 

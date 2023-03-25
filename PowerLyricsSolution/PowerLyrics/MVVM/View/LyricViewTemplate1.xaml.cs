@@ -25,26 +25,20 @@ namespace PowerLyrics.MVVM.View
     {
         public string text
         {
-            get
-            {
-                return TextBlock.Text;
-            }
-            set
-            {
-                TextBlock.Text = value;
-            }
+            get { return TextBlock.Text; }
+            set { TextBlock.Text = value; }
+        }
+
+        public FontFamily fontFamily
+        {
+            get { return TextBlock.FontFamily; }
+            set { TextBlock.FontFamily = value; }
         }
 
         public double fontSize
         {
-            get
-            {
-                return TextBlock.FontSize;
-            }
-            set
-            {
-                TextBlock.FontSize = value;
-            }
+            get { return TextBlock.FontSize; }
+            set { TextBlock.FontSize = value; }
         }
 
         public LyricViewTemplate1()
@@ -57,6 +51,10 @@ namespace PowerLyrics.MVVM.View
             InitializeComponent();
             this.text = copy.text;
             this.fontSize = copy.fontSize;
+            if (copy.fontFamily != null)
+            {
+                this.fontFamily = copy.fontFamily;
+            }
         }
 
         public LyricViewTemplate1(LyricModel lyric)
@@ -64,6 +62,7 @@ namespace PowerLyrics.MVVM.View
             InitializeComponent();
             this.text = lyric.text;
             this.fontSize = lyric.fontSize;
+            this.fontFamily = lyric.fontFamily;
         }
 
         public LyricViewTemplate1(string text)
