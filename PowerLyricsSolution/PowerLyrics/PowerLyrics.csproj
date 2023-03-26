@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Images\centerTextIcon.png" />
     <None Remove="Images\decreaseFontIcon.png" />
+    <None Remove="Images\duplicateIcon.png" />
     <None Remove="Images\editIcon.png" />
     <None Remove="Images\forwardIcon.png" />
     <None Remove="Images\increaseFontIcon.png" />
@@ -38,6 +39,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\decreaseFontIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\duplicateIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\editIcon.png">

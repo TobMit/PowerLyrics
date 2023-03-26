@@ -15,6 +15,12 @@ namespace PowerLyrics.MVVM.Model
 
         public LyricModel()
         {
+            text = "";
+            fontSize = constants.FONT_SIZE;
+            fontFamily =constants.DEFAULT_FONT_FAMILY;
+            LyricType = LyricType.Verse;
+            textAligment = constants.DEFAULT_TEXT_ALIGNMENT;
+            serialNuber = 0;
         }
 
         public LyricModel(LyricModel copy)

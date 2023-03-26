@@ -92,6 +92,9 @@ public class EditViewModel : ObservableObjects
     public RelayCommand IncreaseFontCommand { get; set; }
     public RelayCommand DecreaseFontCommand { get; set; }
     public RelayCommand SetTextAligmentCommand { get; set; }
+    public RelayCommand AddSlideCommand { get; set; }
+    public RelayCommand RemoveSlidetCommand { get; set; }
+    public RelayCommand DuplicateSlideCommand { get; set; }
 
     private string _text;
 
@@ -189,20 +192,7 @@ public class EditViewModel : ObservableObjects
 
     private void inicialiseButtons()
     {
-        SelectSlideCommand = new RelayCommand(o =>
-        {
-            applyChanges();
-            selectedSlideNumber = Int32.Parse(o.ToString());
-            LyricContent = (LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl;
-
-            loadingForEdit = true; // toto je tu kvoli tomu aby som sa nezaciklyl ked nacitavam data
-            this.Text = openSong.LyricModels[selectedSlideNumber].text;
-            this.Fontfamily = openSong.LyricModels[selectedSlideNumber].fontFamily;
-            this.FontSize = openSong.LyricModels[selectedSlideNumber].fontSize;
-            this.TextAlignment = openSong.LyricModels[selectedSlideNumber].textAligment;
-            this.LyricType = openSong.LyricModels[selectedSlideNumber].LyricType;
-            loadingForEdit = false;
-        });
+        SelectSlideCommand = new RelayCommand(o => { SelectSlide(Int32.Parse(o.ToString())); });
 
         IncreaseFontCommand = new RelayCommand(o =>
         {
@@ -229,6 +219,59 @@ public class EditViewModel : ObservableObjects
                 this.TextAlignment = (TextAlignment)Enum.Parse(typeof(TextAlignment), o.ToString());
             }
         });
+
+        AddSlideCommand = new RelayCommand(o =>
+        {
+            
+            openSong.LyricModels.Insert(selectedSlideNumber + 1, new LyricModel());
+            openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+            SelectSlide(selectedSlideNumber + 1);
+        });
+
+        RemoveSlidetCommand = new RelayCommand(o =>
+        {
+            // zmeny sa môžu aplikovať iba keď je niečo vybraté
+            if (isSelectedSlide())
+            {
+                openSong.LyricModels.RemoveAt(selectedSlideNumber);
+                openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+                SelectSlide(selectedSlideNumber, false);
+            }
+        });
+
+        DuplicateSlideCommand = new RelayCommand(o =>
+        {
+            // zmeny sa môžu aplikovať iba keď je niečo vybraté
+            if (isSelectedSlide())
+            {
+                openSong.LyricModels.Insert(selectedSlideNumber + 1, openSong.LyricModels[selectedSlideNumber]);
+                openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+                SelectSlide(selectedSlideNumber + 1);
+            }
+        });
+    }
+
+    private void SelectSlide(int selectedSlide)
+    {
+        this.SelectSlide(selectedSlide, true);
+    }
+
+    private void SelectSlide(int selectedSlide, bool applyEdit)
+    {
+        if (applyEdit)
+        {
+            applyChanges();
+        }
+        selectedSlideNumber = selectedSlide;
+        LyricContent = (LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl;
+
+        loadingForEdit = true; // toto je tu kvoli tomu aby som sa nezaciklyl ked nacitavam data
+        this.Text = openSong.LyricModels[selectedSlideNumber].text;
+        this.Fontfamily = openSong.LyricModels[selectedSlideNumber].fontFamily;
+        this.FontSize = openSong.LyricModels[selectedSlideNumber].fontSize;
+        this.TextAlignment = openSong.LyricModels[selectedSlideNumber].textAligment;
+        this.LyricType = openSong.LyricModels[selectedSlideNumber].LyricType;
+        loadingForEdit = false;
     }
 
     private void applyChanges()

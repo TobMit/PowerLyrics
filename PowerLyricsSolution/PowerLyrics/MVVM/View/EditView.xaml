@@ -32,11 +32,45 @@
                     <RowDefinition Height="30" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0"
-                       Content="SLIDES"
-                       Foreground="#c9c8cf"
-                       FontWeight="Bold"
-                       FontSize="15" />
+                <StackPanel Grid.Row="0"
+                            Orientation="Horizontal">
+                    <Label
+                        Content="SLIDES"
+                        Foreground="#c9c8cf"
+                        FontWeight="Bold"
+                        FontSize="15" />
+                    <Button
+                        Foreground="White"
+                        Width="25"
+                        Height="25"
+                        
+                        Style="{StaticResource MenuButtonTheme}"
+                        Command="{Binding AddSlideCommand}"
+                        Margin="3,0,0,0">
+                        <Image Source="/Images/plusIcon.png"
+                               Height="18" />
+                    </Button>
+                    <Button
+                        Foreground="White"
+                        Width="25"
+                        Height="25"
+                        Style="{StaticResource MenuButtonTheme}"
+                        Command="{Binding RemoveSlidetCommand}"
+                        Margin="3,0,0,0">
+                        <Image Source="/Images/minusIcon.png"
+                               Height="18" />
+                    </Button>
+                    <Button
+                        Foreground="White"
+                        Width="25"
+                        Height="25"
+                        Style="{StaticResource MenuButtonTheme}"
+                        Command="{Binding DuplicateSlideCommand}"
+                        Margin="3,0,0,0">
+                        <Image Source="/Images/duplicateIcon.png"
+                               Height="18" />
+                    </Button>
+                </StackPanel>
                 <ListView
                     Grid.Row="2"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -138,7 +172,7 @@
 
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center" 
+                            HorizontalAlignment="Center"
                             Margin="2,0,0,2">
                     <RadioButton
                         Name="aligmentLeft"
@@ -146,7 +180,7 @@
                         Style="{StaticResource MainNavigationButtonTheme}"
                         Command="{Binding SetTextAligmentCommand}"
                         CommandParameter="Left">
-                        <Image Source="/Images/leftTextIcon.png"/>
+                        <Image Source="/Images/leftTextIcon.png" />
                     </RadioButton>
                     <RadioButton
                         Name="aligmentCenter"
@@ -155,7 +189,7 @@
                         Style="{StaticResource MainNavigationButtonTheme}"
                         Command="{Binding SetTextAligmentCommand}"
                         CommandParameter="Center">
-                        <Image Source="/Images/centerTextIcon.png"/>
+                        <Image Source="/Images/centerTextIcon.png" />
 
                     </RadioButton>
                     <RadioButton
@@ -164,7 +198,7 @@
                         Style="{StaticResource MainNavigationButtonTheme}"
                         Command="{Binding SetTextAligmentCommand}"
                         CommandParameter="Right">
-                        <Image Source="/Images/rightTextIcon.png"/>
+                        <Image Source="/Images/rightTextIcon.png" />
                     </RadioButton>
                     <RadioButton
                         Name="aligmentJustify"
@@ -172,7 +206,7 @@
                         Style="{StaticResource MainNavigationButtonTheme}"
                         Command="{Binding SetTextAligmentCommand}"
                         CommandParameter="Justify">
-                        <Image Source="/Images/justifyTextIcon.png"/>
+                        <Image Source="/Images/justifyTextIcon.png" />
                     </RadioButton>
                 </StackPanel>
                 <Label Content="Slide type" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,2,0,2" />
@@ -188,7 +222,7 @@
                           MaxDropDownHeight="220"
                           Margin="3"
                           FontSize="14"
-                          HorizontalAlignment="Left"/>
+                          HorizontalAlignment="Left" />
 
 
             </StackPanel>
