@@ -42,7 +42,14 @@ public class SongModel
             chorus = copy.chorus != null ? new ArrayList(copy.chorus) : new ArrayList();
             bridge = copy.bridge != null ? new ArrayList(copy.bridge) : new ArrayList();
             lyricTypeQueue = copy.lyricTypeQueue != null ? new List<LyricType>(copy.lyricTypeQueue) : new List<LyricType>();
-            LyricModels = copy.LyricModels != null ? new List<LyricModel>(copy.LyricModels) : new List<LyricModel>();
+            if (copy.LyricModels != null)
+            {
+                LyricModels = new List<LyricModel>();
+                foreach (LyricModel lyricModel in copy.LyricModels)
+                {
+                    LyricModels.Add(new LyricModel(lyricModel));
+                }
+            }
             id = copy.id;
             number = copy.number;
             name = copy.name;

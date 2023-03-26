@@ -113,7 +113,7 @@ namespace PowerLyrics.MVVM.ViewModel
             {
                 _UserControl = _presentingView;
                 presenting = true;
-                _presentingViewModel.OpenedSongModel = _editViewModel.getEditedSong();
+                _presentingViewModel.applayEdit(_editViewModel.getEditedSong());
             });
             SetEditPageCommand = new RelayCommand(o =>
             {

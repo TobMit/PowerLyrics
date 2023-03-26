@@ -12,5 +12,22 @@ namespace PowerLyrics.MVVM.Model
         public LyricType LyricType { get; set; }
         public TextAlignment textAligment { get; set; }
         public int serialNuber { get; set; } // in case there are more verses or bridges...
+
+        public LyricModel()
+        {
+        }
+
+        public LyricModel(LyricModel copy)
+        {
+            if (copy != null)
+            {
+                text = copy.text;
+                fontSize = copy.fontSize;
+                fontFamily = copy.fontFamily;
+                LyricType = copy.LyricType;
+                textAligment = copy.textAligment;
+                serialNuber = copy.serialNuber;
+            }
+        }
     }
 }

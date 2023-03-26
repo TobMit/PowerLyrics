@@ -64,10 +64,11 @@ public class PresentingViewModel : ObservableObjects
             _selectedSongFromPlaylist = value;
 
             // kedze pri vymazavani posuvam ciselnik -1 tak sa to musi osetrit
-            if (listOfSongsInPlayList.Count > 0)
+            if (listOfSongsInPlayList.Count > 0 && _selectedSongFromPlaylist != -1)
             {
                 listOfSongsInPlayList[_selectedSongFromPlaylist].isSelected = true;
             }
+
             listOfSongsInPlayList = new ObservableCollection<SongModel>(listOfSongsInPlayList);
         }
     }
@@ -174,6 +175,7 @@ public class PresentingViewModel : ObservableObjects
             selectedSongFromLibrary = Int32.Parse(o.ToString());
             OpenedSongModel = new SongModel(listOfSongs[selectedSongFromLibrary]);
             selectedSlide = -1;
+            SelectedSongFromPlaylist = -1;
             actualSlidePreviewControl();
         });
 
@@ -280,6 +282,16 @@ public class PresentingViewModel : ObservableObjects
 
     public SongModel getOpenSong()
     {
-        return OpenedSongModel!= null ? new SongModel(OpenedSongModel) : new SongModel();
+        return OpenedSongModel != null ? new SongModel(OpenedSongModel) : new SongModel();
     }
+
+    public void applayEdit(SongModel songModel)
+    {
+        OpenedSongModel = songModel;
+        if (selectedSongFromLibrary != -1 && listOfSongsInPlayList.Count > 0)
+        {
+            listOfSongsInPlayList[selectedSongFromLibrary] = songModel;
+        }
+    }
+
 }
