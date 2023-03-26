@@ -17,7 +17,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Margin="1">
                             <Viewbox Stretch="Uniform">
-                                <ContentPresenter Content="{Binding UserControl}" RenderOptions.BitmapScalingMode="Fant"/>
+                                        <ContentPresenter Content="{Binding UserControl}" RenderOptions.BitmapScalingMode="Fant"/>
                             </Viewbox>
 
                         </Border>
@@ -36,10 +36,12 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" Value="#4f4f4f" />
             </Trigger>
-            <!--
-            <Trigger Property="IsChecked" Value="True">
-                <Setter Property="BorderBrush" Value="#cf0b43" />
-            </Trigger> -->
+            <DataTrigger Binding="{Binding LyricType}" Value="Chorus">
+                <Setter Property="BorderBrush" Value="#77cf0b43"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding LyricType}" Value="Bridge">
+                <Setter Property="BorderBrush" Value="#696cff6c"/>
+            </DataTrigger>
             <DataTrigger Binding="{Binding isSelected}" Value="true">
                 <Setter Property="BorderBrush" Value="#cf0b43"/>
             </DataTrigger>

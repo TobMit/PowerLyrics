@@ -13,10 +13,12 @@ public class DataLoader
 {
     private static Regex _regex;
     private static string[] paths;
+    private TextParser.TextParser textParser;
     public DataLoader()
     {
         _regex = new Regex(@"\s+");
         paths = Directory.GetFiles("Songs");
+        textParser = new TextParser.TextParser();
     }
 
     private string loadSong(string path)
@@ -25,31 +27,37 @@ public class DataLoader
         return _regex.Replace(loadedSong, " ");
     }
 
-    public ObservableCollection<Song> getSongs()
+    public ObservableCollection<SongModel> getSongs()
     {
-        ObservableCollection<Song> songs = new ObservableCollection<Song>();
-        int id = 0;
+        ObservableCollection<SongModel> songs = new ObservableCollection<SongModel>();
         foreach (string path in paths)
         {
             string loadedSong = this.loadSong(path);
-            Song tmpSong = this.processSong(loadedSong);
+            SongModel tmpSongModel = this.processSong(loadedSong);
             string[] splitedPath = path.Split(@"\");
             //z cesty vyberiem meno suboru
             string rawName = splitedPath[splitedPath.Length - 1];
             //rozdelim 
             string[] splitedRawName = rawName.Split(".");
-            tmpSong.number = Int32.Parse(splitedRawName[0]);
-            tmpSong.name = splitedRawName[1].Remove(0,1);
-            tmpSong.id = id++;
-            songs.Add(tmpSong);
+            tmpSongModel.number = Int32.Parse(splitedRawName[0]);
+            tmpSongModel.name = splitedRawName[1].Remove(0,1);
+            tmpSongModel.LyricModels = textParser.parseLyric(tmpSongModel);
+            songs.Add(tmpSongModel);
+        }
+
+        //sort songs by id
+        songs = new ObservableCollection<SongModel>(songs.OrderBy(x => x.number));
+        for (int i = 0; i < songs.Count; i++)
+        {
+            songs[i].id = i;
         }
 
         return songs;
     }
 
-    private Song processSong(string song)
+    private SongModel processSong(string song)
     {
-        Song tmpSong = new Song();
+        SongModel tmpSongModel = new SongModel();
         string[] splitedSong = song.Split(" ");
         LyricType stat = LyricType.Verse;
 
@@ -66,13 +74,13 @@ public class DataLoader
                     switch (stat)
                     {
                         case LyricType.Bridge:
-                            tmpSong.bridge.Add(builder.ToString());
+                            tmpSongModel.bridge.Add(builder.ToString());
                             break;
                         case LyricType.Verse:
-                            tmpSong.verse.Add(builder.ToString());
+                            tmpSongModel.verse.Add(builder.ToString());
                             break;
                         case LyricType.Chorus:
-                            tmpSong.chorus.Add(builder.ToString());
+                            tmpSongModel.chorus.Add(builder.ToString());
                             break;
                     }
                 }
@@ -91,7 +99,7 @@ public class DataLoader
                 {
                     stat = LyricType.Verse;
                 }
-                tmpSong.lyricTypeQueue.Add(stat);
+                tmpSongModel.lyricTypeQueue.Add(stat);
             }
             else
             {
@@ -112,17 +120,17 @@ public class DataLoader
             switch (stat)
             {
                 case LyricType.Bridge:
-                    tmpSong.bridge.Add(builder.ToString());
+                    tmpSongModel.bridge.Add(builder.ToString());
                     break;
                 case LyricType.Verse:
-                    tmpSong.verse.Add(builder.ToString());
+                    tmpSongModel.verse.Add(builder.ToString());
                     break;
                 case LyricType.Chorus:
-                    tmpSong.chorus.Add(builder.ToString());
+                    tmpSongModel.chorus.Add(builder.ToString());
                     break;
             }
         }
         
-        return tmpSong;
+        return tmpSongModel;
     }
 }

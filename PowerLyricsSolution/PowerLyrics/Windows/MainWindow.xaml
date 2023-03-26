@@ -67,22 +67,21 @@
                             <RadioButton
                                 Grid.Column="0"
                                 Foreground="White"
-                                FontSize="14"
                                 Style="{StaticResource MainNavigationButtonTheme}"
-                                IsChecked="True">
+                                IsChecked="True"
+                                Command="{Binding SetPresentingPageCommand}">
                                 <Image Source="../Images/playIcon.png"/>
                             </RadioButton>
                             <RadioButton
                                 Grid.Column="1"
                                 Foreground="White"
-                                FontSize="14"
-                                Style="{StaticResource MainNavigationButtonTheme}">
+                                Style="{StaticResource MainNavigationButtonTheme}"
+                                Command="{Binding SetEditPageCommand}">
                                 <Image Source="../Images/editIcon.png"/>
                             </RadioButton>
                             <Button
                                 Grid.Column="3"
                                 Foreground="White"
-                                FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
                                 Command="{Binding SetAudenceFullScreanCommand}">
                                 <Image Source="../Images/fullscreanIcon.png"
@@ -169,7 +168,6 @@
                         <StackPanel Grid.Column="1">
                             <Button
                                 Foreground="White"
-                                FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
                                 Command="{Binding RemoveSongFromPlayListCommand}">
                                 <Image Source="../Images/minusIcon.png" 
@@ -184,7 +182,6 @@
                         <StackPanel Grid.Column="0">
                             <Button
                                 Foreground="White"
-                                FontSize="14"
                                 Style="{StaticResource MenuButtonTheme}" 
                                 Command="{Binding AddSongToPlayListCommand}">
                                 <Image Source="../Images/plusIcon.png" 
@@ -201,81 +198,10 @@
             </Grid>
             
         </Border>
-        <Border
-            Grid.Row="1"
-            BorderThickness="3"
-            BorderBrush="Blue">
-            <StackPanel Orientation="Vertical">
-                <Label Content="LIBRARY" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15"/>
-                <ListView
-                    Background="Transparent"
-                    ItemsSource="{Binding listOfSongs}"
-                    ItemContainerStyle="{StaticResource SongLibraryTheme}"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    BorderThickness="0"
-                    x:Name="ListViewLibrary" />
-
-            </StackPanel>
-           
-            
-        </Border>
-        <Border
-            Grid.Row="1"
-            Grid.Column="2"
-            BorderThickness="3"
-            BorderBrush="Black">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="300"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Border
-                    Grid.Row="0"
-                    BorderThickness="3"
-                    BorderBrush="Red" 
-                    >
-                    <Viewbox Stretch="Uniform">
-                        <ContentControl Content="{Binding LyricContent}"/>
-                    </Viewbox>
-                </Border>
-                <Border
-                    Grid.Row="1"
-                    BorderThickness="3"
-                    BorderBrush="Bisque"
-                    >
-                    <StackPanel Orientation="Vertical">
-                        <Label Content="PLAYLIST" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15"/>
-                        <ListView
-                            Background="Transparent"
-                            ItemsSource="{Binding listOfSongsInPlayList}"
-                            ItemContainerStyle="{StaticResource SongPlayListTheme}"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            BorderThickness="0"
-                            x:Name="ListViewPlaylist" />
-
-                    </StackPanel>
-                </Border>
-            </Grid>
-        </Border>
-        <ListView 
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            Grid.Row="1"
-            Grid.Column="1"
-            Background="Transparent"
-            ItemsSource="{Binding lyricArray}"
-            ItemContainerStyle="{StaticResource SlidesTheme}"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            BorderThickness="0"
-            x:Name="ListViewSlides"><!-- toto tu je aby som vedel command bindovat -->
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-        </ListView>
+        <ContentControl 
+            Grid.Row="1" 
+            Grid.ColumnSpan="3"
+            Content="{Binding _UserControl}"/>
 
     </Grid>
 </Window>

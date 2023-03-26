@@ -9,24 +9,54 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\centerTextIcon.png" />
+    <None Remove="Images\decreaseFontIcon.png" />
+    <None Remove="Images\duplicateIcon.png" />
     <None Remove="Images\editIcon.png" />
     <None Remove="Images\forwardIcon.png" />
+    <None Remove="Images\increaseFontIcon.png" />
+    <None Remove="Images\justifyTextIcon.png" />
+    <None Remove="Images\leftTextIcon.png" />
     <None Remove="Images\liveIcon.png" />
     <None Remove="Images\lyricIcon.png" />
     <None Remove="Images\notLiveIcon.png" />
     <None Remove="Images\playIcon.png" />
+    <None Remove="Images\rightTextIcon.png" />
+    <None Remove="Songs\10. Keď v Teba dúfam.txt" />
+    <None Remove="Songs\11. Nádej.txt" />
+    <None Remove="Songs\12. El Šadaj, El Šadaj.txt" />
     <None Remove="Songs\3. Už viac niesom strachu otrokom.txt" />
     <None Remove="Songs\4. Dobrá správa utláčaným.txt" />
     <None Remove="Songs\5. Ježiš dávno to už viem.txt" />
     <None Remove="Songs\6. Vyvyšujem teba pane.txt" />
     <None Remove="Songs\7. Môj boh.txt" />
+    <None Remove="Songs\8. Slávny Boh.txt" />
+    <None Remove="Songs\9. Ty si jediný Boh.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\centerTextIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\decreaseFontIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\duplicateIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\editIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\forwardIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\increaseFontIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\justifyTextIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\leftTextIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\liveIcon.png">
@@ -43,6 +73,15 @@
     </Resource>
     <None Remove="Songs\test.txt" />
     <None Remove="Core\DataLoader\test.txt" />
+    <EmbeddedResource Include="Songs\10. Keď v Teba dúfam.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\11. Nádej.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\12. El Šadaj, El Šadaj.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Songs\2. Si cesta.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -65,12 +104,23 @@
     <EmbeddedResource Include="Songs\3. Už viac niesom strachu otrokom.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Songs\8. Slávny Boh.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Songs\9. Ty si jediný Boh.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Remove="Images\plusIcon.png" />
     <Resource Include="Images\plusIcon.png" />
     <None Remove="Images\minusIcon.png" />
     <Resource Include="Images\minusIcon.png" />
     <None Remove="Images\fullscreanIcon.png" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="WpfScreenHelper" Version="2.1.0" />
     <Resource Include="Images\fullscreanIcon.png" />
+    <Resource Include="Images\rightTextIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
