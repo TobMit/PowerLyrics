@@ -74,9 +74,9 @@
                     Margin="3">
                     <TextBox
                         Padding="2"
-                        Text="{Binding LyricContent.text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         FontSize="20"
-                        FontFamily="{Binding LyricContent.fontFamily}"
+                        FontFamily="{Binding Fontfamily}"
                         Height="250"
                         TextWrapping="Wrap"
                         BorderThickness="0"
@@ -90,7 +90,7 @@
                     <ComboBox x:Name="fontSelector"
                               Background="Transparent"
                               ItemsSource="{x:Static Fonts.SystemFontFamilies}"
-                              SelectedItem="{Binding LyricContent.fontFamily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding Fontfamily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               Width="250"
                               Height="30"
                               BorderThickness="0"
@@ -107,7 +107,7 @@
                         <TextBox
                             Width="25"
                             FontSize="18"
-                            Text="{Binding LyricContent.fontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding FontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Background="Transparent"
                             BorderThickness="0"
                             TextAlignment="Right"

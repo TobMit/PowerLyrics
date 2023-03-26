@@ -30,7 +30,6 @@ public class DataLoader
     public ObservableCollection<SongModel> getSongs()
     {
         ObservableCollection<SongModel> songs = new ObservableCollection<SongModel>();
-        int id = 0;
         foreach (string path in paths)
         {
             string loadedSong = this.loadSong(path);
@@ -42,13 +41,16 @@ public class DataLoader
             string[] splitedRawName = rawName.Split(".");
             tmpSongModel.number = Int32.Parse(splitedRawName[0]);
             tmpSongModel.name = splitedRawName[1].Remove(0,1);
-            tmpSongModel.id = id++;
             tmpSongModel.LyricModels = textParser.parseLyric(tmpSongModel);
             songs.Add(tmpSongModel);
         }
 
         //sort songs by id
         songs = new ObservableCollection<SongModel>(songs.OrderBy(x => x.number));
+        for (int i = 0; i < songs.Count; i++)
+        {
+            songs[i].id = i;
+        }
 
         return songs;
     }

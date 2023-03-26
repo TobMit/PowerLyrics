@@ -54,14 +54,17 @@ namespace PowerLyrics.MVVM.View
 
         public LyricViewTemplate1(LyricViewTemplate1 copy)
         {
-            InitializeComponent();
-            this.text = copy.text;
-            this.fontSize = copy.fontSize;
-            if (copy.fontFamily != null)
+            if (copy != null)
             {
-                this.fontFamily = copy.fontFamily;
+                InitializeComponent();
+                this.text = copy.text;
+                this.fontSize = copy.fontSize;
+                if (copy.fontFamily != null)
+                {
+                    this.fontFamily = copy.fontFamily;
+                }
+                this.textAligment = copy.textAligment;
             }
-            this.textAligment = copy.textAligment;
         }
 
         public LyricViewTemplate1(LyricModel lyric)

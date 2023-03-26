@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace PowerLyrics.Core.TextParser
 {
@@ -49,7 +50,7 @@ namespace PowerLyrics.Core.TextParser
                         break;
                 }
                 tmp.fontSize= constants.FONT_SIZE;
-                tmp.fontFamily = constants.FOUNT_FAMILY;
+                tmp.fontFamily = constants.DEFAULT_FONT_FAMILY;
                 tmp.textAligment = constants.DEFAULT_TEXT_ALIGNMENT;
                 tmpSlides.Add(tmp);
             }
@@ -76,16 +77,22 @@ namespace PowerLyrics.Core.TextParser
 
                     id++;
                 }*/
-                Slide slide = new Slide();
-                slide.UserControl = new LyricViewTemplate1(item);
+                Slide slide = this.getSlideFromLyricModel(item);
                 slide.id = id;
-                slide.SlideType = SlideType.Slide;
-                slide.LyricType = item.LyricType;
-                slide.isSelected = false;
                 tmp.Add(slide);
                 id++;
             }
             return tmp;
+        }
+
+        public Slide getSlideFromLyricModel(LyricModel lyricModel)
+        {
+            Slide slide = new Slide();
+            slide.UserControl = new LyricViewTemplate1(lyricModel);
+            slide.SlideType = SlideType.Slide;
+            slide.LyricType = lyricModel.LyricType;
+            slide.isSelected = false;
+            return slide;
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace PowerLyrics.MVVM.ViewModel;
@@ -15,7 +16,7 @@ namespace PowerLyrics.MVVM.ViewModel;
 public class EditViewModel : ObservableObjects
 {
     private TextParser textParser;
-    private DispatcherTimer timer;
+    private bool loadingForEdit = true;
 
 
     private SongModel _openSong;
@@ -78,7 +79,7 @@ public class EditViewModel : ObservableObjects
         get { return _lyricContent; }
         set
         {
-            _lyricContent = value;
+            _lyricContent = new LyricViewTemplate1(value);
             OnPropertyChanged();
         }
     }
@@ -87,24 +88,86 @@ public class EditViewModel : ObservableObjects
      * Select song from playlist
      */
     public RelayCommand SelectSlideCommand { get; set; }
+
     public RelayCommand IncreaseFontCommand { get; set; }
     public RelayCommand DecreaseFontCommand { get; set; }
     public RelayCommand SetTextAligmentCommand { get; set; }
+
+    private string _text;
+
+    public string Text
+    {
+        get { return _text; }
+        set
+        {
+            _text = value;
+            if (!loadingForEdit)
+            {
+                applyChanges();
+            }
+
+            OnPropertyChanged();
+        }
+    }
+
+    private int _fontSize;
+
+    public int FontSize
+    {
+        get { return _fontSize; }
+        set
+        {
+            _fontSize = value;
+            if (!loadingForEdit)
+            {
+                applyChanges();
+            }
+
+            OnPropertyChanged();
+        }
+    }
+
+    private FontFamily _fontFamily;
+
+    public FontFamily Fontfamily
+    {
+        get { return _fontFamily; }
+        set
+        {
+            _fontFamily = value;
+            if (!loadingForEdit)
+            {
+                applyChanges();
+            }
+
+            OnPropertyChanged();
+        }
+    }
+
+    private TextAlignment _textAlignment;
+
+    public TextAlignment TextAlignment
+    {
+        get { return _textAlignment; }
+        set
+        {
+            _textAlignment = value;
+            if (!loadingForEdit)
+            {
+                applyChanges();
+            }
+
+            OnPropertyChanged();
+        }
+    }
 
 
     public EditViewModel()
     {
         textParser = new TextParser();
         openSongSlides = new ObservableCollection<Slide>();
+        this._fontFamily = constants.DEFAULT_FONT_FAMILY;
         inicialiseButtons();
-        timer = new DispatcherTimer();
-        timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-        timer.Tick += new EventHandler(timer_Tick);
-    }
-
-    private void timer_Tick(object? sender, EventArgs e)
-    {
-        this.applyChanges();
     }
 
     private void inicialiseButtons()
@@ -113,14 +176,21 @@ public class EditViewModel : ObservableObjects
         {
             applyChanges();
             selectedSlideNumber = Int32.Parse(o.ToString());
-            LyricContent = new LyricViewTemplate1((LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl);
+            LyricContent = (LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl;
+
+            loadingForEdit = true; // toto je tu kvoli tomu aby som sa nezaciklyl ked nacitavam data
+            this.Text = openSong.LyricModels[selectedSlideNumber].text;
+            this.Fontfamily = openSong.LyricModels[selectedSlideNumber].fontFamily;
+            this.FontSize = openSong.LyricModels[selectedSlideNumber].fontSize;
+            this.TextAlignment = openSong.LyricModels[selectedSlideNumber].textAligment;
+            loadingForEdit = false;
         });
 
         IncreaseFontCommand = new RelayCommand(o =>
         {
             if (isSelectedSlide())
             {
-                LyricContent.fontSize += 2;
+                this.FontSize += 2;
             }
         });
 
@@ -129,7 +199,7 @@ public class EditViewModel : ObservableObjects
             // zmeny sa môžu aplikovať iba keď je niečo vybraté
             if (isSelectedSlide())
             {
-                LyricContent.fontSize -= 2;
+                this.FontSize -= 2;
             }
         });
 
@@ -138,7 +208,7 @@ public class EditViewModel : ObservableObjects
             // zmeny sa môžu aplikovať iba keď je niečo vybraté
             if (isSelectedSlide())
             {
-                LyricContent.textAligment = (TextAlignment)Enum.Parse(typeof(TextAlignment), o.ToString());
+                this.TextAlignment = (TextAlignment)Enum.Parse(typeof(TextAlignment), o.ToString());
             }
         });
     }
@@ -149,15 +219,16 @@ public class EditViewModel : ObservableObjects
         if (isSelectedSlide())
         {
             // prenesenie zmien z view do modelu
-            openSong.LyricModels[selectedSlideNumber].text = LyricContent.text;
-            openSong.LyricModels[selectedSlideNumber].fontSize = (int)LyricContent.fontSize;
-            openSong.LyricModels[selectedSlideNumber].fontFamily = LyricContent.fontFamily;
-            openSong.LyricModels[selectedSlideNumber].textAligment = LyricContent.textAligment;
+            openSong.LyricModels[selectedSlideNumber].text = this.Text;
+            openSong.LyricModels[selectedSlideNumber].fontSize = (int)this.FontSize;
+            openSong.LyricModels[selectedSlideNumber].fontFamily = this.Fontfamily;
+            openSong.LyricModels[selectedSlideNumber].textAligment = this.TextAlignment;
             ObservableCollection<Slide> tmp = textParser.getSlidesFromOpenSong(openSong.LyricModels);
             tmp[selectedSlideNumber].isSelected = true;
             openSongSlides = tmp;
 
-            LyricContent = new LyricViewTemplate1(LyricContent);// to force update
+            // to force update
+            LyricContent = (LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl;
         }
     }
 
@@ -166,15 +237,6 @@ public class EditViewModel : ObservableObjects
         return selectedSlideNumber != -1;
     }
 
-    public void startTimer()
-    {
-        timer.Start();
-    }
-
-    public void stopTimer()
-    {
-        timer.Stop();
-    }
 
     public SongModel getEditedSong()
     {
