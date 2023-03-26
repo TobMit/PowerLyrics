@@ -26,9 +26,14 @@ public class EditViewModel : ObservableObjects
         get { return _openSong; }
         set
         {
-            _openSong = value;
+            _openSong = new SongModel(value);
             selectedSlideNumber = -1;
             openSongSlides = textParser.getSlidesFromOpenSong(_openSong.LyricModels);
+
+            loadingForEdit = true;
+            Name = openSong.name;
+            Number = openSong.number; 
+            loadingForEdit = false;
         }
     }
 
@@ -181,11 +186,42 @@ public class EditViewModel : ObservableObjects
         }
     }
 
+    private int _number;
+    public int Number
+    {
+        get { return _number; }
+        set
+        {
+            _number = value;
+            if (!loadingForEdit)
+            {
+                openSong.number = value;
+            }
+            OnPropertyChanged();
+        }
+    }
+
+    private string _name;
+    public string Name
+    {
+        get { return _name; }
+        set
+        {
+            _name = value;
+            if (!loadingForEdit)
+            {
+                openSong.name = value;
+            }
+            OnPropertyChanged();
+        }
+    }
+
 
     public EditViewModel()
     {
         textParser = new TextParser();
         openSongSlides = new ObservableCollection<Slide>();
+        openSong = new SongModel();
         this._fontFamily = constants.DEFAULT_FONT_FAMILY;
         inicialiseButtons();
     }
@@ -222,7 +258,6 @@ public class EditViewModel : ObservableObjects
 
         AddSlideCommand = new RelayCommand(o =>
         {
-            
             openSong.LyricModels.Insert(selectedSlideNumber + 1, new LyricModel());
             openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
             SelectSlide(selectedSlideNumber + 1);
@@ -262,6 +297,7 @@ public class EditViewModel : ObservableObjects
         {
             applyChanges();
         }
+
         selectedSlideNumber = selectedSlide;
         LyricContent = (LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl;
 

@@ -288,9 +288,9 @@ public class PresentingViewModel : ObservableObjects
     public void applayEdit(SongModel songModel)
     {
         OpenedSongModel = songModel;
-        if (selectedSongFromLibrary != -1 && listOfSongsInPlayList.Count > 0)
+        if (SelectedSongFromPlaylist != -1 && listOfSongsInPlayList.Count > 0)
         {
-            listOfSongsInPlayList[selectedSongFromLibrary] = songModel;
+            listOfSongsInPlayList[SelectedSongFromPlaylist] = songModel;
         }
     }
 

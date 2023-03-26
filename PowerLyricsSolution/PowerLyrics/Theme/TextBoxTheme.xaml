@@ -6,6 +6,7 @@
         <Setter Property="CaretBrush" Value="White"/>
         <Setter Property="SelectionBrush" Value="#c9c8cf"/>
         <Setter Property="SelectionOpacity" Value="0.25"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
     </Style>
     
 </ResourceDictionary>

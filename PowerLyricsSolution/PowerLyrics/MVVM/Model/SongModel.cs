@@ -32,6 +32,8 @@ public class SongModel
         lyricTypeQueue = new List<LyricType>();
         LyricModels = new List<LyricModel>();
         isSelected = false;
+        number = 0;
+        name = "New song";
     }
 
     public SongModel(SongModel copy)

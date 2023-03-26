@@ -101,6 +101,42 @@
             BorderBrush="Black">
             <StackPanel Orientation="Vertical">
                 <Label Content="EDIT TOOLS" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15" Margin="0,0,0,2" />
+                <Label Content="Song" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,0,0,2" />
+                <StackPanel Orientation="Horizontal">
+                    <Border
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        BorderBrush="#c9c8cf"
+                        Margin="3"
+                        Padding="2">
+                        <TextBox
+                            Width="25"
+                            FontSize="18"
+                            Text="{Binding Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            TextAlignment="Right"
+                            Foreground="White"
+                            PreviewTextInput="UIElement_OnPreviewTextInput" />
+                    </Border>
+                    <Border
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        BorderBrush="#c9c8cf"
+                        Margin="3">
+                        <TextBox
+                            Padding="2"
+                            Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="20"
+                            Width="348"
+                            TextWrapping="Wrap"
+                            BorderThickness="0"
+                            Margin="0,0,0,2"
+                            
+                            AcceptsReturn="True"
+                            SpellCheck.IsEnabled="True" />
+                    </Border>
+                </StackPanel>
                 <Label Content="Text" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,0,0,2" />
                 <Border
                     BorderThickness="1"
