@@ -56,7 +56,7 @@ public class PresentingViewModel : ObservableObjects
         get { return _selectedSongFromPlaylist; }
         set
         {
-            if (_selectedSongFromPlaylist != -1)
+            if (_selectedSongFromPlaylist != -1 && _selectedSongFromPlaylist < listOfSongsInPlayList.Count)
             {
                 listOfSongsInPlayList[_selectedSongFromPlaylist].isSelected = false;
             }

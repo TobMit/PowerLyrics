@@ -47,6 +47,9 @@ public class DataLoader
             songs.Add(tmpSongModel);
         }
 
+        //sort songs by id
+        songs = new ObservableCollection<SongModel>(songs.OrderBy(x => x.number));
+
         return songs;
     }
 
