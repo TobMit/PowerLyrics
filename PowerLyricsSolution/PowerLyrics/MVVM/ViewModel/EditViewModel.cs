@@ -161,6 +161,23 @@ public class EditViewModel : ObservableObjects
         }
     }
 
+    private LyricType _lyricType;
+
+    public LyricType LyricType
+    {
+        get { return _lyricType; }
+        set
+        {
+            _lyricType = value;
+            if (!loadingForEdit)
+            {
+                applyChanges();
+            }
+
+            OnPropertyChanged();
+        }
+    }
+
 
     public EditViewModel()
     {
@@ -183,6 +200,7 @@ public class EditViewModel : ObservableObjects
             this.Fontfamily = openSong.LyricModels[selectedSlideNumber].fontFamily;
             this.FontSize = openSong.LyricModels[selectedSlideNumber].fontSize;
             this.TextAlignment = openSong.LyricModels[selectedSlideNumber].textAligment;
+            this.LyricType = openSong.LyricModels[selectedSlideNumber].LyricType;
             loadingForEdit = false;
         });
 
@@ -223,6 +241,7 @@ public class EditViewModel : ObservableObjects
             openSong.LyricModels[selectedSlideNumber].fontSize = (int)this.FontSize;
             openSong.LyricModels[selectedSlideNumber].fontFamily = this.Fontfamily;
             openSong.LyricModels[selectedSlideNumber].textAligment = this.TextAlignment;
+            openSong.LyricModels[selectedSlideNumber].LyricType = this.LyricType;
             ObservableCollection<Slide> tmp = textParser.getSlidesFromOpenSong(openSong.LyricModels);
             tmp[selectedSlideNumber].isSelected = true;
             openSongSlides = tmp;
