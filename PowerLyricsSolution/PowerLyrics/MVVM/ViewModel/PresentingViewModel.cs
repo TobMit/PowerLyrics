@@ -2,7 +2,9 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Windows.Input;
 using PowerLyrics.Core;
 using PowerLyrics.Core.DataLoader;
 using PowerLyrics.Core.TextParser;
@@ -234,6 +236,33 @@ public class PresentingViewModel : ObservableObjects
             selectedSlide = -1;
             SelectedSongFromPlaylist = listOfSongsInPlayList.Count - 1;
             actualSlidePreviewControl();
+        } else if (OpenedSongModel != null)
+        {
+            listOfSongsInPlayList.Add(new SongModel(OpenedSongModel));
+            listOfSongsInPlayList[listOfSongsInPlayList.Count - 1].id =
+                listOfSongsInPlayList.Count - 1; //aby som vedel spravne mazat z listu
+            selectedSlide = -1;
+            SelectedSongFromPlaylist = listOfSongsInPlayList.Count - 1;
+            actualSlidePreviewControl();
+        }
+    }
+
+    public void key(KeyEventArgs keyEvent)
+    {
+        if (keyEvent.Key == Key.Right)
+        {
+            if (selectedSlide < lyricArray.Count -1)
+            {
+                selectedSlide++;
+                actualSlidePreviewControl();
+            } 
+        } else if (keyEvent.Key == Key.Left)
+        {
+            if (selectedSlide > 0)
+            {
+                selectedSlide--;
+                actualSlidePreviewControl();
+            }
         }
     }
 

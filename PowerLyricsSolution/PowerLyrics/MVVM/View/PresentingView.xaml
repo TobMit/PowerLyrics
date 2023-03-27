@@ -87,6 +87,10 @@
             </Grid>
         </Border>
         <ListView 
+            KeyUp="ListViewSlides_OnKeyUp"
+            KeyboardNavigation.ControlTabNavigation="None"
+            FocusVisualStyle="{x:Null}"
+            Focusable="True"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             Grid.Row="1"
             Grid.Column="1"
@@ -102,6 +106,7 @@
                     <WrapPanel />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
+
         </ListView>
     </Grid>
 </UserControl>
