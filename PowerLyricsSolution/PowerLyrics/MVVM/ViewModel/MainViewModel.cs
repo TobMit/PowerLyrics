@@ -60,6 +60,7 @@ namespace PowerLyrics.MVVM.ViewModel
             inicialiseButtons();
             _presentingView = new PresentingView();
             _presentingViewModel = _presentingView.getDataContext();
+            _presentingViewModel.PresentingView = _presentingView;
             _editView = new EditView();
             _editViewModel = _editView.getDataContext();
             

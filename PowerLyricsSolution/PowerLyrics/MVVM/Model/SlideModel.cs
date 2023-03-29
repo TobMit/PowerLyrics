@@ -8,14 +8,25 @@ using System.Windows.Controls;
 
 namespace PowerLyrics.MVVM.Model
 {
-    public class Slide
+    public class Slide : ObservableObjects
     {
         public UserControl? UserControl { get; set; }
         public SlideType SlideType { get; set; }
         public LyricType LyricType { get; set; }
         public int id { get; set; }
         public string dividerText { get; set; }
-        public bool isSelected { get; set; }
+        private bool _isSelected;
+        public bool isSelected {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Slide()
         {

@@ -9,10 +9,12 @@
                         GroupName="Sliders"
                         Style="{StaticResource SlideThemeViewer}"
                         Command="{Binding ElementName=ListViewSlides, Path=DataContext.SelectSlideCommand}"
+                        IsChecked="{Binding isSelected, Mode=TwoWay}"
                         CommandParameter="{Binding id}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding SlideType}" Value="Divider">
                 <Setter Property="Template">

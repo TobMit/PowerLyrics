@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
+using System.Windows.Controls;
 using System.Windows.Input;
 using PowerLyrics.Core;
 using PowerLyrics.Core.DataLoader;
@@ -23,10 +25,11 @@ public class PresentingViewModel : ObservableObjects
     private TextParser textParser;
     private bool isLive = false;
     private int selectedSongFromLibrary = -1;
+    public PresentingView PresentingView { get; set; }
 
     private int _selectedSlide = -1;
 
-    private int selectedSlide
+    public int selectedSlide
     {
         get { return _selectedSlide; }
         set
@@ -40,14 +43,15 @@ public class PresentingViewModel : ObservableObjects
 
                 _selectedSlide = value;
                 lyricArray[_selectedSlide].isSelected = true;
-                lyricArray =
-                    new ObservableCollection<Slide>(
-                        lyricArray); //! takto to je aby som forsol aktualizaciu obrazovky
+                ListViewItem item = PresentingView.ListViewSlides.ItemContainerGenerator.ContainerFromIndex(_selectedSlide) as ListViewItem;
+                item.Focus();
+
             }
             else
             {
                 _selectedSlide = value;
             }
+            OnPropertyChanged();
         }
     }
 
@@ -70,8 +74,7 @@ public class PresentingViewModel : ObservableObjects
             {
                 listOfSongsInPlayList[_selectedSongFromPlaylist].isSelected = true;
             }
-
-            listOfSongsInPlayList = new ObservableCollection<SongModel>(listOfSongsInPlayList);
+            
         }
     }
 

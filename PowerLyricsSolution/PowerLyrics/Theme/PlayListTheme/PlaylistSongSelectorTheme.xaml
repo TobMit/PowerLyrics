@@ -6,7 +6,7 @@
                 <ControlTemplate TargetType="ListViewItem">
 
                     <RadioButton
-                        GroupName="Library"
+                        GroupName="slides"
                         Style="{StaticResource SongPlTheme}"
                         Command="{Binding ElementName=ListViewLibrary, Path=DataContext.SelectPlaylistSongCommand}"
                         CommandParameter="{Binding id}" />
