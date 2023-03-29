@@ -8,18 +8,35 @@ using System.Windows.Controls;
 
 namespace PowerLyrics.MVVM.Model
 {
-    public class Slide
+    public class Slide : ObservableObjects
     {
         public UserControl? UserControl { get; set; }
         public SlideType SlideType { get; set; }
         public LyricType LyricType { get; set; }
         public int id { get; set; }
-        public string dividerText { get; set; }
-        public bool isSelected { get; set; }
+        public string labelText { get; set; }
+
+        private bool _isSelected;
+        public bool isSelected {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Slide()
         {
-            
+            this.UserControl = null;
+            this.SlideType = SlideType.Slide;
+            this.LyricType = LyricType.Undefined;
+            this.id = 0;
+            this.labelText = "";
+            this.isSelected = false;
         }
         //copy constructor for Slide
         public Slide(Slide copy)
@@ -27,7 +44,7 @@ namespace PowerLyrics.MVVM.Model
             UserControl = copy.UserControl;
             SlideType = copy.SlideType;
             id = copy.id;
-            dividerText = copy.dividerText;
+            labelText = copy.labelText;
             LyricType = copy.LyricType;
             isSelected = false;
         }

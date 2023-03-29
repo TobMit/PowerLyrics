@@ -216,6 +216,21 @@ public class EditViewModel : ObservableObjects
         }
     }
 
+    private int _serialNuber;
+    public int SerialNuber
+    {
+        get { return _serialNuber; }
+        set
+        {
+            _serialNuber = value;
+            if (!loadingForEdit)
+            {
+                applyChanges();
+            }
+            OnPropertyChanged();
+        }
+    }
+
 
     public EditViewModel()
     {
@@ -279,7 +294,7 @@ public class EditViewModel : ObservableObjects
             // zmeny sa môžu aplikovať iba keď je niečo vybraté
             if (isSelectedSlide())
             {
-                openSong.LyricModels.Insert(selectedSlideNumber + 1, openSong.LyricModels[selectedSlideNumber]);
+                openSong.LyricModels.Insert(selectedSlideNumber + 1, new LyricModel(openSong.LyricModels[selectedSlideNumber]));
                 openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
                 SelectSlide(selectedSlideNumber + 1);
             }
@@ -307,6 +322,7 @@ public class EditViewModel : ObservableObjects
         this.FontSize = openSong.LyricModels[selectedSlideNumber].fontSize;
         this.TextAlignment = openSong.LyricModels[selectedSlideNumber].textAligment;
         this.LyricType = openSong.LyricModels[selectedSlideNumber].LyricType;
+        this.SerialNuber = openSong.LyricModels[selectedSlideNumber].serialNuber;
         loadingForEdit = false;
     }
 
@@ -321,6 +337,7 @@ public class EditViewModel : ObservableObjects
             openSong.LyricModels[selectedSlideNumber].fontFamily = this.Fontfamily;
             openSong.LyricModels[selectedSlideNumber].textAligment = this.TextAlignment;
             openSong.LyricModels[selectedSlideNumber].LyricType = this.LyricType;
+            openSong.LyricModels[selectedSlideNumber].serialNuber = this.SerialNuber;
             ObservableCollection<Slide> tmp = textParser.getSlidesFromOpenSong(openSong.LyricModels);
             tmp[selectedSlideNumber].isSelected = true;
             openSongSlides = tmp;

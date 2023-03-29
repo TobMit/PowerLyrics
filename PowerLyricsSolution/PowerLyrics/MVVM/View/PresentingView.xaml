@@ -87,12 +87,18 @@
             </Grid>
         </Border>
         <ListView 
+            KeyUp="ListViewSlides_OnKeyUp"
+            KeyboardNavigation.ControlTabNavigation="none"
+            FocusVisualStyle="{x:Null}"
+            Focusable="true"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             Grid.Row="1"
             Grid.Column="1"
             Background="Transparent"
             ItemsSource="{Binding lyricArray}"
             ItemContainerStyle="{StaticResource SlidesTheme}"
+            SelectedIndex="{Binding selectedSlide, Mode=OneWay}"
+            FlowDirection="LeftToRight"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             BorderThickness="0"
@@ -102,6 +108,7 @@
                     <WrapPanel />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
+
         </ListView>
     </Grid>
 </UserControl>

@@ -60,6 +60,7 @@ namespace PowerLyrics.MVVM.ViewModel
             inicialiseButtons();
             _presentingView = new PresentingView();
             _presentingViewModel = _presentingView.getDataContext();
+            _presentingViewModel.PresentingView = _presentingView;
             _editView = new EditView();
             _editViewModel = _editView.getDataContext();
             
@@ -76,9 +77,7 @@ namespace PowerLyrics.MVVM.ViewModel
 
             GoLiveCommand = new RelayCommand(o =>
             {
-                if (presenting) {
-                    _presentingViewModel.GoLive((bool)o);
-                }
+                _presentingViewModel.GoLive((bool)o);
             });
             
             AddSongToPlayListCommand = new RelayCommand(o =>
@@ -118,6 +117,7 @@ namespace PowerLyrics.MVVM.ViewModel
             SetEditPageCommand = new RelayCommand(o =>
             {
                 _UserControl = _editView;
+                _presentingViewModel.selectedSlide = -1; // aby ked sa preklikne do edit page a zrusi zdielanie tak aby nenabehol slide
                 presenting = false;
                 _editViewModel.openSong = _presentingViewModel.getOpenSong();
             });

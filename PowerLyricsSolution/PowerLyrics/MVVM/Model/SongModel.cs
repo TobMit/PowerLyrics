@@ -5,7 +5,7 @@ using PowerLyrics.Core;
 
 namespace PowerLyrics.MVVM.Model;
 
-public class SongModel
+public class SongModel : ObservableObjects
 {
     public int number { get; set; }
     
@@ -19,8 +19,20 @@ public class SongModel
     public ArrayList bridge { get; set; }
 
     public List<LyricType> lyricTypeQueue { get; set; }
-    
-    public bool isSelected { get; set; }
+
+    private bool _isSelected;
+    public bool isSelected
+    {
+        get
+        {
+            return _isSelected;
+        }
+        set
+        {
+            _isSelected = value;
+            OnPropertyChanged();
+        }
+    }
 
     public List<LyricModel> LyricModels { get; set; }
 

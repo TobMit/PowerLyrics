@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.TextFormatting;
 using PowerLyrics.MVVM.ViewModel;
 
@@ -15,4 +16,10 @@ public partial class PresentingView : UserControl
     {
         return this.presentingDataContext;
     }
+
+    private void ListViewSlides_OnKeyUp(object sender, KeyEventArgs e)
+    {
+        this.presentingDataContext.key(e);
+    }
+
 }
