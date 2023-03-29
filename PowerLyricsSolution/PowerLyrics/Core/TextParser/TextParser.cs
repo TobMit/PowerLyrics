@@ -64,24 +64,57 @@ namespace PowerLyrics.Core.TextParser
             int oldSerialNumber = 1;
             foreach (var item in song)
             {
-                /*if (oldType == LyricType.Undefined || oldType != item.LyricType || oldSerialNumber != item.serialNuber)
-                {
-                    oldType = item.LyricType;
-                    oldSerialNumber = item.serialNuber;
-                    tmp.Add(new Slide()
-                    {
-                        SlideType = SlideType.Divider,
-                        dividerText = item.serialNuber + ". " + item.LyricType.ToString(),
-                    });
-
-
-                    id++;
-                }*/
                 Slide slide = this.getSlideFromLyricModel(item);
                 slide.id = id;
                 tmp.Add(slide);
                 id++;
             }
+            return tmp;
+        }
+
+        public ObservableCollection<Slide> getSlidesFromOpenSong(ObservableCollection<SongModel> listOfSong, List<SlideSongIndexingModel> slideSongIndexing)
+        {
+            ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
+            int id = 0;
+            foreach (var song in listOfSong)
+            {
+                // display name of song
+                Slide tmpSlide = new Slide();
+                tmpSlide.SlideType = SlideType.Divider;
+                tmpSlide.labelText = song.number + " " + song.name;
+                tmpSlide.id = id;
+                tmp.Add(tmpSlide);
+                id++;
+
+                //set index of first slide of song
+                SlideSongIndexingModel tmpSongIndexingModel = new SlideSongIndexingModel();
+                tmpSongIndexingModel.indexOfFirstSlide = id;
+                
+
+                // set name of song
+                LyricModel tmpLyricModel = new LyricModel();
+                tmpLyricModel.text = song.name;
+                tmpLyricModel.LyricType = LyricType.Verse;
+                tmpLyricModel.serialNuber = 0;
+                //tmpLyricModel.text = "";
+                tmpLyricModel.LyricType = LyricType.Undefined;
+                Slide tmpSlideSongName = getSlideFromLyricModel(tmpLyricModel);
+                tmpSlideSongName.id = id;
+                tmp.Add(tmpSlideSongName);
+                id++;
+
+                // parse song and add slides
+                foreach (LyricModel lyricModel in song.LyricModels)
+                {
+                    Slide slide = this.getSlideFromLyricModel(lyricModel);
+                    slide.id = id;
+                    tmp.Add(slide);
+                    id++;
+                }
+                tmpSongIndexingModel.indexOfLastSlide = id - 1; // pretože sa mi čislo posledného slide zvyšilo v cykle
+                slideSongIndexing.Add(tmpSongIndexingModel);
+            }
+            
             return tmp;
         }
 
@@ -92,7 +125,7 @@ namespace PowerLyrics.Core.TextParser
             slide.SlideType = SlideType.Slide;
             slide.LyricType = lyricModel.LyricType;
             slide.isSelected = false;
-            slide.labelText = lyricModel.LyricType.ToString() + " " + lyricModel.serialNuber;
+            slide.labelText = lyricModel.LyricType == LyricType.Undefined ? "Name" : lyricModel.LyricType.ToString() + " " + lyricModel.serialNuber;
             return slide;
         }
     }

@@ -15,6 +15,7 @@ namespace PowerLyrics.MVVM.Model
         public LyricType LyricType { get; set; }
         public int id { get; set; }
         public string labelText { get; set; }
+
         private bool _isSelected;
         public bool isSelected {
             get
@@ -30,7 +31,12 @@ namespace PowerLyrics.MVVM.Model
 
         public Slide()
         {
-            
+            this.UserControl = null;
+            this.SlideType = SlideType.Slide;
+            this.LyricType = LyricType.Undefined;
+            this.id = 0;
+            this.labelText = "";
+            this.isSelected = false;
         }
         //copy constructor for Slide
         public Slide(Slide copy)

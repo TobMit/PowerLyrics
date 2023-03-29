@@ -26,6 +26,7 @@ public class PresentingViewModel : ObservableObjects
     private bool isLive = false;
     private int selectedSongFromLibrary = -1;
     public PresentingView PresentingView { get; set; }
+    private List<SlideSongIndexingModel> SlideSongIndexingModelList;
 
     private int _selectedSlide = -1;
 
@@ -43,17 +44,17 @@ public class PresentingViewModel : ObservableObjects
 
                 _selectedSlide = value;
                 lyricArray[_selectedSlide].isSelected = true;
-                ListViewItem item = PresentingView.ListViewSlides.ItemContainerGenerator.ContainerFromIndex(_selectedSlide) as ListViewItem;
-                item.Focus();
-
+                setFocus(_selectedSlide);
             }
             else
             {
                 _selectedSlide = value;
             }
+
             OnPropertyChanged();
         }
     }
+
 
     private int _selectedSongFromPlaylist = -1;
 
@@ -73,8 +74,8 @@ public class PresentingViewModel : ObservableObjects
             if (listOfSongsInPlayList.Count > 0 && _selectedSongFromPlaylist != -1)
             {
                 listOfSongsInPlayList[_selectedSongFromPlaylist].isSelected = true;
+                handleSelectPlaylist();
             }
-            
         }
     }
 
@@ -102,7 +103,12 @@ public class PresentingViewModel : ObservableObjects
         set
         {
             _openedSongModel = value;
-            lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.LyricModels);
+            //toto je tu kvoli tomu aby sa použil iný parsovač na piesne
+            if (listOfSongsInPlayList.Count == 0)
+            {
+                lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.LyricModels);
+            }
+
             OnPropertyChanged();
         }
     }
@@ -165,6 +171,7 @@ public class PresentingViewModel : ObservableObjects
 
         textParser = new TextParser();
         lyricArray = new ObservableCollection<Slide>();
+        SlideSongIndexingModelList = new List<SlideSongIndexingModel>();
     }
 
     private void inicialiseButtons()
@@ -198,7 +205,6 @@ public class PresentingViewModel : ObservableObjects
         if (SelectedSongFromPlaylist - 1 >= 0)
         {
             OpenedSongModel = listOfSongsInPlayList[--SelectedSongFromPlaylist];
-            selectedSlide = -1;
             actualSlidePreviewControl();
         }
     }
@@ -208,7 +214,6 @@ public class PresentingViewModel : ObservableObjects
         if (SelectedSongFromPlaylist + 1 < listOfSongsInPlayList.Count)
         {
             OpenedSongModel = listOfSongsInPlayList[++SelectedSongFromPlaylist];
-            selectedSlide = -1;
             actualSlidePreviewControl();
         }
     }
@@ -223,9 +228,12 @@ public class PresentingViewModel : ObservableObjects
                 listOfSongsInPlayList[i].id = i;
             }
 
-            listOfSongsInPlayList = new ObservableCollection<SongModel>(listOfSongsInPlayList);
+            //listOfSongsInPlayList = new ObservableCollection<SongModel>(listOfSongsInPlayList);
             selectedSlide = -1;
             actualSlidePreviewControl();
+
+            SlideSongIndexingModelList.Clear();
+            lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
         }
     }
 
@@ -236,15 +244,22 @@ public class PresentingViewModel : ObservableObjects
             listOfSongsInPlayList.Add(new SongModel(listOfSongs[selectedSongFromLibrary]));
             listOfSongsInPlayList[listOfSongsInPlayList.Count - 1].id =
                 listOfSongsInPlayList.Count - 1; //aby som vedel spravne mazat z listu
-            selectedSlide = -1;
+
+            SlideSongIndexingModelList.Clear();
+            lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+
             SelectedSongFromPlaylist = listOfSongsInPlayList.Count - 1;
             actualSlidePreviewControl();
-        } else if (OpenedSongModel != null)
+        }
+        else if (OpenedSongModel != null)
         {
             listOfSongsInPlayList.Add(new SongModel(OpenedSongModel));
             listOfSongsInPlayList[listOfSongsInPlayList.Count - 1].id =
                 listOfSongsInPlayList.Count - 1; //aby som vedel spravne mazat z listu
-            selectedSlide = -1;
+
+            SlideSongIndexingModelList.Clear();
+            lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+
             SelectedSongFromPlaylist = listOfSongsInPlayList.Count - 1;
             actualSlidePreviewControl();
         }
@@ -254,16 +269,32 @@ public class PresentingViewModel : ObservableObjects
     {
         if (keyEvent.Key == Key.Right)
         {
-            if (selectedSlide < lyricArray.Count -1)
+            if (selectedSlide < lyricArray.Count - 1)
             {
-                selectedSlide++;
+                if (listOfSongsInPlayList.Count == 0)
+                {
+                    selectedSlide++;
+                }
+                else
+                {
+                    handleNextSelectSlidePlaylist();
+                }
+
                 actualSlidePreviewControl();
-            } 
-        } else if (keyEvent.Key == Key.Left)
+            }
+        }
+        else if (keyEvent.Key == Key.Left)
         {
             if (selectedSlide > 0)
             {
-                selectedSlide--;
+                if (listOfSongsInPlayList.Count == 0)
+                {
+                    selectedSlide--;
+                }
+                else
+                {
+                    handlePrevSelectSlidePlaylist();
+                }
                 actualSlidePreviewControl();
             }
         }
@@ -326,4 +357,39 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    private void setFocus(int index)
+    {
+        ListViewItem item =
+            PresentingView.ListViewSlides.ItemContainerGenerator.ContainerFromIndex(_selectedSlide) as ListViewItem;
+        item.Focus();
+    }
+
+    private void handleSelectPlaylist()
+    {
+        selectedSlide = SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfFirstSlide;
+    }
+
+    private void handleNextSelectSlidePlaylist()
+    {
+        if (selectedSlide < SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfLastSlide)
+        {
+            selectedSlide++;
+        }
+        else
+        {
+            NextSongInPlaylist();
+        }
+    }
+
+    private void handlePrevSelectSlidePlaylist()
+    {
+        if (selectedSlide > SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfFirstSlide)
+        {
+            selectedSlide--;
+        }
+        else
+        {
+            PrevSongInPlaylist();
+        }
+    }
 }

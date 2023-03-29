@@ -77,9 +77,7 @@ namespace PowerLyrics.MVVM.ViewModel
 
             GoLiveCommand = new RelayCommand(o =>
             {
-                if (presenting) {
-                    _presentingViewModel.GoLive((bool)o);
-                }
+                _presentingViewModel.GoLive((bool)o);
             });
             
             AddSongToPlayListCommand = new RelayCommand(o =>
@@ -119,6 +117,7 @@ namespace PowerLyrics.MVVM.ViewModel
             SetEditPageCommand = new RelayCommand(o =>
             {
                 _UserControl = _editView;
+                _presentingViewModel.selectedSlide = -1;
                 presenting = false;
                 _editViewModel.openSong = _presentingViewModel.getOpenSong();
             });
