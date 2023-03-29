@@ -117,7 +117,7 @@ namespace PowerLyrics.MVVM.ViewModel
             SetEditPageCommand = new RelayCommand(o =>
             {
                 _UserControl = _editView;
-                _presentingViewModel.selectedSlide = -1;
+                _presentingViewModel.selectedSlide = -1; // aby ked sa preklikne do edit page a zrusi zdielanie tak aby nenabehol slide
                 presenting = false;
                 _editViewModel.openSong = _presentingViewModel.getOpenSong();
             });

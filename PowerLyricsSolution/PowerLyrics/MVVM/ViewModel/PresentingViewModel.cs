@@ -156,6 +156,8 @@ public class PresentingViewModel : ObservableObjects
 
     public PresentingViewModel()
     {
+        selectedSongFromLibrary = -1;
+
         audieceWindow = new AudiencWindow();
         audieceWindow.Show();
 
@@ -363,10 +365,14 @@ public class PresentingViewModel : ObservableObjects
     public void applayEdit(SongModel songModel)
     {
         OpenedSongModel = songModel;
-        if (SelectedSongFromPlaylist != -1 && listOfSongsInPlayList.Count > 0)
+        if (lyricArray[0].SlideType == SlideType.Divider)
         {
             listOfSongsInPlayList[SelectedSongFromPlaylist] = songModel;
+            SlideSongIndexingModelList.Clear();
+            lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
         }
+
+        selectedSongFromLibrary = -1;
     }
 
     private void setFocus(int index)
