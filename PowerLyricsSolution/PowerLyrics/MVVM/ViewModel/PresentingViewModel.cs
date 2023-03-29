@@ -104,7 +104,7 @@ public class PresentingViewModel : ObservableObjects
         {
             _openedSongModel = value;
             //toto je tu kvoli tomu aby sa použil iný parsovač na piesne
-            if (listOfSongsInPlayList.Count == 0)
+            if (selectedSongFromLibrary > -1)
             {
                 lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.LyricModels);
             }
@@ -196,13 +196,21 @@ public class PresentingViewModel : ObservableObjects
             SelectedSongFromPlaylist = Int32.Parse(o.ToString()); // mam info o id 
             OpenedSongModel = listOfSongsInPlayList[SelectedSongFromPlaylist];
             selectedSlide = -1;
+            selectedSongFromLibrary = -1;
+            // ak by bol scenár že mám niečo v playliste a potom vyberiem niečo z knižnice a zase kliknem na playlist musim refreshnúť zobrazené slide
+            if (lyricArray[0].SlideType != SlideType.Divider)
+            {
+                SlideSongIndexingModelList.Clear();
+                lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+            }
             actualSlidePreviewControl();
         });
     }
 
     public void PrevSongInPlaylist()
     {
-        if (SelectedSongFromPlaylist - 1 >= 0)
+        // ak je prvý slide divider tak sa zobrazuje playlist
+        if (SelectedSongFromPlaylist - 1 >= 0 && lyricArray[0].SlideType == SlideType.Divider)
         {
             OpenedSongModel = listOfSongsInPlayList[--SelectedSongFromPlaylist];
             actualSlidePreviewControl();
@@ -211,7 +219,8 @@ public class PresentingViewModel : ObservableObjects
 
     public void NextSongInPlaylist()
     {
-        if (SelectedSongFromPlaylist + 1 < listOfSongsInPlayList.Count)
+        // ak je prvý slide divider tak sa zobrazuje playlist
+        if (SelectedSongFromPlaylist + 1 < listOfSongsInPlayList.Count && lyricArray[0].SlideType == SlideType.Divider)
         {
             OpenedSongModel = listOfSongsInPlayList[++SelectedSongFromPlaylist];
             actualSlidePreviewControl();
@@ -271,7 +280,8 @@ public class PresentingViewModel : ObservableObjects
         {
             if (selectedSlide < lyricArray.Count - 1)
             {
-                if (listOfSongsInPlayList.Count == 0)
+                // ak je prvy divider zobrazuje sa playlist
+                if (lyricArray[0].SlideType != SlideType.Divider)
                 {
                     selectedSlide++;
                 }
@@ -287,7 +297,8 @@ public class PresentingViewModel : ObservableObjects
         {
             if (selectedSlide > 0)
             {
-                if (listOfSongsInPlayList.Count == 0)
+                // ak je prvy divider zobrazuje sa playlist
+                if (lyricArray[0].SlideType != SlideType.Divider)
                 {
                     selectedSlide--;
                 }
@@ -295,6 +306,7 @@ public class PresentingViewModel : ObservableObjects
                 {
                     handlePrevSelectSlidePlaylist();
                 }
+
                 actualSlidePreviewControl();
             }
         }
