@@ -24,7 +24,7 @@
                             <Border Width="10000000000"
                                     BorderThickness="0,0,0,5"
                                     BorderBrush="#f00">
-                                <Label Content="{Binding dividerText}"
+                                <Label Content="{Binding labelText}"
                                        Foreground="White"
                                        FontSize="20"/>
                             </Border>

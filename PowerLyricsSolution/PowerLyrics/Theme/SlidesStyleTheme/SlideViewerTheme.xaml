@@ -20,12 +20,12 @@
                                 <Viewbox Stretch="Uniform">
                                     <ContentPresenter Content="{Binding UserControl}" RenderOptions.BitmapScalingMode="Fant"/>
                                 </Viewbox>
-                                <TextBlock Text="test"
+                                <TextBlock Text="{Binding labelText}"
                                        Width="180"
                                        Foreground="White"
                                        Background="#636365"
                                        TextAlignment="Center"
-                                       FontSize="16"
+                                       FontSize="15"
                                        Padding="-15,-3,0,0"/>
                             </StackPanel>
                             

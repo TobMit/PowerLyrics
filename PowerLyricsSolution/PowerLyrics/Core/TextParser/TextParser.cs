@@ -92,6 +92,7 @@ namespace PowerLyrics.Core.TextParser
             slide.SlideType = SlideType.Slide;
             slide.LyricType = lyricModel.LyricType;
             slide.isSelected = false;
+            slide.labelText = lyricModel.LyricType.ToString() + " " + lyricModel.serialNuber;
             return slide;
         }
     }
