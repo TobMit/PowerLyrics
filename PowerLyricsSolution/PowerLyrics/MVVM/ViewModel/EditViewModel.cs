@@ -294,7 +294,7 @@ public class EditViewModel : ObservableObjects
             // zmeny sa môžu aplikovať iba keď je niečo vybraté
             if (isSelectedSlide())
             {
-                openSong.LyricModels.Insert(selectedSlideNumber + 1, openSong.LyricModels[selectedSlideNumber]);
+                openSong.LyricModels.Insert(selectedSlideNumber + 1, new LyricModel(openSong.LyricModels[selectedSlideNumber]));
                 openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
                 SelectSlide(selectedSlideNumber + 1);
             }

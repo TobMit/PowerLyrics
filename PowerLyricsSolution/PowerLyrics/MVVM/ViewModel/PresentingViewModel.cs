@@ -181,6 +181,10 @@ public class PresentingViewModel : ObservableObjects
         SelectSlideCommand = new RelayCommand(o =>
         {
             selectedSlide = Int32.Parse(o.ToString());
+            if (lyricArray[0].SlideType == SlideType.Divider)
+            {
+                handleClickSelectSlidePlaylist();
+            }
             actualSlidePreviewControl();
         });
 
@@ -337,7 +341,8 @@ public class PresentingViewModel : ObservableObjects
     {
         if (isLive)
         {
-            if (selectedSlide != -1)
+            // pre istotu ak by sa sem dostal nejakou náhodov divider ktorý sa nedá zobraziť
+            if (selectedSlide != -1 && lyricArray[selectedSlide].SlideType != SlideType.Divider)
             {
                 LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[selectedSlide].UserControl);
             }
@@ -389,6 +394,7 @@ public class PresentingViewModel : ObservableObjects
 
     private void handleNextSelectSlidePlaylist()
     {
+        selectedSongFromLibrary = -1;
         if (selectedSlide < SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfLastSlide)
         {
             selectedSlide++;
@@ -401,6 +407,7 @@ public class PresentingViewModel : ObservableObjects
 
     private void handlePrevSelectSlidePlaylist()
     {
+        selectedSongFromLibrary = -1;
         if (selectedSlide > SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfFirstSlide)
         {
             selectedSlide--;
@@ -408,6 +415,20 @@ public class PresentingViewModel : ObservableObjects
         else
         {
             PrevSongInPlaylist();
+        }
+    }
+
+    private void handleClickSelectSlidePlaylist()
+    {
+        for (int i = 0; i < SlideSongIndexingModelList.Count; i++)
+        {
+            if (selectedSlide >= SlideSongIndexingModelList[i].indexOfFirstSlide && selectedSlide <= SlideSongIndexingModelList[i].indexOfLastSlide)
+            {
+                int tmpSelectedSlide = selectedSlide;
+                SelectedSongFromPlaylist = i;
+                selectedSlide = tmpSelectedSlide;
+                break;
+            }
         }
     }
 }
