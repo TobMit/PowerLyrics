@@ -357,6 +357,18 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    public void OpenSong()
+    {
+        songsLoader.loadFile();
+        switch (songsLoader.openedFileType)
+        {
+            case FileType.Song:
+                OpenedSongModel = songsLoader.getSongModel();
+                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
+                break;
+        }
+    }
+
     public void closeWindow()
     {
         audieceWindow.Close();
@@ -370,11 +382,14 @@ public class PresentingViewModel : ObservableObjects
     public void applayEdit(SongModel songModel)
     {
         OpenedSongModel = songModel;
-        if (lyricArray[0].SlideType == SlideType.Divider)
+        if (lyricArray.Count != 0)
         {
-            listOfSongsInPlayList[SelectedSongFromPlaylist] = songModel;
-            SlideSongIndexingModelList.Clear();
-            lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+            if (lyricArray[0].SlideType == SlideType.Divider)
+            {
+                listOfSongsInPlayList[SelectedSongFromPlaylist] = songModel;
+                SlideSongIndexingModelList.Clear();
+                lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+            }
         }
 
         selectedSongFromLibrary = -1;

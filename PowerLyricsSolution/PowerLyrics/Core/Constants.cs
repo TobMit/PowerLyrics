@@ -23,6 +23,13 @@ namespace PowerLyrics.Core
         Divider
     }
 
+    public enum FileType
+    {
+        Song,
+        PlayList,
+        undefined
+    }
+
     class constants
     {
         public const int FONT_SIZE = 25;

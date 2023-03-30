@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Shapes;
+using Microsoft.Win32;
 using PowerLyrics.MVVM.Model;
 
 namespace PowerLyrics.Core.DataLoader;
@@ -14,11 +16,17 @@ public class DataLoader
     private static Regex _regex;
     private static string[] paths;
     private TextParser.TextParser textParser;
+    public FileType openedFileType { get; set; }
+    // ak je nacitany súbor môjho formátu
+    bool myFileType = false;
+    private SongModel songModel;
+
     public DataLoader()
     {
         _regex = new Regex(@"\s+");
         paths = Directory.GetFiles("Songs");
         textParser = new TextParser.TextParser();
+        openedFileType = FileType.undefined;
     }
 
     private string loadSong(string path)
@@ -34,13 +42,8 @@ public class DataLoader
         {
             string loadedSong = this.loadSong(path);
             SongModel tmpSongModel = this.processSong(loadedSong);
-            string[] splitedPath = path.Split(@"\");
-            //z cesty vyberiem meno suboru
-            string rawName = splitedPath[splitedPath.Length - 1];
-            //rozdelim 
-            string[] splitedRawName = rawName.Split(".");
-            tmpSongModel.number = Int32.Parse(splitedRawName[0]);
-            tmpSongModel.name = splitedRawName[1].Remove(0,1);
+            tmpSongModel.name = getName(path);
+            tmpSongModel.number = getSongNumber(path);
             tmpSongModel.LyricModels = textParser.parseLyric(tmpSongModel);
             songs.Add(tmpSongModel);
         }
@@ -53,6 +56,38 @@ public class DataLoader
         }
 
         return songs;
+    }
+
+    private string getName(string song)
+    {
+        string[] splitedSong = getFileName(song).Split(".");
+        if (splitedSong.Length > 2)
+        {
+            return splitedSong[1].Remove(0, 1);
+        }
+        else
+        {
+            return splitedSong[0];
+        }
+    }
+
+    private int getSongNumber(string song)
+    {
+        string[] splitedSong = getFileName(song).Split(".");
+        if (splitedSong.Length > 2)
+        {
+            return Int32.Parse(splitedSong[0]);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private string getFileName(string path)
+    {
+        string[] splitedPath = path.Split(@"\");
+        return splitedPath[splitedPath.Length - 1];
     }
 
     private SongModel processSong(string song)
@@ -132,5 +167,34 @@ public class DataLoader
         }
         
         return tmpSongModel;
+    }
+
+    public void loadFile()
+    {
+        OpenFileDialog opneFileDialog = new OpenFileDialog();
+        opneFileDialog.Filter = "Text files (*.txt)|*.txt|PowerLyric (*.pwly)|*.pwly";
+        if (opneFileDialog.ShowDialog() == true)
+        {
+            string[] splitedPath = opneFileDialog.FileName.Split(@".");
+            myFileType = !splitedPath[splitedPath.Length - 1].Contains("txt");
+
+            if (myFileType)
+            {
+                // toto je na doprogramovanie
+            }
+            else
+            {
+                openedFileType = FileType.Song;
+                songModel = this.processSong(loadSong(opneFileDialog.FileName));
+                songModel.name = getName(opneFileDialog.FileName);
+                songModel.number = getSongNumber(opneFileDialog.FileName);
+                songModel.LyricModels = textParser.parseLyric(songModel);
+            }
+        }
+    }
+
+    public SongModel getSongModel()
+    {
+        return new SongModel(songModel);
     }
 }
