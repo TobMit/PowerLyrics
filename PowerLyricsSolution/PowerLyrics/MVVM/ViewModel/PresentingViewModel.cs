@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Input;
 using PowerLyrics.Core;
-using PowerLyrics.Core.DataLoader;
+using PowerLyrics.Core.DataHandler;
 using PowerLyrics.Core.TextParser;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;

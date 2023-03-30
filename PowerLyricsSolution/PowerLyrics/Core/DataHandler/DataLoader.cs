@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Shapes;
 using Microsoft.Win32;
 using PowerLyrics.MVVM.Model;
 
-namespace PowerLyrics.Core.DataLoader;
+namespace PowerLyrics.Core.DataHandler;
 
 public class DataLoader
 {
@@ -189,7 +187,7 @@ public class DataLoader
                 songModel.name = getName(opneFileDialog.FileName);
                 songModel.number = getSongNumber(opneFileDialog.FileName);
                 songModel.LyricModels = textParser.parseLyric(songModel);
-            }
+            }   
         }
     }
 

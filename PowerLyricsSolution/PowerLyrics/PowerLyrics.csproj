@@ -77,7 +77,7 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <None Remove="Songs\test.txt" />
-    <None Remove="Core\DataLoader\test.txt" />
+    <None Remove="Core\DataHandler\test.txt" />
     <EmbeddedResource Include="Songs\10. Keď v Teba dúfam.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
