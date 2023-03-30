@@ -370,6 +370,13 @@ public class PresentingViewModel : ObservableObjects
                 OpenedSongModel = songsLoader.getSongModel();
                 lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
                 break;
+            case FileType.PlayList:
+                listOfSongsInPlayList = songsLoader.getPlaylist();
+                SlideSongIndexingModelList.Clear();
+                lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+                SelectedSongFromPlaylist = 0;
+                this.handleSelectPlaylist();
+                break;
         }
     }
 
@@ -378,6 +385,13 @@ public class PresentingViewModel : ObservableObjects
         if (OpenedSongModel != null)
         {
             this.songsSaver.saveSong(OpenedSongModel);
+        }
+    }
+    public void SavePlaylist()
+    {
+        if (listOfSongsInPlayList.Count > 0)
+        {
+            this.songsSaver.savePlaylist(listOfSongsInPlayList);
         }
     }
 

@@ -24,6 +24,7 @@ public class DataLoader
     // ak je nacitany súbor môjho formátu
     bool myFileType = false;
     private SongModel songModel;
+    private ObservableCollection<SongModel> playlist;
 
     public DataLoader()
     {
@@ -239,12 +240,39 @@ public class DataLoader
 
     private void processMyFilePlayList()
     {
-        throw new NotImplementedException();
+        playlist = new ObservableCollection<SongModel>();
+        int count = reader.ReadInt32();
+        for (int i = 0; i < count; i++)
+        {
+            SongModel tmp = new SongModel();
+            tmp.id = i;
+            tmp.number = reader.ReadInt32();
+            tmp.name = reader.ReadString();
+            int count2 = reader.ReadInt32();
+            for (int j = 0; j < count2; j++)
+            {
+                LyricModel tmp2 = new LyricModel();
+                tmp2.text = reader.ReadString();
+                tmp2.fontSize = reader.ReadInt32();
+                tmp2.fontFamily = new FontFamily(reader.ReadString());
+                tmp2.LyricType = (LyricType)Enum.Parse(typeof(LyricType), reader.ReadString());
+                tmp2.textAligment = (TextAlignment)Enum.Parse(typeof(TextAlignment), reader.ReadString());
+                tmp2.serialNuber = reader.ReadInt32();
+                tmp.LyricModels.Add(tmp2);
+            }
+
+            playlist.Add(tmp);
+        }
     }
-    
+
 
     public SongModel getSongModel()
     {
         return new SongModel(songModel);
+    }
+
+    public ObservableCollection<SongModel> getPlaylist()
+    {
+        return new ObservableCollection<SongModel>(playlist);
     }
 }

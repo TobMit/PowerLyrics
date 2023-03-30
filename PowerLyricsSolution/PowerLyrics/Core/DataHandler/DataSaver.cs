@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -31,15 +32,26 @@ namespace PowerLyrics.Core.DataHandler
                 writer.Write(openedSongModel.name);
                 this.writeLyricModel(openedSongModel.LyricModels);
                 writer.Close();
+            }
+        }
 
-                /*BinaryReader Reader = new BinaryReader(File.Open(saveFileDialog.FileName, FileMode.Open));
-                if (Reader.ReadString().Equals("PWLY"))
+        public void savePlaylist(ObservableCollection<SongModel> listOfSongModels)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PowerLyrics (*.pwly)|*.pwly";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                writer = new BinaryWriter(File.Open(saveFileDialog.FileName, FileMode.OpenOrCreate));
+                writer.Write(constants.MAGICNUMBER_FILE); // magic number (PWLY)
+                writer.Write(constants.MAGICNUMBER_PLAYLIST); // magic number (PWLY)
+                writer.Write(listOfSongModels.Count);
+                foreach (SongModel songModel in listOfSongModels)
                 {
-                    Debug.WriteLine(Reader.ReadString());
-                    Debug.WriteLine(Reader.ReadInt32());
+                    writer.Write(songModel.number);
+                    writer.Write(songModel.name);
+                    this.writeLyricModel(songModel.LyricModels);
                 }
-                //Debug.WriteLine(Reader.ReadString());
-                Reader.Close();*/
+                writer.Close();
             }
         }
 
