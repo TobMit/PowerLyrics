@@ -178,7 +178,7 @@ public class DataLoader
     public void loadFile()
     {
         OpenFileDialog opneFileDialog = new OpenFileDialog();
-        opneFileDialog.Filter = "Text files (*.txt)|*.txt|PowerLyric (*.pwly)|*.pwly";
+        opneFileDialog.Filter = "PowerLyric (*.pwly)|*.pwly|Text files (*.txt)|*.txt";
         if (opneFileDialog.ShowDialog() == true)
         {
             string[] splitedPath = opneFileDialog.FileName.Split(@".");

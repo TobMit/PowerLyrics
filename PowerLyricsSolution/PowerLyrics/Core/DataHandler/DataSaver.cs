@@ -23,6 +23,7 @@ namespace PowerLyrics.Core.DataHandler
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PowerLyrics (*.pwly)|*.pwly";
+            saveFileDialog.FileName = openedSongModel.number + ". " + openedSongModel.name;
             if (saveFileDialog.ShowDialog() == true)
             {
                 writer = new BinaryWriter(File.Open(saveFileDialog.FileName, FileMode.OpenOrCreate));
@@ -39,6 +40,7 @@ namespace PowerLyrics.Core.DataHandler
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PowerLyrics (*.pwly)|*.pwly";
+            saveFileDialog.FileName = "playlist";
             if (saveFileDialog.ShowDialog() == true)
             {
                 writer = new BinaryWriter(File.Open(saveFileDialog.FileName, FileMode.OpenOrCreate));
