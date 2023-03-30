@@ -22,6 +22,7 @@ public class PresentingViewModel : ObservableObjects
     private AudiencWindow audieceWindow;
 
     private DataLoader songsLoader;
+    private DataSaver songsSaver;
     private TextParser textParser;
     private bool isLive = false;
     private int selectedSongFromLibrary = -1;
@@ -167,6 +168,7 @@ public class PresentingViewModel : ObservableObjects
         inicialiseButtons();
 
         songsLoader = new DataLoader();
+        songsSaver = new DataSaver();
         listOfSongs = songsLoader.getSongs();
         _listOfSongsInPlayList = new ObservableCollection<SongModel>();
 
@@ -185,6 +187,7 @@ public class PresentingViewModel : ObservableObjects
             {
                 handleClickSelectSlidePlaylist();
             }
+
             actualSlidePreviewControl();
         });
 
@@ -209,6 +212,7 @@ public class PresentingViewModel : ObservableObjects
                 SlideSongIndexingModelList.Clear();
                 lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
             }
+
             actualSlidePreviewControl();
         });
     }
@@ -369,6 +373,14 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    public void SaveSong()
+    {
+        if (OpenedSongModel != null)
+        {
+            this.songsSaver.saveSong(OpenedSongModel);
+        }
+    }
+
     public void closeWindow()
     {
         audieceWindow.Close();
@@ -437,7 +449,8 @@ public class PresentingViewModel : ObservableObjects
     {
         for (int i = 0; i < SlideSongIndexingModelList.Count; i++)
         {
-            if (selectedSlide >= SlideSongIndexingModelList[i].indexOfFirstSlide && selectedSlide <= SlideSongIndexingModelList[i].indexOfLastSlide)
+            if (selectedSlide >= SlideSongIndexingModelList[i].indexOfFirstSlide &&
+                selectedSlide <= SlideSongIndexingModelList[i].indexOfLastSlide)
             {
                 int tmpSelectedSlide = selectedSlide;
                 SelectedSongFromPlaylist = i;

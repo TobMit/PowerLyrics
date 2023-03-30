@@ -58,7 +58,8 @@
                     <StackPanel Grid.Column="1">
                         <Button
                             Foreground="White"
-                            Style="{StaticResource MenuButtonTheme}" >
+                            Style="{StaticResource MenuButtonTheme}" 
+                            Command="{Binding SaveSongCommand}">
                             <Image Source="../Images/saveIcon.png" 
                                    Height="21"/>
                         </Button>

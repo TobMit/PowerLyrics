@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Media;
 using Microsoft.Win32;
 using PowerLyrics.MVVM.Model;
 
@@ -14,7 +17,10 @@ public class DataLoader
     private static Regex _regex;
     private static string[] paths;
     private TextParser.TextParser textParser;
+    private BinaryReader reader;
+
     public FileType openedFileType { get; set; }
+
     // ak je nacitany súbor môjho formátu
     bool myFileType = false;
     private SongModel songModel;
@@ -95,7 +101,7 @@ public class DataLoader
         LyricType stat = LyricType.Verse;
 
         StringBuilder builder = new StringBuilder();
-        
+
         //state machine for lyric parsing
         foreach (string word in splitedSong)
         {
@@ -119,7 +125,7 @@ public class DataLoader
                 }
 
                 builder.Clear();
-                
+
                 if (word.Contains("C"))
                 {
                     stat = LyricType.Chorus;
@@ -132,6 +138,7 @@ public class DataLoader
                 {
                     stat = LyricType.Verse;
                 }
+
                 tmpSongModel.lyricTypeQueue.Add(stat);
             }
             else
@@ -146,7 +153,7 @@ public class DataLoader
                 }
             }
         }
-        
+
         //aby sa aj posledna cast piesne nacitala do pamete
         if (builder.Length != 0)
         {
@@ -163,7 +170,7 @@ public class DataLoader
                     break;
             }
         }
-        
+
         return tmpSongModel;
     }
 
@@ -178,7 +185,7 @@ public class DataLoader
 
             if (myFileType)
             {
-                // toto je na doprogramovanie
+                this.processMyFile(opneFileDialog.FileName);
             }
             else
             {
@@ -187,9 +194,54 @@ public class DataLoader
                 songModel.name = getName(opneFileDialog.FileName);
                 songModel.number = getSongNumber(opneFileDialog.FileName);
                 songModel.LyricModels = textParser.parseLyric(songModel);
-            }   
+            }
         }
     }
+
+    private void processMyFile(string fileName)
+    {
+        reader = new BinaryReader(File.Open(fileName, FileMode.Open));
+        if (reader.ReadInt32() == constants.MAGICNUMBER_FILE)
+        {
+            openedFileType = reader.ReadInt32() == constants.MAGICNUMBER_SONG ? FileType.Song : FileType.PlayList;
+            if (openedFileType == FileType.Song)
+            {
+                processMyFileSong();
+            }
+            else
+            {
+                processMyFilePlayList();
+            }
+        }
+
+        //Debug.WriteLine(Reader.ReadString());
+        reader.Close();
+    }
+
+    private void processMyFileSong()
+    {
+        songModel = new SongModel();
+        songModel.number = reader.ReadInt32();
+        songModel.name = reader.ReadString();
+        int count = reader.ReadInt32();
+        for (int i = 0; i < count; i++)
+        {
+            LyricModel tmp = new LyricModel();
+            tmp.text = reader.ReadString();
+            tmp.fontSize = reader.ReadInt32();
+            tmp.fontFamily = new FontFamily(reader.ReadString());
+            tmp.LyricType = (LyricType)Enum.Parse(typeof(LyricType), reader.ReadString());
+            tmp.textAligment = (TextAlignment)Enum.Parse(typeof(TextAlignment), reader.ReadString());
+            tmp.serialNuber = reader.ReadInt32();
+            songModel.LyricModels.Add(tmp);
+        }
+    }
+
+    private void processMyFilePlayList()
+    {
+        throw new NotImplementedException();
+    }
+    
 
     public SongModel getSongModel()
     {

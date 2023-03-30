@@ -40,6 +40,7 @@ namespace PowerLyrics.MVVM.ViewModel
         
         public RelayCommand SetEditPageCommand { get; set; }
         public RelayCommand OpenSongCommand { get; set; }
+        public RelayCommand SaveSongCommand { get; set; }
 
         private UserControl _userControl;
 
@@ -127,6 +128,13 @@ namespace PowerLyrics.MVVM.ViewModel
                 if (presenting)
                 {
                     _presentingViewModel.OpenSong();
+                }
+            });
+            SaveSongCommand = new RelayCommand(o =>
+            {
+                if (presenting)
+                {
+                    _presentingViewModel.SaveSong();
                 }
             });
 
