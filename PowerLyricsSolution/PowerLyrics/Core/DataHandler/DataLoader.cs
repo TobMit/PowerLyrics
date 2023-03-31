@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Media;
 using Microsoft.Win32;
 using PowerLyrics.MVVM.Model;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace PowerLyrics.Core.DataHandler;
 
@@ -29,7 +30,6 @@ public class DataLoader
     public DataLoader()
     {
         _regex = new Regex(@"\s+");
-        paths = Directory.GetFiles("Songs");
         textParser = new TextParser.TextParser();
         openedFileType = FileType.undefined;
     }
@@ -43,21 +43,36 @@ public class DataLoader
     public ObservableCollection<SongModel> getSongs()
     {
         ObservableCollection<SongModel> songs = new ObservableCollection<SongModel>();
-        foreach (string path in paths)
+        try
         {
-            string loadedSong = this.loadSong(path);
-            SongModel tmpSongModel = this.processSong(loadedSong);
-            tmpSongModel.name = getName(path);
-            tmpSongModel.number = getSongNumber(path);
-            tmpSongModel.LyricModels = textParser.parseLyric(tmpSongModel);
-            songs.Add(tmpSongModel);
-        }
+            
+            paths = Directory.GetFiles(System.IO.Path.GetDirectoryName(
+                System.Reflection.Assembly.GetEntryAssembly().Location)+ "\\Songs"); // toto vyriešilo ten bug ktorý me nechcel dovoliť bindowanie v xaml preview
+            // problém bol v tom že sa aplikácia mohla spúšťať z rôznych lokácii keď sa debugova a ked sa vyvýjala, to spôsobovalo že nie vždy exsitoval tento priečino
+            // táto chyba sa prejavila až keď som sa snažil spustiť aplikáciu pomocou súboru
 
-        //sort songs by id
-        songs = new ObservableCollection<SongModel>(songs.OrderBy(x => x.number));
-        for (int i = 0; i < songs.Count; i++)
+            foreach (string path in paths)
+            {
+                string loadedSong = this.loadSong(path);
+                SongModel tmpSongModel = this.processSong(loadedSong);
+                tmpSongModel.name = getName(path);
+                tmpSongModel.number = getSongNumber(path);
+                tmpSongModel.LyricModels = textParser.parseLyric(tmpSongModel);
+                songs.Add(tmpSongModel);
+            }
+
+            //sort songs by id
+            songs = new ObservableCollection<SongModel>(songs.OrderBy(x => x.number));
+            for (int i = 0; i < songs.Count; i++)
+            {
+                songs[i].id = i;
+            }
+        }
+        catch (Exception e)
         {
-            songs[i].id = i;
+            MessageBox.Show(e.Message, "toto je test", MessageBoxButton.OK,
+                MessageBoxImage.Information);
+            throw;
         }
 
         return songs;
@@ -181,21 +196,26 @@ public class DataLoader
         opneFileDialog.Filter = "PowerLyric (*.pwly)|*.pwly|Text files (*.txt)|*.txt";
         if (opneFileDialog.ShowDialog() == true)
         {
-            string[] splitedPath = opneFileDialog.FileName.Split(@".");
-            myFileType = !splitedPath[splitedPath.Length - 1].Contains("txt");
+            loadFileStartUp(opneFileDialog.FileName);
+        }
+    }
 
-            if (myFileType)
-            {
-                this.processMyFile(opneFileDialog.FileName);
-            }
-            else
-            {
-                openedFileType = FileType.Song;
-                songModel = this.processSong(loadSong(opneFileDialog.FileName));
-                songModel.name = getName(opneFileDialog.FileName);
-                songModel.number = getSongNumber(opneFileDialog.FileName);
-                songModel.LyricModels = textParser.parseLyric(songModel);
-            }
+    public void loadFileStartUp(string path)
+    {
+        string[] splitedPath = path.Split(@".");
+        myFileType = !splitedPath[splitedPath.Length - 1].Contains("txt");
+
+        if (myFileType)
+        {
+            this.processMyFile(path);
+        }
+        else
+        {
+            openedFileType = FileType.Song;
+            songModel = this.processSong(loadSong(path));
+            songModel.name = getName(path);
+            songModel.number = getSongNumber(path);
+            songModel.LyricModels = textParser.parseLyric(songModel);
         }
     }
 

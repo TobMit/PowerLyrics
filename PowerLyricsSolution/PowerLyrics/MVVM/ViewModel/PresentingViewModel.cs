@@ -158,15 +158,15 @@ public class PresentingViewModel : ObservableObjects
     public PresentingViewModel()
     {
         selectedSongFromLibrary = -1;
-
+        
         audieceWindow = new AudiencWindow();
         audieceWindow.Show();
-
+        
         LyricViewTemplate1 tesLyricViewTemplate1 =
             new LyricViewTemplate1("Pre začatie prezentovania stlačte Fullsc tlačídko!");
         LyricContent = tesLyricViewTemplate1;
         inicialiseButtons();
-
+        
         songsLoader = new DataLoader();
         songsSaver = new DataSaver();
         listOfSongs = songsLoader.getSongs();
@@ -361,9 +361,17 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
-    public void OpenSong()
+
+    public void OpenSong(string? path)
     {
-        songsLoader.loadFile();
+        if (path != null)
+        {
+            songsLoader.loadFileStartUp(path);
+        }
+        else
+        {
+            songsLoader.loadFile();
+        }
         switch (songsLoader.openedFileType)
         {
             case FileType.Song:

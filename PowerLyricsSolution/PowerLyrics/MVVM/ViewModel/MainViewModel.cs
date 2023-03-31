@@ -67,7 +67,7 @@ namespace PowerLyrics.MVVM.ViewModel
             _editView = new EditView();
             _editViewModel = _editView.getDataContext();
             
-            _userControl = _presentingView;
+           _userControl = _presentingView;
         }
 
         private void inicialiseButtons()
@@ -128,7 +128,7 @@ namespace PowerLyrics.MVVM.ViewModel
             {
                 if (presenting)
                 {
-                    _presentingViewModel.OpenSong();
+                    _presentingViewModel.OpenSong(null);
                 }
             });
             SaveSongCommand = new RelayCommand(o =>
@@ -146,6 +146,11 @@ namespace PowerLyrics.MVVM.ViewModel
                 }
             });
 
+        }
+
+        public void openSongOnStartup(string path)
+        {
+            _presentingViewModel.OpenSong(path);
         }
 
         public void closeWindow()
