@@ -32,8 +32,8 @@ namespace PowerLyrics.Windows
 
         protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Vyska.Content = "Vyska: " + e.NewSize.Height.ToString();
-            Sirka.Content = "Sirka: " + e.NewSize.Width.ToString();
+            //Vyska.Content = "Vyska: " + e.NewSize.Height.ToString();
+            //Sirka.Content = "Sirka: " + e.NewSize.Width.ToString();
         }
 
         protected override void OnClosed(EventArgs e)

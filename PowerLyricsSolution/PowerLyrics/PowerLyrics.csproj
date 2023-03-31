@@ -20,8 +20,10 @@
     <None Remove="Images\liveIcon.png" />
     <None Remove="Images\lyricIcon.png" />
     <None Remove="Images\notLiveIcon.png" />
+    <None Remove="Images\openIcon.png" />
     <None Remove="Images\playIcon.png" />
     <None Remove="Images\rightTextIcon.png" />
+    <None Remove="Images\saveIcon.png" />
     <None Remove="Songs\10. Keď v Teba dúfam.txt" />
     <None Remove="Songs\11. Nádej.txt" />
     <None Remove="Songs\12. El Šadaj, El Šadaj.txt" />
@@ -68,11 +70,14 @@
     <Resource Include="Images\notLiveIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\openIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\playIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <None Remove="Songs\test.txt" />
-    <None Remove="Core\DataLoader\test.txt" />
+    <None Remove="Core\DataHandler\test.txt" />
     <EmbeddedResource Include="Songs\10. Keď v Teba dúfam.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -119,6 +124,9 @@
     <PackageReference Include="WpfScreenHelper" Version="2.1.0" />
     <Resource Include="Images\fullscreanIcon.png" />
     <Resource Include="Images\rightTextIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\saveIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

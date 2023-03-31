@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Input;
 using PowerLyrics.Core;
-using PowerLyrics.Core.DataLoader;
+using PowerLyrics.Core.DataHandler;
 using PowerLyrics.Core.TextParser;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
@@ -22,6 +22,7 @@ public class PresentingViewModel : ObservableObjects
     private AudiencWindow audieceWindow;
 
     private DataLoader songsLoader;
+    private DataSaver songsSaver;
     private TextParser textParser;
     private bool isLive = false;
     private int selectedSongFromLibrary = -1;
@@ -157,16 +158,17 @@ public class PresentingViewModel : ObservableObjects
     public PresentingViewModel()
     {
         selectedSongFromLibrary = -1;
-
+        
         audieceWindow = new AudiencWindow();
         audieceWindow.Show();
-
+        
         LyricViewTemplate1 tesLyricViewTemplate1 =
             new LyricViewTemplate1("Pre začatie prezentovania stlačte Fullsc tlačídko!");
         LyricContent = tesLyricViewTemplate1;
         inicialiseButtons();
-
+        
         songsLoader = new DataLoader();
+        songsSaver = new DataSaver();
         listOfSongs = songsLoader.getSongs();
         _listOfSongsInPlayList = new ObservableCollection<SongModel>();
 
@@ -185,6 +187,7 @@ public class PresentingViewModel : ObservableObjects
             {
                 handleClickSelectSlidePlaylist();
             }
+
             actualSlidePreviewControl();
         });
 
@@ -209,6 +212,7 @@ public class PresentingViewModel : ObservableObjects
                 SlideSongIndexingModelList.Clear();
                 lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
             }
+
             actualSlidePreviewControl();
         });
     }
@@ -357,6 +361,48 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+
+    public void OpenSong(string? path)
+    {
+        if (path != null)
+        {
+            songsLoader.loadFileStartUp(path);
+        }
+        else
+        {
+            songsLoader.loadFile();
+        }
+        switch (songsLoader.openedFileType)
+        {
+            case FileType.Song:
+                OpenedSongModel = songsLoader.getSongModel();
+                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
+                break;
+            case FileType.PlayList:
+                listOfSongsInPlayList = songsLoader.getPlaylist();
+                SlideSongIndexingModelList.Clear();
+                lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+                SelectedSongFromPlaylist = 0;
+                this.handleSelectPlaylist();
+                break;
+        }
+    }
+
+    public void SaveSong()
+    {
+        if (OpenedSongModel != null)
+        {
+            this.songsSaver.saveSong(OpenedSongModel);
+        }
+    }
+    public void SavePlaylist()
+    {
+        if (listOfSongsInPlayList.Count > 0)
+        {
+            this.songsSaver.savePlaylist(listOfSongsInPlayList);
+        }
+    }
+
     public void closeWindow()
     {
         audieceWindow.Close();
@@ -370,11 +416,14 @@ public class PresentingViewModel : ObservableObjects
     public void applayEdit(SongModel songModel)
     {
         OpenedSongModel = songModel;
-        if (lyricArray[0].SlideType == SlideType.Divider)
+        if (lyricArray.Count != 0)
         {
-            listOfSongsInPlayList[SelectedSongFromPlaylist] = songModel;
-            SlideSongIndexingModelList.Clear();
-            lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+            if (lyricArray[0].SlideType == SlideType.Divider)
+            {
+                listOfSongsInPlayList[SelectedSongFromPlaylist] = songModel;
+                SlideSongIndexingModelList.Clear();
+                lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+            }
         }
 
         selectedSongFromLibrary = -1;
@@ -422,7 +471,8 @@ public class PresentingViewModel : ObservableObjects
     {
         for (int i = 0; i < SlideSongIndexingModelList.Count; i++)
         {
-            if (selectedSlide >= SlideSongIndexingModelList[i].indexOfFirstSlide && selectedSlide <= SlideSongIndexingModelList[i].indexOfLastSlide)
+            if (selectedSlide >= SlideSongIndexingModelList[i].indexOfFirstSlide &&
+                selectedSlide <= SlideSongIndexingModelList[i].indexOfLastSlide)
             {
                 int tmpSelectedSlide = selectedSlide;
                 SelectedSongFromPlaylist = i;

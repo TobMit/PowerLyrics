@@ -39,6 +39,9 @@ namespace PowerLyrics.MVVM.ViewModel
         public RelayCommand SetPresentingPageCommand { get; set; }
         
         public RelayCommand SetEditPageCommand { get; set; }
+        public RelayCommand OpenSongCommand { get; set; }
+        public RelayCommand SaveSongCommand { get; set; }
+        public RelayCommand SavePlaylistCommand { get; set; }
 
         private UserControl _userControl;
 
@@ -64,7 +67,7 @@ namespace PowerLyrics.MVVM.ViewModel
             _editView = new EditView();
             _editViewModel = _editView.getDataContext();
             
-            _userControl = _presentingView;
+           _userControl = _presentingView;
         }
 
         private void inicialiseButtons()
@@ -121,7 +124,33 @@ namespace PowerLyrics.MVVM.ViewModel
                 presenting = false;
                 _editViewModel.openSong = _presentingViewModel.getOpenSong();
             });
-            
+            OpenSongCommand = new RelayCommand(o =>
+            {
+                if (presenting)
+                {
+                    _presentingViewModel.OpenSong(null);
+                }
+            });
+            SaveSongCommand = new RelayCommand(o =>
+            {
+                if (presenting)
+                {
+                    _presentingViewModel.SaveSong();
+                }
+            });
+            SavePlaylistCommand = new RelayCommand(o =>
+            {
+                if (presenting)
+                {
+                    _presentingViewModel.SavePlaylist();
+                }
+            });
+
+        }
+
+        public void openSongOnStartup(string path)
+        {
+            _presentingViewModel.OpenSong(path);
         }
 
         public void closeWindow()

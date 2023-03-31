@@ -9,7 +9,7 @@
         Title="PowerLyrics" Height="720" Width="1280"
         MinHeight="650" MinWidth="1100"
         Background="#474747"
-        >
+>
 
     <Window.DataContext>
         <viewModel:MainViewModel x:Name="myDataContext"/>
@@ -38,11 +38,48 @@
                     <ColumnDefinition Width="400"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Orientation="Vertical">
-                    <Label Content="Pravdepodobne uloženie alebo take niečo "/>
-                    <Label Foreground="White" Name="Sirka" Content="Sirka: 1280" Margin="0,-10,0,0"/>
-                    <Label Foreground="White" Name="Vyska" Content="Vyska: 720" Margin="0,-10,0,0"/>
-                </StackPanel>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <Button
+                            Foreground="White"
+                            Style="{StaticResource MenuButtonTheme}"
+                            Command="{Binding OpenSongCommand}">
+                            <Image Source="../Images/openIcon.png" 
+                                   Height="21"/>
+                        </Button>
+                        <Label Content="Open"
+                               Style="{StaticResource LabelButtonTheme}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <Button
+                            Foreground="White"
+                            Style="{StaticResource MenuButtonTheme}" 
+                            Command="{Binding SaveSongCommand}">
+                            <Image Source="../Images/saveIcon.png" 
+                                   Height="21"/>
+                        </Button>
+                        <Label Content="Save&#x0a;Song"
+                               FontSize="11"
+                               Style="{StaticResource LabelButtonTheme}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <Button
+                            Foreground="White"
+                            Style="{StaticResource MenuButtonTheme}" 
+                            Command="{Binding SavePlaylistCommand}">
+                            <Image Source="../Images/saveIcon.png" 
+                                   Height="21"/>
+                        </Button>
+                        <Label Content="Save&#x0a;PlayL"
+                               FontSize="11"
+                               Style="{StaticResource LabelButtonTheme}"/>
+                    </StackPanel>
+                </Grid>
 
                 <StackPanel Grid.Column="1" 
                             Orientation="Horizontal"
