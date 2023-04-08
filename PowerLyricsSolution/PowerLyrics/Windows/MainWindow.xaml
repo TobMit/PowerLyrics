@@ -68,7 +68,7 @@
                                Style="{StaticResource LabelButtonTheme}"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2"
-                                Visibility="{Binding Presenting}">
+                                Visibility="{Binding PresentingButtons}">
                         <Button
                             Foreground="White"
                             Style="{StaticResource MenuButtonTheme}" 
@@ -169,7 +169,7 @@
                                   Command="{Binding GoLiveCommand}"
                                   CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
                         <StackPanel Grid.Column="3"
-                                    Visibility="{Binding Presenting}">
+                                    Visibility="{Binding PresentingButtons}">
                             <Button
                                 Foreground="White"
                                 FontSize="14"
@@ -184,7 +184,7 @@
                         </StackPanel>
 
                         <StackPanel Grid.Column="2"
-                                    Visibility="{Binding Presenting}">
+                                    Visibility="{Binding PresentingButtons}">
                             <Button
                                 Foreground="White"
                                 FontSize="14"
@@ -205,7 +205,7 @@
                         </StackPanel>
 
                         <StackPanel Grid.Column="1"
-                                    Visibility="{Binding Presenting}">
+                                    Visibility="{Binding PresentingButtons}">
                             <Button
                                 Foreground="White"
                                 Style="{StaticResource MenuButtonTheme}" 
@@ -220,7 +220,7 @@
                         </StackPanel>
                         
                         <StackPanel Grid.Column="0" 
-                                    Visibility="{Binding Presenting}">
+                                    Visibility="{Binding PresentingButtons}">
                             <Button
                                 Foreground="White"
                                 Style="{StaticResource MenuButtonTheme}" 
