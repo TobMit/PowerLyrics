@@ -359,6 +359,11 @@ public class EditViewModel : ObservableObjects
 
     public void OpenSong(string? path)
     {
+        if (openSongSlides.Count != 0)
+        {
+            MessageBox.Show("You are trying override song.", "Open song", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
         if (path != null)
         {
             songsLoader.loadFileStartUp(path);
@@ -370,11 +375,13 @@ public class EditViewModel : ObservableObjects
         switch (songsLoader.openedFileType)
         {
             case FileType.Song:
+                int oldId = openSong.id;
                 openSong = songsLoader.getSongModel();
+                openSong.id = oldId;
                 openSongSlides= textParser.getSlidesFromOpenSong(openSong.LyricModels);
                 break;
             case FileType.PlayList:
-                MessageBox.Show("You trying open playlist in edit-page!\nIn edit-page zou can open only SONGS.", "Open song", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("You are trying open playlist in edit-page!\nIn edit-page zou can open only SONGS.", "Open song", MessageBoxButton.OK, MessageBoxImage.Warning);
                 break;
         }
     }

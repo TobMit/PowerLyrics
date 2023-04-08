@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using PowerLyrics.Core;
 using PowerLyrics.MVVM.View;
 
@@ -10,7 +11,60 @@ namespace PowerLyrics.MVVM.ViewModel
         private PresentingView _presentingView;
         private EditViewModel _editViewModel;
         private EditView _editView;
-        private bool presenting = true;
+
+        private bool _presenting;
+
+        private bool presenting
+        {
+            get
+            {
+                return _presenting;
+            }
+            set
+            {
+                _presenting = value;
+                if (_presenting)
+                {
+                    PresentingButtons = Visibility.Visible;
+                    EditingButtons = Visibility.Hidden;
+                }
+                else
+                {
+                    PresentingButtons = Visibility.Hidden;
+                    EditingButtons = Visibility.Visible;
+                }
+            }
+        }
+        
+        private Visibility _presentingButtons;
+        public Visibility PresentingButtons
+        {
+            get
+            {
+                return _presentingButtons;
+            }
+            set
+            {
+                _presentingButtons = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _editingButtons;
+
+        public Visibility EditingButtons
+        {
+            get
+            {
+                return _editingButtons;
+            }
+            set
+            {
+                _editingButtons = value;
+                OnPropertyChanged();
+            }
+        }
+
         /**
          * Set audience window full screan
          */
@@ -66,7 +120,8 @@ namespace PowerLyrics.MVVM.ViewModel
             _presentingViewModel.PresentingView = _presentingView;
             _editView = new EditView();
             _editViewModel = _editView.getDataContext();
-            
+            presenting = true;
+
            _userControl = _presentingView;
         }
 
@@ -89,12 +144,20 @@ namespace PowerLyrics.MVVM.ViewModel
                 {
                     _presentingViewModel.AddSongToPlayList();
                 }
+                else
+                {
+                    MessageBox.Show("You can use this button only in SHOW-PAGE", "Button", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             });
             RemoveSongFromPlayListCommand = new RelayCommand(o =>
             {
                 if (presenting)
                 {
                     _presentingViewModel.RemoveSongFromPlayList();
+                }
+                else
+                {
+                    MessageBox.Show("You can use this button only in SHOW-PAGE", "Buttong", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             });
             NextSongInPlaylistCommand = new RelayCommand(o =>
@@ -103,12 +166,20 @@ namespace PowerLyrics.MVVM.ViewModel
                 {
                     _presentingViewModel.NextSongInPlaylist();
                 }
+                else
+                {
+                    MessageBox.Show("You can use this button only in SHOW-PAGE", "Button", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             });
             PrewSongInPlaylistCommand = new RelayCommand(o =>
             {
                 if (presenting)
                 {
                     _presentingViewModel.PrevSongInPlaylist();
+                }
+                else
+                {
+                    MessageBox.Show("You can use this button only in SHOW-PAGE", "Button", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             });
             SetPresentingPageCommand = new RelayCommand(o =>
@@ -151,6 +222,10 @@ namespace PowerLyrics.MVVM.ViewModel
                 if (presenting)
                 {
                     _presentingViewModel.SavePlaylist();
+                }
+                else
+                {
+                    MessageBox.Show("You can use this button only in SHOW-PAGE", "Button", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             });
 
