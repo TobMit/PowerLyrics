@@ -38,7 +38,7 @@ public class PresentingViewModel : ObservableObjects
         {
             if (value != -1)
             {
-                if (_selectedSlide != -1)
+                if (_selectedSlide != -1 && _selectedSlide <= lyricArray.Count-1)
                 {
                     lyricArray[_selectedSlide].isSelected = false;
                 }
@@ -202,16 +202,15 @@ public class PresentingViewModel : ObservableObjects
 
         SelectPlaylistSongCommand = new RelayCommand(o =>
         {
-            SelectedSongFromPlaylist = Int32.Parse(o.ToString()); // mam info o id 
-            OpenedSongModel = listOfSongsInPlayList[SelectedSongFromPlaylist];
-            selectedSlide = -1;
-            selectedSongFromLibrary = -1;
             // ak by bol scenár že mám niečo v playliste a potom vyberiem niečo z knižnice a zase kliknem na playlist musim refreshnúť zobrazené slide
             if (lyricArray[0].SlideType != SlideType.Divider)
             {
                 SlideSongIndexingModelList.Clear();
                 lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
             }
+            selectedSongFromLibrary = -1;
+            SelectedSongFromPlaylist = Int32.Parse(o.ToString()); // mam info o id 
+            OpenedSongModel = listOfSongsInPlayList[SelectedSongFromPlaylist];
 
             actualSlidePreviewControl();
         });
@@ -246,13 +245,19 @@ public class PresentingViewModel : ObservableObjects
             {
                 listOfSongsInPlayList[i].id = i;
             }
-
-            //listOfSongsInPlayList = new ObservableCollection<SongModel>(listOfSongsInPlayList);
-            selectedSlide = -1;
-            actualSlidePreviewControl();
-
+            
             SlideSongIndexingModelList.Clear();
             lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+
+            if (SelectedSongFromPlaylist == listOfSongsInPlayList.Count)
+            {
+                SelectedSongFromPlaylist--;
+            }
+            else
+            {
+                SelectedSongFromPlaylist = SelectedSongFromPlaylist; // aby som forsol označenie playlistu
+            }
+            actualSlidePreviewControl();
         }
     }
 

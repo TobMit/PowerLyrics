@@ -30,7 +30,7 @@
         <Border
             Grid.ColumnSpan="3"
             BorderThickness="0,0,0,3"
-            BorderBrush="Black">
+            BorderBrush="#898989">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>

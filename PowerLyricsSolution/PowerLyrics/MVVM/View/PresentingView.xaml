@@ -20,14 +20,19 @@
         
         <Border
             Grid.Row="1"
-            BorderThickness="3"
-            BorderBrush="Blue">
+            BorderThickness="0,0,1,0"
+            BorderBrush="#898989">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Content="LIBRARY" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15"/>
+                <Label Grid.Row="0" 
+                       Content="LIBRARY" 
+                       Foreground="#c9c8cf"
+                       Background="#414141"
+                       FontWeight="Bold" 
+                       FontSize="15"/>
                 <ListView
                     Grid.Row="1"
                     Background="Transparent"
@@ -45,8 +50,8 @@
         <Border
             Grid.Row="1"
             Grid.Column="2"
-            BorderThickness="3"
-            BorderBrush="Black">
+            BorderThickness="1,0,0,0"
+            BorderBrush="#898989">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="300"/>
@@ -54,8 +59,7 @@
                 </Grid.RowDefinitions>
                 <Border
                     Grid.Row="0"
-                    BorderThickness="3"
-                    BorderBrush="Red" 
+                    BorderThickness="0"
                     >
                     <Viewbox Stretch="Uniform">
                         <ContentControl Content="{Binding LyricContent}"/>
@@ -63,15 +67,20 @@
                 </Border>
                 <Border
                     Grid.Row="1"
-                    BorderThickness="3"
-                    BorderBrush="Bisque"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="#898989"
                     >
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Content="PLAYLIST" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15"/>
+                        <Label Grid.Row="0" 
+                               Content="PLAYLIST" 
+                               Foreground="#c9c8cf"
+                               Background="#414141"
+                               FontWeight="Bold" 
+                               FontSize="15"/>
                         <ListView
                             Grid.Row="1"
                             Background="Transparent"
@@ -94,7 +103,7 @@
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             Grid.Row="1"
             Grid.Column="1"
-            Background="Transparent"
+            Background="#5c5c5c"
             ItemsSource="{Binding lyricArray}"
             ItemContainerStyle="{StaticResource SlidesTheme}"
             SelectedIndex="{Binding selectedSlide, Mode=OneWay}"

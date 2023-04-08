@@ -23,7 +23,7 @@
                                 <TextBlock Text="{Binding labelText}"
                                            Width="180"
                                            Foreground="White"
-                                           Background="#636365"
+                                           Background="#474747"
                                            TextAlignment="Center"
                                            FontSize="15"
                                            Padding="-15,-3,0,0"/> 

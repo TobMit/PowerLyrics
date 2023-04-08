@@ -20,8 +20,8 @@
                                 Orientation="Horizontal"
                                 Margin="8,0,0,0">
                                 <Image 
-                                    Height="20" 
-                                    Source="../../Images/lyricIcon.png" 
+                                    Height="15" 
+                                    Source="../../Images/songIcon.png" 
                                     RenderOptions.BitmapScalingMode="Fant" 
                                     Margin="0,0,-3,0"/>
                                 <Label 
@@ -34,7 +34,7 @@
                                     Width="130"  Text="{Binding name}" 
                                     Foreground="White" 
                                     TextTrimming="CharacterEllipsis" 
-                                    Margin="-3,0,0,0"/>
+                                    FontSize="12"/>
                             </StackPanel>
 
                         </Border>

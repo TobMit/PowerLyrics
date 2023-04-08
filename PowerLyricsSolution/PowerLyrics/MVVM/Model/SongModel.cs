@@ -8,8 +8,20 @@ namespace PowerLyrics.MVVM.Model;
 public class SongModel : ObservableObjects
 {
     public int number { get; set; }
-    
-    public int id { get; set; }
+    private int _id;
+
+    public int id
+    {
+        get
+        {
+            return _id;
+        }
+        set
+        {
+            _id = value;
+            OnPropertyChanged();
+        }
+    }
 
     public string name { get; set; }
     public ArrayList verse { get; set; }

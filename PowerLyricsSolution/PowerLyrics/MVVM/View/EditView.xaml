@@ -25,15 +25,16 @@
 
         <Border
             Grid.Row="1"
-            BorderThickness="3"
-            BorderBrush="Blue">
+            BorderThickness="0,0,2,0"
+            BorderBrush="#898989">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0"
-                            Orientation="Horizontal">
+                            Orientation="Horizontal"
+                            Background="#414141">
                     <Label
                         Content="SLIDES"
                         Foreground="#c9c8cf"
@@ -74,7 +75,7 @@
                 <ListView
                     Grid.Row="2"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    Background="Transparent"
+                    Background="#5c5c5c"
                     ItemsSource="{Binding openSongSlides}"
                     ItemContainerStyle="{StaticResource SlidesTheme}"
                     HorizontalAlignment="Stretch"
@@ -97,10 +98,14 @@
         <Border
             Grid.Row="1"
             Grid.Column="2"
-            BorderThickness="3"
-            BorderBrush="Black">
+            BorderThickness="2,0,0,0"
+            BorderBrush="#898989">
             <StackPanel Orientation="Vertical">
-                <Label Content="EDIT TOOLS" Foreground="#c9c8cf" FontWeight="Bold" FontSize="15" Margin="0,0,0,2" />
+                <Label Content="EDIT TOOLS"
+                       Foreground="#c9c8cf"
+                       Background="#414141"
+                       FontWeight="Bold" FontSize="15"
+                       Margin="0,0,0,2" />
                 <Label Content="Song" Foreground="#c9c8cf" FontWeight="Bold" FontSize="12" Margin="0,0,0,2" />
                 <StackPanel Orientation="Horizontal">
                     <Border

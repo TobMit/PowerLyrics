@@ -23,8 +23,10 @@
     <None Remove="Images\notLiveIcon.png" />
     <None Remove="Images\openIcon.png" />
     <None Remove="Images\playIcon.png" />
+    <None Remove="Images\playlistIcon.png" />
     <None Remove="Images\rightTextIcon.png" />
     <None Remove="Images\saveIcon.png" />
+    <None Remove="Images\songIcon.png" />
     <None Remove="Songs\10. Keď v Teba dúfam.txt" />
     <None Remove="Songs\11. Nádej.txt" />
     <None Remove="Songs\12. El Šadaj, El Šadaj.txt" />
@@ -117,6 +119,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Remove="Images\plusIcon.png" />
+    <Resource Include="Images\playlistIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\plusIcon.png" />
     <None Remove="Images\minusIcon.png" />
     <Resource Include="Images\minusIcon.png" />
@@ -128,6 +133,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\saveIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\songIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
