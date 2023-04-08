@@ -1,4 +1,5 @@
 ﻿using PowerLyrics.Core;
+using PowerLyrics.Core.DataHandler;
 using PowerLyrics.Core.TextParser;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
@@ -17,6 +18,8 @@ public class EditViewModel : ObservableObjects
 {
     private TextParser textParser;
     private bool loadingForEdit = true;
+    private DataLoader songsLoader;
+    private DataSaver songsSaver;
 
 
     private SongModel _openSong;
@@ -238,6 +241,8 @@ public class EditViewModel : ObservableObjects
         openSongSlides = new ObservableCollection<Slide>();
         openSong = new SongModel();
         this._fontFamily = constants.DEFAULT_FONT_FAMILY;
+        songsLoader = new DataLoader();
+        songsSaver = new DataSaver();
         inicialiseButtons();
     }
 
@@ -352,6 +357,35 @@ public class EditViewModel : ObservableObjects
         return selectedSlideNumber != -1;
     }
 
+    public void OpenSong(string? path)
+    {
+        if (path != null)
+        {
+            songsLoader.loadFileStartUp(path);
+        }
+        else
+        {
+            songsLoader.loadFile();
+        }
+        switch (songsLoader.openedFileType)
+        {
+            case FileType.Song:
+                openSong = songsLoader.getSongModel();
+                openSongSlides= textParser.getSlidesFromOpenSong(openSong.LyricModels);
+                break;
+            case FileType.PlayList:
+                MessageBox.Show("You trying open playlist in edit-page!\nIn edit-page zou can open only SONGS.", "Open song", MessageBoxButton.OK, MessageBoxImage.Warning);
+                break;
+        }
+    }
+
+    public void SaveSong()
+    {
+        if (openSong != null)
+        {
+            this.songsSaver.saveSong(openSong);
+        }
+    }
 
     public SongModel getEditedSong()
     {

@@ -273,7 +273,6 @@ public class PresentingViewModel : ObservableObjects
             lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
 
             SelectedSongFromPlaylist = listOfSongsInPlayList.Count - 1;
-
             actualSlidePreviewControl();
         }
         else if (OpenedSongModel != null)

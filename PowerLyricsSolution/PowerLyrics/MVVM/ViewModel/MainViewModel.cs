@@ -130,12 +130,20 @@ namespace PowerLyrics.MVVM.ViewModel
                 {
                     _presentingViewModel.OpenSong(null);
                 }
+                else
+                {
+                    _editViewModel.OpenSong(null);
+                }
             });
             SaveSongCommand = new RelayCommand(o =>
             {
                 if (presenting)
                 {
                     _presentingViewModel.SaveSong();
+                }
+                else
+                {
+                    _editViewModel.SaveSong();
                 }
             });
             SavePlaylistCommand = new RelayCommand(o =>
