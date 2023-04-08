@@ -273,6 +273,7 @@ public class PresentingViewModel : ObservableObjects
             lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
 
             SelectedSongFromPlaylist = listOfSongsInPlayList.Count - 1;
+
             actualSlidePreviewControl();
         }
         else if (OpenedSongModel != null)
@@ -420,15 +421,27 @@ public class PresentingViewModel : ObservableObjects
 
     public void applayEdit(SongModel songModel)
     {
-        OpenedSongModel = songModel;
+        
         if (lyricArray.Count != 0)
         {
             if (lyricArray[0].SlideType == SlideType.Divider)
             {
+                OpenedSongModel = songModel;
                 listOfSongsInPlayList[SelectedSongFromPlaylist] = songModel;
                 SlideSongIndexingModelList.Clear();
                 lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+                SelectedSongFromPlaylist = SelectedSongFromPlaylist;
             }
+            else
+            {
+                OpenedSongModel = songModel;
+                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
+            }
+        }
+        else
+        {
+            OpenedSongModel = songModel;
+            lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
         }
 
         selectedSongFromLibrary = -1;
