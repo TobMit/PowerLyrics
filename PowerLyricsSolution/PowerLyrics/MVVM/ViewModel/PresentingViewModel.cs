@@ -494,6 +494,7 @@ public class PresentingViewModel : ObservableObjects
                 int tmpSelectedSlide = selectedSlide;
                 SelectedSongFromPlaylist = i;
                 selectedSlide = tmpSelectedSlide;
+                OpenedSongModel = new SongModel(listOfSongsInPlayList[SelectedSongFromPlaylist]);
                 break;
             }
         }
