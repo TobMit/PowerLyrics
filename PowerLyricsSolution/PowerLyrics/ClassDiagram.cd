@@ -1,42 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="PowerLyrics.Core.DataHandler.DataLoader">
-    <Position X="13.25" Y="3.75" Width="1.5" />
+    <Position X="7.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAEIAAQAQAQACAAAEDAwAAAAAAAAEAAAgIEAIAREAA=</HashCode>
       <FileName>Core\DataHandler\DataLoader.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.Core.DataHandler.DataSaver">
-    <Position X="15" Y="5.75" Width="1.5" />
+    <Position X="9.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ASAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Core\DataHandler\DataSaver.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.Core.TextParser.TextParser">
-    <Position X="15" Y="3.75" Width="1.5" />
+    <Position X="9.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAIAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\TextParser\TextParser.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.Core.constants">
-    <Position X="15" Y="8" Width="1.5" />
+    <Position X="9.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gACgAAAAAAAAAQAAAAAAAgAAAAAAAAAAAAAAAgAACAA=</HashCode>
       <FileName>Core\Constants.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.Core.EnumBindingSourceExtencion">
-    <Position X="16.75" Y="8.5" Width="1.5" />
+    <Position X="11" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
       <FileName>Core\Constants.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.Core.ObservableObjects">
-    <Position X="16.75" Y="6.75" Width="1.5" />
+    <Position X="11" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\ObservableObjects.cs</FileName>
@@ -44,7 +44,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="PowerLyrics.Core.RelayCommand" BaseTypeListCollapsed="true">
-    <Position X="16.75" Y="3.75" Width="1.5" />
+    <Position X="11" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\RelayCommand.cs</FileName>
@@ -52,35 +52,35 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="PowerLyrics.MVVM.Model.LyricModel">
-    <Position X="16.75" Y="12" Width="1.5" />
+    <Position X="7.5" Y="11.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAAAAAAAAAACAAAAAABAAAAAAAAIAIAAABAAAAA=</HashCode>
       <FileName>MVVM\Model\LyricModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.MVVM.Model.Slide" HideInheritanceLine="true">
-    <Position X="0.75" Y="3.75" Width="1.5" />
+    <Position X="11" Y="11.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAQAAAAAIAAAAAAAACAAAAQAAAAAAAAABAAAgA=</HashCode>
       <FileName>MVVM\Model\SlideModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.MVVM.Model.SlideSongIndexingModel">
-    <Position X="13.25" Y="12" Width="1.5" />
+    <Position X="7.5" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
       <FileName>MVVM\Model\SlideSongIndexingModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.MVVM.Model.SongModel" HideInheritanceLine="true">
-    <Position X="5.5" Y="3.75" Width="1.5" />
+    <Position X="9.25" Y="11.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQAAAAQAACAABAAACBEAAEAAAAAAgIAAAAAgA=</HashCode>
       <FileName>MVVM\Model\SongModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.MVVM.View.EditView" BaseTypeListCollapsed="true">
-    <Position X="15" Y="12" Width="1.5" />
+    <Position X="19.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAg=</HashCode>
       <FileName>MVVM\View\EditView.xaml.cs</FileName>
@@ -88,7 +88,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="PowerLyrics.MVVM.View.LyricViewTemplate1" BaseTypeListCollapsed="true">
-    <Position X="13.25" Y="15" Width="1.5" />
+    <Position X="15.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAAAAAAAAAACAAAAAAAAAAAAAAAIAIAAAAAAAAA=</HashCode>
       <FileName>MVVM\View\LyricViewTemplate1.xaml.cs</FileName>
@@ -96,7 +96,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="PowerLyrics.MVVM.View.PresentingView" BaseTypeListCollapsed="true">
-    <Position X="16.75" Y="15" Width="1.5" />
+    <Position X="17.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAg=</HashCode>
       <FileName>MVVM\View\PresentingView.xaml.cs</FileName>
@@ -104,28 +104,28 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="PowerLyrics.MVVM.ViewModel.EditViewModel" HideInheritanceLine="true">
-    <Position X="3.25" Y="3.75" Width="1.5" />
+    <Position X="2.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EACAoAAwAEEEAAAAEMQAggSIQCBggAgIECYQCBRBCAA=</HashCode>
       <FileName>MVVM\ViewModel\EditViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.MVVM.ViewModel.MainViewModel" HideInheritanceLine="true">
-    <Position X="7.5" Y="3.75" Width="1.5" />
+    <Position X="4.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEUAAAjAEBAwAAAABIAEQBgAAAJCBIIAAKBAAAAA=</HashCode>
       <FileName>MVVM\ViewModel\MainViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.MVVM.ViewModel.PresentingViewModel" HideInheritanceLine="true">
-    <Position X="9.75" Y="3.75" Width="1.5" />
+    <Position X="0.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAEAEyggAEAQAAQAAEDAKAACIEgBoAiiIBijDBBQA=</HashCode>
       <FileName>MVVM\ViewModel\PresentingViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PowerLyrics.Windows.AudiencWindow" BaseTypeListCollapsed="true">
-    <Position X="15.25" Y="0.75" Width="1.5" />
+    <Position X="9.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>Windows\AudienceWindow.xaml.cs</FileName>
@@ -133,7 +133,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="PowerLyrics.Windows.MainWindow" BaseTypeListCollapsed="true">
-    <Position X="13.25" Y="0.75" Width="1.5" />
+    <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>Windows\MainWindow.xaml.cs</FileName>
@@ -141,28 +141,28 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="PowerLyrics.App">
-    <Position X="15" Y="15" Width="1.5" />
+    <Position X="0.75" Y="12.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="PowerLyrics.Core.LyricType">
-    <Position X="18.5" Y="3.75" Width="1.5" />
+    <Position X="12.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAABgAAAAAAAAAACA=</HashCode>
       <FileName>Core\Constants.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="PowerLyrics.Core.SlideType">
-    <Position X="18.5" Y="7" Width="1.5" />
+    <Position X="12.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQABAA=</HashCode>
       <FileName>Core\Constants.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="PowerLyrics.Core.FileType">
-    <Position X="18.5" Y="5.5" Width="1.5" />
+    <Position X="12.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAAAAAAAAAgQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\Constants.cs</FileName>
