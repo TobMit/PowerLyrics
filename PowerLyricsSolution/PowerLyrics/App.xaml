@@ -1,24 +1,23 @@
 ﻿<Application x:Class="PowerLyrics.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:PowerLyrics"
              Startup="App_OnStartup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme/TextBoxTheme.xaml"/>
-                <ResourceDictionary Source="Theme/MainNavigationButtonTheme.xaml"/>
-                <ResourceDictionary Source="Theme/LiveButtonTheme.xaml"/>
-                <ResourceDictionary Source="Theme/LabelButtonTheme.xaml"/>
-                <ResourceDictionary Source="Theme/ButtonTheme.xaml"/>
-                <ResourceDictionary Source="/Theme/SlidesStyleTheme/SlideViewerTheme.xaml"/>
-                <ResourceDictionary Source="/Theme/SlidesStyleTheme/LyricSlideTheme.xaml"/>
-                <ResourceDictionary Source="Theme/LibraryTheme/SongTheme.xaml"/>
-                <ResourceDictionary Source="Theme/LibraryTheme/SongSelectorTheme.xaml"/>
-                <ResourceDictionary Source="Theme/CustomScrollBar.xaml"/>
-                <ResourceDictionary Source="Theme/PlayListTheme/SongPlaylistTheme.xaml"/>
-                <ResourceDictionary Source="Theme/PlayListTheme/PlaylistSongSelectorTheme.xaml"/>
-                <ResourceDictionary Source="/Theme/ComboBoxTheme.xaml"/>
+                <ResourceDictionary Source="Theme/TextBoxTheme.xaml" />
+                <ResourceDictionary Source="Theme/MainNavigationButtonTheme.xaml" />
+                <ResourceDictionary Source="Theme/LiveButtonTheme.xaml" />
+                <ResourceDictionary Source="Theme/LabelButtonTheme.xaml" />
+                <ResourceDictionary Source="Theme/ButtonTheme.xaml" />
+                <ResourceDictionary Source="/Theme/SlidesStyleTheme/SlideViewerTheme.xaml" />
+                <ResourceDictionary Source="/Theme/SlidesStyleTheme/LyricSlideTheme.xaml" />
+                <ResourceDictionary Source="Theme/LibraryTheme/SongTheme.xaml" />
+                <ResourceDictionary Source="Theme/LibraryTheme/SongSelectorTheme.xaml" />
+                <ResourceDictionary Source="Theme/CustomScrollBar.xaml" />
+                <ResourceDictionary Source="Theme/PlayListTheme/SongPlaylistTheme.xaml" />
+                <ResourceDictionary Source="Theme/PlayListTheme/PlaylistSongSelectorTheme.xaml" />
+                <ResourceDictionary Source="/Theme/ComboBoxTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

@@ -1,141 +1,140 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.InteropServices.JavaScript;
-using System.Text;
-using System.Threading.Tasks;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace PowerLyrics.Core.TextParser
+namespace PowerLyrics.Core.TextParser;
+
+internal class TextParser
 {
-    internal class TextParser
-    {
-        public TextParser()
-        {
-            
-        }
-        /**
+    /**
          * Rozdelý text z listov do LyricType
          */
-        public List<LyricModel> parseLyric(SongModel songModel)
-        {
-            var tmpSlides = new List<LyricModel>();
-            int verse = 0;
-            int bridge = 0;
-            int chorus = 0;
+    public List<LyricModel> parseLyric(SongModel songModel)
+    {
+        var tmpSlides = new List<LyricModel>();
+        var verse = 0;
+        var bridge = 0;
+        var chorus = 0;
 
-            for (int i = 0; i < songModel.lyricTypeQueue.Count; i++)
+        for (var i = 0; i < songModel.lyricTypeQueue.Count; i++)
+        {
+            var tmp = new LyricModel();
+            switch (songModel.lyricTypeQueue[i])
             {
-                var tmp = new LyricModel();
-                switch (songModel.lyricTypeQueue[i])
-                {
-                    case LyricType.Verse:
-                        tmp.text = songModel.verse[verse].ToString();
-                        tmp.LyricType = LyricType.Verse;
-                        tmp.serialNuber = verse + 1; // iba kvoli vypisu
-                        verse++;
-                        break;
-                    case LyricType.Chorus:
-                        tmp.text = songModel.chorus[chorus].ToString();
-                        tmp.LyricType = LyricType.Chorus;
-                        tmp.serialNuber = chorus + 1;
-                        chorus++;
-                        break;
-                    case LyricType.Bridge:
-                        tmp.text = songModel.bridge[bridge].ToString();
-                        tmp.LyricType = LyricType.Bridge;
-                        tmp.serialNuber = bridge + 1;
-                        bridge++;
-                        break;
-                }
-                tmp.fontSize= constants.FONT_SIZE;
-                tmp.fontFamily = constants.DEFAULT_FONT_FAMILY;
-                tmp.textAligment = constants.DEFAULT_TEXT_ALIGNMENT;
-                tmpSlides.Add(tmp);
+                case LyricType.Verse:
+                    tmp.text = songModel.verse[verse].ToString();
+                    tmp.LyricType = LyricType.Verse;
+                    tmp.serialNuber = verse + 1; // iba kvoli vypisu
+                    verse++;
+                    break;
+                case LyricType.Chorus:
+                    tmp.text = songModel.chorus[chorus].ToString();
+                    tmp.LyricType = LyricType.Chorus;
+                    tmp.serialNuber = chorus + 1;
+                    chorus++;
+                    break;
+                case LyricType.Bridge:
+                    tmp.text = songModel.bridge[bridge].ToString();
+                    tmp.LyricType = LyricType.Bridge;
+                    tmp.serialNuber = bridge + 1;
+                    bridge++;
+                    break;
             }
-            return tmpSlides;
+
+            tmp.fontSize = constants.FONT_SIZE;
+            tmp.fontFamily = constants.DEFAULT_FONT_FAMILY;
+            tmp.textAligment = constants.DEFAULT_TEXT_ALIGNMENT;
+            tmpSlides.Add(tmp);
         }
-        /**
+
+        return tmpSlides;
+    }
+
+    /**
          * Vytvorí z listu LyricModel kolekciu slide pre pieseň
          */
-        public ObservableCollection<Slide> getSlidesFromOpenSong(List<LyricModel> song)
+    public ObservableCollection<Slide> getSlidesFromOpenSong(List<LyricModel> song)
+    {
+        var tmp = new ObservableCollection<Slide>();
+        var id = 0;
+        var oldType = LyricType.Undefined;
+        var oldSerialNumber = 1;
+        foreach (var item in song)
         {
-            ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
-            int id = 0;
-            LyricType oldType = LyricType.Undefined;
-            int oldSerialNumber = 1;
-            foreach (var item in song)
+            var slide = getSlideFromLyricModel(item);
+            slide.id = id;
+            tmp.Add(slide);
+            id++;
+        }
+
+        return tmp;
+    }
+
+    /**
+         * Vytvorí z listu LyricModel kolekciu slide pre playlist
+         */
+    public ObservableCollection<Slide> getSlidesFromOpenSong(ObservableCollection<SongModel> listOfSong,
+        List<SlideSongIndexingModel> slideSongIndexing)
+    {
+        var tmp = new ObservableCollection<Slide>();
+        var id = 0;
+        foreach (var song in listOfSong)
+        {
+            // display name of song
+            var tmpSlide = new Slide();
+            tmpSlide.SlideType = SlideType.Divider;
+            tmpSlide.labelText = song.number + " " + song.name;
+            tmpSlide.id = id;
+            tmp.Add(tmpSlide);
+            id++;
+
+            //set index of first slide of song
+            var tmpSongIndexingModel = new SlideSongIndexingModel();
+            tmpSongIndexingModel.indexOfFirstSlide = id;
+
+
+            // set name of song
+            var tmpLyricModel = new LyricModel();
+            tmpLyricModel.text = song.name;
+            tmpLyricModel.LyricType = LyricType.Verse;
+            tmpLyricModel.serialNuber = 0;
+            //tmpLyricModel.text = "";
+            tmpLyricModel.LyricType = LyricType.Undefined;
+            var tmpSlideSongName = getSlideFromLyricModel(tmpLyricModel);
+            tmpSlideSongName.id = id;
+            tmp.Add(tmpSlideSongName);
+            id++;
+
+            // parse song and add slides
+            foreach (var lyricModel in song.LyricModels)
             {
-                Slide slide = this.getSlideFromLyricModel(item);
+                var slide = getSlideFromLyricModel(lyricModel);
                 slide.id = id;
                 tmp.Add(slide);
                 id++;
             }
-            return tmp;
+
+            tmpSongIndexingModel.indexOfLastSlide = id - 1; // pretože sa mi čislo posledného slide zvyšilo v cykle
+            slideSongIndexing.Add(tmpSongIndexingModel);
         }
-        /**
-         * Vytvorí z listu LyricModel kolekciu slide pre playlist
-         */
-        public ObservableCollection<Slide> getSlidesFromOpenSong(ObservableCollection<SongModel> listOfSong, List<SlideSongIndexingModel> slideSongIndexing)
-        {
-            ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
-            int id = 0;
-            foreach (var song in listOfSong)
-            {
-                // display name of song
-                Slide tmpSlide = new Slide();
-                tmpSlide.SlideType = SlideType.Divider;
-                tmpSlide.labelText = song.number + " " + song.name;
-                tmpSlide.id = id;
-                tmp.Add(tmpSlide);
-                id++;
 
-                //set index of first slide of song
-                SlideSongIndexingModel tmpSongIndexingModel = new SlideSongIndexingModel();
-                tmpSongIndexingModel.indexOfFirstSlide = id;
-                
+        return tmp;
+    }
 
-                // set name of song
-                LyricModel tmpLyricModel = new LyricModel();
-                tmpLyricModel.text = song.name;
-                tmpLyricModel.LyricType = LyricType.Verse;
-                tmpLyricModel.serialNuber = 0;
-                //tmpLyricModel.text = "";
-                tmpLyricModel.LyricType = LyricType.Undefined;
-                Slide tmpSlideSongName = getSlideFromLyricModel(tmpLyricModel);
-                tmpSlideSongName.id = id;
-                tmp.Add(tmpSlideSongName);
-                id++;
-
-                // parse song and add slides
-                foreach (LyricModel lyricModel in song.LyricModels)
-                {
-                    Slide slide = this.getSlideFromLyricModel(lyricModel);
-                    slide.id = id;
-                    tmp.Add(slide);
-                    id++;
-                }
-                tmpSongIndexingModel.indexOfLastSlide = id - 1; // pretože sa mi čislo posledného slide zvyšilo v cykle
-                slideSongIndexing.Add(tmpSongIndexingModel);
-            }
-            
-            return tmp;
-        }
-        /**
+    /**
          * Vytvorí Slide z LyricModel
          */
-        public Slide getSlideFromLyricModel(LyricModel lyricModel)
-        {
-            Slide slide = new Slide();
-            slide.UserControl = new LyricViewTemplate1(lyricModel);
-            slide.SlideType = SlideType.Slide;
-            slide.LyricType = lyricModel.LyricType;
-            slide.isSelected = false;
-            slide.labelText = lyricModel.LyricType == LyricType.Undefined ? "Name" : lyricModel.LyricType.ToString() + " " + lyricModel.serialNuber;
-            return slide;
-        }
+    public Slide getSlideFromLyricModel(LyricModel lyricModel)
+    {
+        var slide = new Slide();
+        slide.UserControl = new LyricViewTemplate1(lyricModel);
+        slide.SlideType = SlideType.Slide;
+        slide.LyricType = lyricModel.LyricType;
+        slide.isSelected = false;
+        slide.labelText = lyricModel.LyricType == LyricType.Undefined
+            ? "Name"
+            : lyricModel.LyricType + " " + lyricModel.serialNuber;
+        return slide;
     }
 }

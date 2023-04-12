@@ -7,7 +7,7 @@ namespace PowerLyrics.MVVM.View;
 
 public partial class EditView : UserControl
 {
-    private Regex number;
+    private readonly Regex number;
 
     public EditView()
     {
@@ -18,8 +18,9 @@ public partial class EditView : UserControl
 
     public EditViewModel getDataContext()
     {
-        return this.editDataContext;
+        return editDataContext;
     }
+
     /**
      * Umožní input iba čísel
      */

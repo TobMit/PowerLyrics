@@ -16,25 +16,25 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Margin="1">
 
-                            <StackPanel 
+                            <StackPanel
                                 Orientation="Horizontal"
                                 Margin="8,0,0,0">
-                                <Image 
-                                    Height="15" 
-                                    Source="../../Images/songIcon.png" 
-                                    RenderOptions.BitmapScalingMode="Fant" 
-                                    Margin="0,0,-3,0"/>
-                                <Label 
-                                    VerticalAlignment="Center" 
-                                    Content="{Binding number}" 
-                                    ContentStringFormat=" {0}." 
-                                    Foreground="White"/>
-                                <TextBlock 
-                                    VerticalAlignment="Center" 
-                                    Width="130"  Text="{Binding name}" 
-                                    Foreground="White" 
-                                    TextTrimming="CharacterEllipsis" 
-                                    FontSize="12"/>
+                                <Image
+                                    Height="15"
+                                    Source="../../Images/songIcon.png"
+                                    RenderOptions.BitmapScalingMode="Fant"
+                                    Margin="0,0,-3,0" />
+                                <Label
+                                    VerticalAlignment="Center"
+                                    Content="{Binding number}"
+                                    ContentStringFormat=" {0}."
+                                    Foreground="White" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Width="130" Text="{Binding name}"
+                                    Foreground="White"
+                                    TextTrimming="CharacterEllipsis"
+                                    FontSize="12" />
                             </StackPanel>
 
                         </Border>
@@ -43,9 +43,9 @@
                 </Setter.Value>
             </Setter>
 
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="Transparent" />
         </Style.Setters>
 
         <Style.Triggers>

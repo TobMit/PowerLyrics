@@ -69,8 +69,7 @@
                             Grid.Column="2"
                             Focusable="false"
                             IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-                            ClickMode="Press">
-                        </ToggleButton>
+                            ClickMode="Press" />
                         <ContentPresenter Name="ContentSite" IsHitTestVisible="False"
                                           Content="{TemplateBinding SelectionBoxItem}"
                                           ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
@@ -88,10 +87,10 @@
                                  Background="Transparent"
                                  Foreground="White"
                                  Visibility="Hidden"
-                                 IsReadOnly="{TemplateBinding IsReadOnly}" 
+                                 IsReadOnly="{TemplateBinding IsReadOnly}"
                                  CaretBrush="White"
                                  SelectionBrush="#c9c8cf"
-                                 SelectionOpacity="0.25"/>
+                                 SelectionOpacity="0.25" />
                         <Popup
                             Name="Popup"
                             Placement="Bottom"

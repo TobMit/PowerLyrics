@@ -3,11 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:PowerLyrics.MVVM.View"
              xmlns:core="clr-namespace:PowerLyrics.Core"
              xmlns:viewModel="clr-namespace:PowerLyrics.MVVM.ViewModel"
-             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d"
              d:DesignHeight="650" d:DesignWidth="1280"
              Background="Transparent">

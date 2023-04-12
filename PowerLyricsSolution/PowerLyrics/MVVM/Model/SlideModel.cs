@@ -1,55 +1,49 @@
-﻿using PowerLyrics.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using PowerLyrics.Core;
 
-namespace PowerLyrics.MVVM.Model
-{
-    /**
+namespace PowerLyrics.MVVM.Model;
+
+/**
      * Model priamo Slide
      */
-    public class Slide : ObservableObjects
+public class Slide : ObservableObjects
+{
+    private bool _isSelected;
+
+    public Slide()
     {
-        public UserControl? UserControl { get; set; }
-        public SlideType SlideType { get; set; }
-        public LyricType LyricType { get; set; }
-        public int id { get; set; }
-        public string labelText { get; set; }
+        UserControl = null;
+        SlideType = SlideType.Slide;
+        LyricType = LyricType.Undefined;
+        id = 0;
+        labelText = "";
+        isSelected = false;
+    }
 
-        private bool _isSelected;
-        public bool isSelected {
-            get
-            {
-                return _isSelected;
-            }
-            set
-            {
-                _isSelected = value;
-                OnPropertyChanged();
-            }
-        }
+    //copy constructor for Slide
+    public Slide(Slide copy)
+    {
+        UserControl = copy.UserControl;
+        SlideType = copy.SlideType;
+        id = copy.id;
+        labelText = copy.labelText;
+        LyricType = copy.LyricType;
+        isSelected = false;
+    }
 
-        public Slide()
+    public UserControl? UserControl { get; set; }
+    public SlideType SlideType { get; set; }
+    public LyricType LyricType { get; set; }
+    public int id { get; set; }
+    public string labelText { get; set; }
+
+    public bool isSelected
+    {
+        get => _isSelected;
+        set
         {
-            this.UserControl = null;
-            this.SlideType = SlideType.Slide;
-            this.LyricType = LyricType.Undefined;
-            this.id = 0;
-            this.labelText = "";
-            this.isSelected = false;
-        }
-        //copy constructor for Slide
-        public Slide(Slide copy)
-        {
-            UserControl = copy.UserControl;
-            SlideType = copy.SlideType;
-            id = copy.id;
-            labelText = copy.labelText;
-            LyricType = copy.LyricType;
-            isSelected = false;
+            _isSelected = value;
+            OnPropertyChanged();
         }
     }
 }

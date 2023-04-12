@@ -18,7 +18,8 @@
                             Margin="1">
                             <StackPanel Orientation="Vertical">
                                 <Viewbox Stretch="Uniform">
-                                    <ContentPresenter Content="{Binding UserControl}" RenderOptions.BitmapScalingMode="Fant"/>
+                                    <ContentPresenter Content="{Binding UserControl}"
+                                                      RenderOptions.BitmapScalingMode="Fant" />
                                 </Viewbox>
                                 <TextBlock Text="{Binding labelText}"
                                            Width="180"
@@ -26,9 +27,9 @@
                                            Background="#474747"
                                            TextAlignment="Center"
                                            FontSize="15"
-                                           Padding="-15,-3,0,0"/> 
+                                           Padding="-15,-3,0,0" />
                             </StackPanel>
-                            
+
 
                         </Border>
                     </ControlTemplate>
@@ -36,9 +37,9 @@
                 </Setter.Value>
             </Setter>
 
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="Transparent" />
         </Style.Setters>
 
         <Style.Triggers>
@@ -46,13 +47,13 @@
                 <Setter Property="BorderBrush" Value="#4f4f4f" />
             </Trigger>
             <DataTrigger Binding="{Binding LyricType}" Value="Chorus">
-                <Setter Property="BorderBrush" Value="#77cf0b43"/>
+                <Setter Property="BorderBrush" Value="#77cf0b43" />
             </DataTrigger>
             <DataTrigger Binding="{Binding LyricType}" Value="Bridge">
-                <Setter Property="BorderBrush" Value="#696cff6c"/>
+                <Setter Property="BorderBrush" Value="#696cff6c" />
             </DataTrigger>
             <Trigger Property="IsChecked" Value="true">
-                <Setter Property="BorderBrush" Value="#cf0b43"/>
+                <Setter Property="BorderBrush" Value="#cf0b43" />
             </Trigger>
         </Style.Triggers>
     </Style>
