@@ -18,7 +18,9 @@ namespace PowerLyrics.Core.DataHandler
         public DataSaver()
         {
         }
-
+        /**
+         * Uloží pieseň do súboru pomocou dialógového okna
+         */
         public void saveSong(SongModel openedSongModel)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -35,7 +37,9 @@ namespace PowerLyrics.Core.DataHandler
                 writer.Close();
             }
         }
-
+        /**
+         * Uloží playlist do súboru pomocou dialógového okna
+         */
         public void savePlaylist(ObservableCollection<SongModel> listOfSongModels)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -56,7 +60,9 @@ namespace PowerLyrics.Core.DataHandler
                 writer.Close();
             }
         }
-
+        /**
+         * Zapíše do súboru LyricModel
+         */
         private void writeLyricModel(List<LyricModel> lyricModels)
         {
             writer.Write(lyricModels.Count);

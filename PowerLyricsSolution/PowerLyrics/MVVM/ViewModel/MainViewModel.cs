@@ -124,7 +124,9 @@ namespace PowerLyrics.MVVM.ViewModel
 
            _userControl = _presentingView;
         }
-
+        /**
+         * Inicializácia tlačidiel
+         */
         private void inicialiseButtons()
         {
             
@@ -230,12 +232,16 @@ namespace PowerLyrics.MVVM.ViewModel
             });
 
         }
-
+        /**
+         * načítanie piesne pri spustení
+         */
         public void openSongOnStartup(string path)
         {
             _presentingViewModel.OpenSong(path);
         }
-
+        /**
+         * Zatvorí audience okno
+         */
         public void closeWindow()
         {
             _presentingViewModel.closeWindow();

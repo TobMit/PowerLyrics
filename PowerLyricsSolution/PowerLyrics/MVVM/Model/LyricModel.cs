@@ -4,6 +4,9 @@ using PowerLyrics.Core;
 
 namespace PowerLyrics.MVVM.Model
 {
+    /**
+     * Poskytuje vešetky potrebné dáta pre vytvorenie slide
+     */
     public class LyricModel
     {
         public string text { get; set; }

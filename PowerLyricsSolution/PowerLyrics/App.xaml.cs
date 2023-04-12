@@ -22,12 +22,18 @@ namespace PowerLyrics
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
         }
 
+        /**
+         * hadle výnimky
+         */
         static void MyHandler(object sender, UnhandledExceptionEventArgs args)
         {
             Exception e = (Exception)args.ExceptionObject;
             MessageBox.Show("We are sorry for crashing. This app is still in progress!\n\n" + e.Message, "App crash", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        /**
+         * otvorenie aplikácie aj pomocou súboru
+         */
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();

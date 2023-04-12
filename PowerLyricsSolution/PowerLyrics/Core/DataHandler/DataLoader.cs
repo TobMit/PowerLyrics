@@ -33,13 +33,17 @@ public class DataLoader
         textParser = new TextParser.TextParser();
         openedFileType = FileType.undefined;
     }
-
+    /**
+     * Načíta pieseň z file do string
+     */
     private string loadSong(string path)
     {
         string loadedSong = File.ReadAllText(path);
         return _regex.Replace(loadedSong, " ");
     }
-
+    /**
+     * Získa piesne pre knižnicu
+     */
     public ObservableCollection<SongModel> getSongs()
     {
         ObservableCollection<SongModel> songs = new ObservableCollection<SongModel>();
@@ -77,7 +81,9 @@ public class DataLoader
 
         return songs;
     }
-
+    /**
+     * zísak meno z názvu súboru
+     */
     private string getName(string song)
     {
         string[] splitedSong = getFileName(song).Split(".");
@@ -90,7 +96,9 @@ public class DataLoader
             return splitedSong[0];
         }
     }
-
+    /**
+     * získa číslo piense z názvu súboru
+     */
     private int getSongNumber(string song)
     {
         string[] splitedSong = getFileName(song).Split(".");
@@ -103,13 +111,17 @@ public class DataLoader
             return 0;
         }
     }
-
+    /**
+     * získa celé mno súboru
+     */
     private string getFileName(string path)
     {
         string[] splitedPath = path.Split(@"\");
         return splitedPath[splitedPath.Length - 1];
     }
-
+    /**
+     * state machina pre spracovanie raw textu
+     */
     private SongModel processSong(string song)
     {
         SongModel tmpSongModel = new SongModel();
@@ -189,7 +201,9 @@ public class DataLoader
 
         return tmpSongModel;
     }
-
+    /**
+     * Načíta pieseň s otovrením dialógového okna
+     */
     public void loadFile()
     {
         OpenFileDialog opneFileDialog = new OpenFileDialog();
@@ -199,7 +213,9 @@ public class DataLoader
             loadFileStartUp(opneFileDialog.FileName);
         }
     }
-
+    /**
+     * načíta pieseň alebo playlist pri start-up
+     */
     public void loadFileStartUp(string path)
     {
         string[] splitedPath = path.Split(@".");
@@ -219,6 +235,9 @@ public class DataLoader
         }
     }
 
+    /**
+     * Správne načíta zadaný súbor.
+     */
     private void processMyFile(string fileName)
     {
         reader = new BinaryReader(File.Open(fileName, FileMode.Open));
@@ -238,7 +257,9 @@ public class DataLoader
         //Debug.WriteLine(Reader.ReadString());
         reader.Close();
     }
-
+    /**
+     * Načíta pieseň z .ppwly súboru
+     */
     private void processMyFileSong()
     {
         songModel = new SongModel();
@@ -257,7 +278,9 @@ public class DataLoader
             songModel.LyricModels.Add(tmp);
         }
     }
-
+    /**
+     * Načíta playlist z .pwly súboru
+     */
     private void processMyFilePlayList()
     {
         playlist = new ObservableCollection<SongModel>();
@@ -285,12 +308,16 @@ public class DataLoader
         }
     }
 
-
+    /**
+     * Vráti aktuálne načítanú songModel
+     */
     public SongModel getSongModel()
     {
         return new SongModel(songModel);
     }
-
+    /**
+     * Vráti akutálne načítaný playlist
+     */
     public ObservableCollection<SongModel> getPlaylist()
     {
         return new ObservableCollection<SongModel>(playlist);

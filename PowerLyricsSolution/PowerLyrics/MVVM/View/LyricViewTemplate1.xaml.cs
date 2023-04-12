@@ -19,7 +19,7 @@ using PowerLyrics.MVVM.Model;
 namespace PowerLyrics.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for LyricViewTemplate1.xaml
+    /// Interaction logic for LyricViewTemplate1.xaml Toto je zobrazovaný kontent
     /// </summary>
     public partial class LyricViewTemplate1 : UserControl
     {

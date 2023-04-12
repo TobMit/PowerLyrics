@@ -8,6 +8,9 @@ using System.Windows.Controls;
 
 namespace PowerLyrics.MVVM.Model
 {
+    /**
+     * Model priamo Slide
+     */
     public class Slide : ObservableObjects
     {
         public UserControl? UserControl { get; set; }

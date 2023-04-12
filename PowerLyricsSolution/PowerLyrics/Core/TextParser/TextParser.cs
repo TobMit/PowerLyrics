@@ -17,7 +17,9 @@ namespace PowerLyrics.Core.TextParser
         {
             
         }
-
+        /**
+         * Rozdelý text z listov do LyricType
+         */
         public List<LyricModel> parseLyric(SongModel songModel)
         {
             var tmpSlides = new List<LyricModel>();
@@ -56,6 +58,9 @@ namespace PowerLyrics.Core.TextParser
             }
             return tmpSlides;
         }
+        /**
+         * Vytvorí z listu LyricModel kolekciu slide pre pieseň
+         */
         public ObservableCollection<Slide> getSlidesFromOpenSong(List<LyricModel> song)
         {
             ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
@@ -71,7 +76,9 @@ namespace PowerLyrics.Core.TextParser
             }
             return tmp;
         }
-
+        /**
+         * Vytvorí z listu LyricModel kolekciu slide pre playlist
+         */
         public ObservableCollection<Slide> getSlidesFromOpenSong(ObservableCollection<SongModel> listOfSong, List<SlideSongIndexingModel> slideSongIndexing)
         {
             ObservableCollection<Slide> tmp = new ObservableCollection<Slide>();
@@ -117,7 +124,9 @@ namespace PowerLyrics.Core.TextParser
             
             return tmp;
         }
-
+        /**
+         * Vytvorí Slide z LyricModel
+         */
         public Slide getSlideFromLyricModel(LyricModel lyricModel)
         {
             Slide slide = new Slide();

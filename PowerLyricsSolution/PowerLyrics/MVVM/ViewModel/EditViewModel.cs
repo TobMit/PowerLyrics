@@ -13,7 +13,9 @@ using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace PowerLyrics.MVVM.ViewModel;
-
+/**
+ * Slúži pre správu edit-page
+ */
 public class EditViewModel : ObservableObjects
 {
     private TextParser textParser;
@@ -23,7 +25,9 @@ public class EditViewModel : ObservableObjects
 
 
     private SongModel _openSong;
-
+    /**
+     * otvorená pieseň ktorá sa edituje
+     */
     public SongModel openSong
     {
         get { return _openSong; }
@@ -41,7 +45,9 @@ public class EditViewModel : ObservableObjects
     }
 
     private ObservableCollection<Slide> _openSongSlides;
-
+    /**
+     * Slide otvorenej piesne
+     */
     public ObservableCollection<Slide> openSongSlides
     {
         get { return _openSongSlides; }
@@ -53,7 +59,9 @@ public class EditViewModel : ObservableObjects
     }
 
     private int _selectedSlideNumber = -1;
-
+    /**
+     * Vybratý slide
+     */
     private int selectedSlideNumber
     {
         get { return _selectedSlideNumber; }
@@ -81,7 +89,9 @@ public class EditViewModel : ObservableObjects
     }
 
     private LyricViewTemplate1 _lyricContent;
-
+    /**
+     * otvorený slide v prieview
+     */
     public LyricViewTemplate1 LyricContent
     {
         get { return _lyricContent; }
@@ -96,7 +106,6 @@ public class EditViewModel : ObservableObjects
      * Select song from playlist
      */
     public RelayCommand SelectSlideCommand { get; set; }
-
     public RelayCommand IncreaseFontCommand { get; set; }
     public RelayCommand DecreaseFontCommand { get; set; }
     public RelayCommand SetTextAligmentCommand { get; set; }
@@ -245,7 +254,9 @@ public class EditViewModel : ObservableObjects
         songsSaver = new DataSaver();
         inicialiseButtons();
     }
-
+    /**
+     * Inicializuje ovaldanie pomocu tlačidiel
+     */
     private void inicialiseButtons()
     {
         SelectSlideCommand = new RelayCommand(o => { SelectSlide(Int32.Parse(o.ToString())); });
@@ -305,12 +316,16 @@ public class EditViewModel : ObservableObjects
             }
         });
     }
-
+    /**
+     * Výber slide
+     */
     private void SelectSlide(int selectedSlide)
     {
         this.SelectSlide(selectedSlide, true);
     }
-
+    /**
+     * Výber slide a apply edit
+     */
     private void SelectSlide(int selectedSlide, bool applyEdit)
     {
         if (applyEdit)
@@ -330,7 +345,9 @@ public class EditViewModel : ObservableObjects
         this.SerialNuber = openSong.LyricModels[selectedSlideNumber].serialNuber;
         loadingForEdit = false;
     }
-
+    /**
+     * uloží zmeny z prop naspäť do LyricModelu
+     */
     private void applyChanges()
     {
         // zmeny sa môžu aplikovať iba keď je niečo vybraté
@@ -351,12 +368,16 @@ public class EditViewModel : ObservableObjects
             LyricContent = (LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl;
         }
     }
-
+    /**
+     * Slide je vybratý ak je číslo íné ako -1
+     */
     private bool isSelectedSlide()
     {
         return selectedSlideNumber != -1;
     }
-
+    /**
+     * Metóda na otvorenie piesene zo súboru
+     */
     public void OpenSong(string? path)
     {
         if (openSongSlides.Count != 0)
@@ -385,7 +406,9 @@ public class EditViewModel : ObservableObjects
                 break;
         }
     }
-
+    /**
+     * Uloží pieseň zo súboru
+     */
     public void SaveSong()
     {
         if (openSong != null)
@@ -393,7 +416,9 @@ public class EditViewModel : ObservableObjects
             this.songsSaver.saveSong(openSong);
         }
     }
-
+    /**
+     * vráti edit v piesne
+     */
     public SongModel getEditedSong()
     {
         applyChanges();

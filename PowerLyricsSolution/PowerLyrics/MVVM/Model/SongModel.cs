@@ -5,6 +5,9 @@ using PowerLyrics.Core;
 
 namespace PowerLyrics.MVVM.Model;
 
+/**
+ * Model načítanej piesne
+ */
 public class SongModel : ObservableObjects
 {
     public int number { get; set; }

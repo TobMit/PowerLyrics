@@ -30,7 +30,9 @@ public class PresentingViewModel : ObservableObjects
     private List<SlideSongIndexingModel> SlideSongIndexingModelList;
 
     private int _selectedSlide = -1;
-
+    /**
+     * Slide ktorý je aktuálne vybratý
+     */
     public int selectedSlide
     {
         get { return _selectedSlide; }
@@ -58,7 +60,9 @@ public class PresentingViewModel : ObservableObjects
 
 
     private int _selectedSongFromPlaylist = -1;
-
+    /**
+     * Pieseň ktorá je vybratá z playlistu
+     */
     private int SelectedSongFromPlaylist
     {
         get { return _selectedSongFromPlaylist; }
@@ -79,12 +83,11 @@ public class PresentingViewModel : ObservableObjects
             }
         }
     }
-
+    
+    private object _lyricContent;
     /**
      * For audience view and for preview
      */
-    private object _lyricContent;
-
     public object LyricContent
     {
         get { return _lyricContent; }
@@ -97,7 +100,9 @@ public class PresentingViewModel : ObservableObjects
     }
 
     private SongModel _openedSongModel;
-
+    /**
+     * Aktuálne otvorená pieseň
+     */
     public SongModel OpenedSongModel
     {
         get { return _openedSongModel; }
@@ -115,7 +120,9 @@ public class PresentingViewModel : ObservableObjects
     }
 
     private ObservableCollection<Slide> _lyricArray;
-
+    /**
+     * Slides ktoré sú zobrazované a z ktorých sa vyberá
+     */
     public ObservableCollection<Slide> lyricArray
     {
         get { return _lyricArray; }
@@ -144,7 +151,9 @@ public class PresentingViewModel : ObservableObjects
     public ObservableCollection<SongModel> listOfSongs { get; set; }
 
     private ObservableCollection<SongModel> _listOfSongsInPlayList;
-
+    /**
+     * Piesne ktoré sa nachadzajú v playliste
+     */
     public ObservableCollection<SongModel> listOfSongsInPlayList
     {
         get { return _listOfSongsInPlayList; }
@@ -178,6 +187,9 @@ public class PresentingViewModel : ObservableObjects
         SlideSongIndexingModelList = new List<SlideSongIndexingModel>();
     }
 
+    /**
+     * Inicializácie funkcionality tlačidiel
+     */
     private void inicialiseButtons()
     {
         SelectSlideCommand = new RelayCommand(o =>
@@ -216,6 +228,9 @@ public class PresentingViewModel : ObservableObjects
         });
     }
 
+    /**
+     * Predchádzajúca pieseň v playliste
+     */
     public void PrevSongInPlaylist()
     {
         // ak je prvý slide divider tak sa zobrazuje playlist
@@ -226,6 +241,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * ďaľšia pieseň v playliste
+     */
     public void NextSongInPlaylist()
     {
         // ak je prvý slide divider tak sa zobrazuje playlist
@@ -236,6 +254,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Odstráni pieseň z playlistu
+     */
     public void RemoveSongFromPlayList()
     {
         if (SelectedSongFromPlaylist != -1 && SelectedSongFromPlaylist < listOfSongsInPlayList.Count)
@@ -261,6 +282,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Pridá pieseň do playlistu
+     */
     public void AddSongToPlayList()
     {
         if (selectedSongFromLibrary != -1)
@@ -289,6 +313,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Spracovanie kláves
+     */
     public void key(KeyEventArgs keyEvent)
     {
         if (keyEvent.Key == Key.Right)
@@ -327,6 +354,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Nastavý audienece okno na druhú obrazovku a do fullscreanu
+     */
     public void SetAudienceFullScreanCommand()
     {
         if (Screen.AllScreens.ToArray().Length > 1)
@@ -340,12 +370,18 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Spustí a pozastavý pprezentáciu
+     */
     public void GoLive(bool o)
     {
         isLive = o;
         actualSlidePreviewControl();
     }
 
+    /**
+     * Riadi čo je zobrazené v preview a u divákov
+     */
     private void actualSlidePreviewControl()
     {
         if (isLive)
@@ -366,7 +402,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
-
+    /**
+     * Načíta pieseň, playlist zo súboru
+     */
     public void OpenSong(string? path)
     {
         if (path != null)
@@ -393,6 +431,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Uloží pieseň do súboru
+     */
     public void SaveSong()
     {
         if (OpenedSongModel != null)
@@ -400,6 +441,9 @@ public class PresentingViewModel : ObservableObjects
             this.songsSaver.saveSong(OpenedSongModel);
         }
     }
+    /**
+     * Uloží playlist do súboru
+     */
     public void SavePlaylist()
     {
         if (listOfSongsInPlayList.Count > 0)
@@ -408,16 +452,25 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Zatvorí okno pre divákov 
+     */
     public void closeWindow()
     {
         audieceWindow.Close();
     }
 
+    /**
+     * Vráti otvorenú pieseň, ak nie je otvorená pieseň tak vráti prázdnu pieseň
+     */
     public SongModel getOpenSong()
     {
         return OpenedSongModel != null ? new SongModel(OpenedSongModel) : new SongModel();
     }
 
+    /**
+     * aplykuje edit z edit page
+     */
     public void applayEdit(SongModel songModel)
     {
         
@@ -446,6 +499,9 @@ public class PresentingViewModel : ObservableObjects
         selectedSongFromLibrary = -1;
     }
 
+    /**
+     * Nastaví focus pre správne používanie klávesnice
+     */
     private void setFocus(int index)
     {
         ListViewItem item =
@@ -453,11 +509,17 @@ public class PresentingViewModel : ObservableObjects
         item.Focus();
     }
 
+    /**
+     * Riadene select v playliste
+     */
     private void handleSelectPlaylist()
     {
         selectedSlide = SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfFirstSlide;
     }
 
+    /**
+     * ďaľší slide v playliste
+     */
     private void handleNextSelectSlidePlaylist()
     {
         selectedSongFromLibrary = -1;
@@ -471,6 +533,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Predchádzajúci slide v playliste
+     */
     private void handlePrevSelectSlidePlaylist()
     {
         selectedSongFromLibrary = -1;
@@ -484,6 +549,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Vyber slide pomocou myšli v playliste
+     */
     private void handleClickSelectSlidePlaylist()
     {
         for (int i = 0; i < SlideSongIndexingModelList.Count; i++)

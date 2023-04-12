@@ -40,6 +40,9 @@ namespace PowerLyrics.Core
 
     }
 
+    /**
+     * Služí na binding enumu k xaml
+     */
     // https://www.youtube.com/watch?v=Bp5LFXjwtQ0 
     public class EnumBindingSourceExtencion : MarkupExtension
     {
