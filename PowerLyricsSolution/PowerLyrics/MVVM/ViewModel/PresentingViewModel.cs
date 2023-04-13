@@ -265,6 +265,10 @@ public class PresentingViewModel : ObservableObjects
                 SelectedSongFromPlaylist--;
             else
                 SelectedSongFromPlaylist = SelectedSongFromPlaylist; // aby som forsol označenie playlistu
+            if (listOfSongsInPlayList.Count <= 0)
+            {
+                selectedSlide = -1;
+            }
             actualSlidePreviewControl();
         }
     }
@@ -399,6 +403,8 @@ public class PresentingViewModel : ObservableObjects
                 SelectedSongFromPlaylist = 0;
                 handleSelectPlaylist();
                 break;
+            default:
+                break;
         }
     }
 
@@ -518,6 +524,7 @@ public class PresentingViewModel : ObservableObjects
                 var tmpSelectedSlide = selectedSlide;
                 SelectedSongFromPlaylist = i;
                 selectedSlide = tmpSelectedSlide;
+                selectedSongFromLibrary = -1;
                 OpenedSongModel = new SongModel(listOfSongsInPlayList[SelectedSongFromPlaylist]);
                 break;
             }

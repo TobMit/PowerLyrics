@@ -374,6 +374,8 @@ public class EditViewModel : ObservableObjects
                 MessageBox.Show("You are trying open playlist in edit-page!\nIn edit-page zou can open only SONGS.",
                     "Open song", MessageBoxButton.OK, MessageBoxImage.Warning);
                 break;
+            default:
+                break;
         }
     }
 

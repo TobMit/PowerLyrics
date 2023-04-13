@@ -183,6 +183,7 @@ public class DataLoader
      */
     public void loadFile()
     {
+        openedFileType = FileType.undefined;
         var opneFileDialog = new OpenFileDialog();
         opneFileDialog.Filter = "PowerLyric (*.pwly)|*.pwly|Text files (*.txt)|*.txt";
         if (opneFileDialog.ShowDialog() == true) loadFileStartUp(opneFileDialog.FileName);
