@@ -1,10 +1,6 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Input;
 using PowerLyrics.Core;
@@ -19,29 +15,64 @@ namespace PowerLyrics.MVVM.ViewModel;
 
 public class PresentingViewModel : ObservableObjects
 {
-    private AudiencWindow audieceWindow;
+    private ObservableCollection<SongModel> _listOfSongsInPlayList;
 
-    private DataLoader songsLoader;
-    private DataSaver songsSaver;
-    private TextParser textParser;
-    private bool isLive = false;
-    private int selectedSongFromLibrary = -1;
-    public PresentingView PresentingView { get; set; }
-    private List<SlideSongIndexingModel> SlideSongIndexingModelList;
+    private ObservableCollection<Slide> _lyricArray;
+
+    private object _lyricContent;
+
+    private SongModel _openedSongModel;
 
     private int _selectedSlide = -1;
 
+
+    private int _selectedSongFromPlaylist = -1;
+    private readonly AudiencWindow audieceWindow;
+    private bool isLive;
+    private int selectedSongFromLibrary = -1;
+    private readonly List<SlideSongIndexingModel> SlideSongIndexingModelList;
+
+    private readonly DataLoader songsLoader;
+    private readonly DataSaver songsSaver;
+    private readonly TextParser textParser;
+
+    public PresentingViewModel()
+    {
+        selectedSongFromLibrary = -1;
+
+        audieceWindow = new AudiencWindow();
+        audieceWindow.Show();
+
+        var tesLyricViewTemplate1 =
+            new LyricViewTemplate1("Pre začatie prezentovania stlačte Fullsc tlačídko!");
+        LyricContent = tesLyricViewTemplate1;
+        inicialiseButtons();
+
+        songsLoader = new DataLoader();
+        songsSaver = new DataSaver();
+        listOfSongs = songsLoader.getSongs();
+        _listOfSongsInPlayList = new ObservableCollection<SongModel>();
+
+
+        textParser = new TextParser();
+        lyricArray = new ObservableCollection<Slide>();
+        SlideSongIndexingModelList = new List<SlideSongIndexingModel>();
+    }
+
+    public PresentingView PresentingView { get; set; }
+
+    /**
+     * Slide ktorý je aktuálne vybratý
+     */
     public int selectedSlide
     {
-        get { return _selectedSlide; }
+        get => _selectedSlide;
         set
         {
             if (value != -1)
             {
-                if (_selectedSlide != -1 && _selectedSlide <= lyricArray.Count-1)
-                {
+                if (_selectedSlide != -1 && _selectedSlide <= lyricArray.Count - 1)
                     lyricArray[_selectedSlide].isSelected = false;
-                }
 
                 _selectedSlide = value;
                 lyricArray[_selectedSlide].isSelected = true;
@@ -56,18 +87,16 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
-
-    private int _selectedSongFromPlaylist = -1;
-
+    /**
+     * Pieseň ktorá je vybratá z playlistu
+     */
     private int SelectedSongFromPlaylist
     {
-        get { return _selectedSongFromPlaylist; }
+        get => _selectedSongFromPlaylist;
         set
         {
             if (_selectedSongFromPlaylist != -1 && _selectedSongFromPlaylist < listOfSongsInPlayList.Count)
-            {
                 listOfSongsInPlayList[_selectedSongFromPlaylist].isSelected = false;
-            }
 
             _selectedSongFromPlaylist = value;
 
@@ -83,11 +112,9 @@ public class PresentingViewModel : ObservableObjects
     /**
      * For audience view and for preview
      */
-    private object _lyricContent;
-
     public object LyricContent
     {
-        get { return _lyricContent; }
+        get => _lyricContent;
         set
         {
             _lyricContent = value;
@@ -96,29 +123,29 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
-    private SongModel _openedSongModel;
-
+    /**
+     * Aktuálne otvorená pieseň
+     */
     public SongModel OpenedSongModel
     {
-        get { return _openedSongModel; }
+        get => _openedSongModel;
         set
         {
             _openedSongModel = value;
             //toto je tu kvoli tomu aby sa použil iný parsovač na piesne
             if (selectedSongFromLibrary > -1)
-            {
                 lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.LyricModels);
-            }
 
             OnPropertyChanged();
         }
     }
 
-    private ObservableCollection<Slide> _lyricArray;
-
+    /**
+     * Slides ktoré sú zobrazované a z ktorých sa vyberá
+     */
     public ObservableCollection<Slide> lyricArray
     {
-        get { return _lyricArray; }
+        get => _lyricArray;
         set
         {
             _lyricArray = value;
@@ -143,11 +170,12 @@ public class PresentingViewModel : ObservableObjects
 
     public ObservableCollection<SongModel> listOfSongs { get; set; }
 
-    private ObservableCollection<SongModel> _listOfSongsInPlayList;
-
+    /**
+     * Piesne ktoré sa nachadzajú v playliste
+     */
     public ObservableCollection<SongModel> listOfSongsInPlayList
     {
-        get { return _listOfSongsInPlayList; }
+        get => _listOfSongsInPlayList;
         set
         {
             _listOfSongsInPlayList = value;
@@ -155,45 +183,22 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
-    public PresentingViewModel()
-    {
-        selectedSongFromLibrary = -1;
-        
-        audieceWindow = new AudiencWindow();
-        audieceWindow.Show();
-        
-        LyricViewTemplate1 tesLyricViewTemplate1 =
-            new LyricViewTemplate1("Pre začatie prezentovania stlačte Fullsc tlačídko!");
-        LyricContent = tesLyricViewTemplate1;
-        inicialiseButtons();
-        
-        songsLoader = new DataLoader();
-        songsSaver = new DataSaver();
-        listOfSongs = songsLoader.getSongs();
-        _listOfSongsInPlayList = new ObservableCollection<SongModel>();
-
-
-        textParser = new TextParser();
-        lyricArray = new ObservableCollection<Slide>();
-        SlideSongIndexingModelList = new List<SlideSongIndexingModel>();
-    }
-
+    /**
+     * Inicializácie funkcionality tlačidiel
+     */
     private void inicialiseButtons()
     {
         SelectSlideCommand = new RelayCommand(o =>
         {
-            selectedSlide = Int32.Parse(o.ToString());
-            if (lyricArray[0].SlideType == SlideType.Divider)
-            {
-                handleClickSelectSlidePlaylist();
-            }
+            selectedSlide = int.Parse(o.ToString());
+            if (lyricArray[0].SlideType == SlideType.Divider) handleClickSelectSlidePlaylist();
 
             actualSlidePreviewControl();
         });
 
         SelectLibrarySongCommand = new RelayCommand(o =>
         {
-            selectedSongFromLibrary = Int32.Parse(o.ToString());
+            selectedSongFromLibrary = int.Parse(o.ToString());
             OpenedSongModel = new SongModel(listOfSongs[selectedSongFromLibrary]);
             selectedSlide = -1;
             SelectedSongFromPlaylist = -1;
@@ -208,14 +213,18 @@ public class PresentingViewModel : ObservableObjects
                 SlideSongIndexingModelList.Clear();
                 lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
             }
+
             selectedSongFromLibrary = -1;
-            SelectedSongFromPlaylist = Int32.Parse(o.ToString()); // mam info o id 
+            SelectedSongFromPlaylist = int.Parse(o.ToString()); // mam info o id 
             OpenedSongModel = listOfSongsInPlayList[SelectedSongFromPlaylist];
 
             actualSlidePreviewControl();
         });
     }
 
+    /**
+     * Predchádzajúca pieseň v playliste
+     */
     public void PrevSongInPlaylist()
     {
         // ak je prvý slide divider tak sa zobrazuje playlist
@@ -226,6 +235,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * ďaľšia pieseň v playliste
+     */
     public void NextSongInPlaylist()
     {
         // ak je prvý slide divider tak sa zobrazuje playlist
@@ -236,31 +248,34 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Odstráni pieseň z playlistu
+     */
     public void RemoveSongFromPlayList()
     {
         if (SelectedSongFromPlaylist != -1 && SelectedSongFromPlaylist < listOfSongsInPlayList.Count)
         {
             listOfSongsInPlayList.RemoveAt(SelectedSongFromPlaylist);
-            for (int i = 0; i < listOfSongsInPlayList.Count; i++)
-            {
-                listOfSongsInPlayList[i].id = i;
-            }
-            
+            for (var i = 0; i < listOfSongsInPlayList.Count; i++) listOfSongsInPlayList[i].id = i;
+
             SlideSongIndexingModelList.Clear();
             lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
 
             if (SelectedSongFromPlaylist == listOfSongsInPlayList.Count)
-            {
                 SelectedSongFromPlaylist--;
-            }
             else
-            {
                 SelectedSongFromPlaylist = SelectedSongFromPlaylist; // aby som forsol označenie playlistu
+            if (listOfSongsInPlayList.Count <= 0)
+            {
+                selectedSlide = -1;
             }
             actualSlidePreviewControl();
         }
     }
 
+    /**
+     * Pridá pieseň do playlistu
+     */
     public void AddSongToPlayList()
     {
         if (selectedSongFromLibrary != -1)
@@ -289,6 +304,9 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Spracovanie kláves
+     */
     public void key(KeyEventArgs keyEvent)
     {
         if (keyEvent.Key == Key.Right)
@@ -297,13 +315,9 @@ public class PresentingViewModel : ObservableObjects
             {
                 // ak je prvy divider zobrazuje sa playlist
                 if (lyricArray[0].SlideType != SlideType.Divider)
-                {
                     selectedSlide++;
-                }
                 else
-                {
                     handleNextSelectSlidePlaylist();
-                }
 
                 actualSlidePreviewControl();
             }
@@ -314,19 +328,18 @@ public class PresentingViewModel : ObservableObjects
             {
                 // ak je prvy divider zobrazuje sa playlist
                 if (lyricArray[0].SlideType != SlideType.Divider)
-                {
                     selectedSlide--;
-                }
                 else
-                {
                     handlePrevSelectSlidePlaylist();
-                }
 
                 actualSlidePreviewControl();
             }
         }
     }
 
+    /**
+     * Nastavý audienece okno na druhú obrazovku a do fullscreanu
+     */
     public void SetAudienceFullScreanCommand()
     {
         if (Screen.AllScreens.ToArray().Length > 1)
@@ -340,25 +353,27 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
+    /**
+     * Spustí a pozastavý pprezentáciu
+     */
     public void GoLive(bool o)
     {
         isLive = o;
         actualSlidePreviewControl();
     }
 
+    /**
+     * Riadi čo je zobrazené v preview a u divákov
+     */
     private void actualSlidePreviewControl()
     {
         if (isLive)
         {
             // pre istotu ak by sa sem dostal nejakou náhodov divider ktorý sa nedá zobraziť
             if (selectedSlide != -1 && lyricArray[selectedSlide].SlideType != SlideType.Divider)
-            {
                 LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[selectedSlide].UserControl);
-            }
             else
-            {
                 LyricContent = new LyricViewTemplate1();
-            }
         }
         else
         {
@@ -366,17 +381,15 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
-
+    /**
+     * Načíta pieseň, playlist zo súboru
+     */
     public void OpenSong(string? path)
     {
         if (path != null)
-        {
             songsLoader.loadFileStartUp(path);
-        }
         else
-        {
             songsLoader.loadFile();
-        }
         switch (songsLoader.openedFileType)
         {
             case FileType.Song:
@@ -388,39 +401,50 @@ public class PresentingViewModel : ObservableObjects
                 SlideSongIndexingModelList.Clear();
                 lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
                 SelectedSongFromPlaylist = 0;
-                this.handleSelectPlaylist();
+                handleSelectPlaylist();
+                break;
+            default:
                 break;
         }
     }
 
+    /**
+     * Uloží pieseň do súboru
+     */
     public void SaveSong()
     {
-        if (OpenedSongModel != null)
-        {
-            this.songsSaver.saveSong(OpenedSongModel);
-        }
-    }
-    public void SavePlaylist()
-    {
-        if (listOfSongsInPlayList.Count > 0)
-        {
-            this.songsSaver.savePlaylist(listOfSongsInPlayList);
-        }
+        if (OpenedSongModel != null) songsSaver.saveSong(OpenedSongModel);
     }
 
+    /**
+     * Uloží playlist do súboru
+     */
+    public void SavePlaylist()
+    {
+        if (listOfSongsInPlayList.Count > 0) songsSaver.savePlaylist(listOfSongsInPlayList);
+    }
+
+    /**
+     * Zatvorí okno pre divákov
+     */
     public void closeWindow()
     {
         audieceWindow.Close();
     }
 
+    /**
+     * Vráti otvorenú pieseň, ak nie je otvorená pieseň tak vráti prázdnu pieseň
+     */
     public SongModel getOpenSong()
     {
         return OpenedSongModel != null ? new SongModel(OpenedSongModel) : new SongModel();
     }
 
+    /**
+     * aplykuje edit z edit page
+     */
     public void applayEdit(SongModel songModel)
     {
-        
         if (lyricArray.Count != 0)
         {
             if (lyricArray[0].SlideType == SlideType.Divider)
@@ -446,56 +470,63 @@ public class PresentingViewModel : ObservableObjects
         selectedSongFromLibrary = -1;
     }
 
+    /**
+     * Nastaví focus pre správne používanie klávesnice
+     */
     private void setFocus(int index)
     {
-        ListViewItem item =
+        var item =
             PresentingView.ListViewSlides.ItemContainerGenerator.ContainerFromIndex(_selectedSlide) as ListViewItem;
         item.Focus();
     }
 
+    /**
+     * Riadene select v playliste
+     */
     private void handleSelectPlaylist()
     {
         selectedSlide = SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfFirstSlide;
     }
 
+    /**
+     * ďaľší slide v playliste
+     */
     private void handleNextSelectSlidePlaylist()
     {
         selectedSongFromLibrary = -1;
         if (selectedSlide < SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfLastSlide)
-        {
             selectedSlide++;
-        }
         else
-        {
             NextSongInPlaylist();
-        }
     }
 
+    /**
+     * Predchádzajúci slide v playliste
+     */
     private void handlePrevSelectSlidePlaylist()
     {
         selectedSongFromLibrary = -1;
         if (selectedSlide > SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfFirstSlide)
-        {
             selectedSlide--;
-        }
         else
-        {
             PrevSongInPlaylist();
-        }
     }
 
+    /**
+     * Vyber slide pomocou myšli v playliste
+     */
     private void handleClickSelectSlidePlaylist()
     {
-        for (int i = 0; i < SlideSongIndexingModelList.Count; i++)
-        {
+        for (var i = 0; i < SlideSongIndexingModelList.Count; i++)
             if (selectedSlide >= SlideSongIndexingModelList[i].indexOfFirstSlide &&
                 selectedSlide <= SlideSongIndexingModelList[i].indexOfLastSlide)
             {
-                int tmpSelectedSlide = selectedSlide;
+                var tmpSelectedSlide = selectedSlide;
                 SelectedSongFromPlaylist = i;
                 selectedSlide = tmpSelectedSlide;
+                selectedSongFromLibrary = -1;
+                OpenedSongModel = new SongModel(listOfSongsInPlayList[SelectedSongFromPlaylist]);
                 break;
             }
-        }
     }
 }

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
 using Microsoft.Win32;
 using PowerLyrics.MVVM.Model;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace PowerLyrics.Core.DataHandler;
 
@@ -17,15 +16,13 @@ public class DataLoader
 {
     private static Regex _regex;
     private static string[] paths;
-    private TextParser.TextParser textParser;
-    private BinaryReader reader;
-
-    public FileType openedFileType { get; set; }
 
     // ak je nacitany súbor môjho formátu
-    bool myFileType = false;
-    private SongModel songModel;
+    private bool myFileType;
     private ObservableCollection<SongModel> playlist;
+    private BinaryReader reader;
+    private SongModel songModel;
+    private readonly TextParser.TextParser textParser;
 
     public DataLoader()
     {
@@ -34,27 +31,35 @@ public class DataLoader
         openedFileType = FileType.undefined;
     }
 
+    public FileType openedFileType { get; set; }
+
+    /**
+     * Načíta pieseň z file do string
+     */
     private string loadSong(string path)
     {
-        string loadedSong = File.ReadAllText(path);
+        var loadedSong = File.ReadAllText(path);
         return _regex.Replace(loadedSong, " ");
     }
 
+    /**
+     * Získa piesne pre knižnicu
+     */
     public ObservableCollection<SongModel> getSongs()
     {
-        ObservableCollection<SongModel> songs = new ObservableCollection<SongModel>();
+        var songs = new ObservableCollection<SongModel>();
         try
         {
-            
-            paths = Directory.GetFiles(System.IO.Path.GetDirectoryName(
-                System.Reflection.Assembly.GetEntryAssembly().Location)+ "\\Songs"); // toto vyriešilo ten bug ktorý me nechcel dovoliť bindowanie v xaml preview
+            paths = Directory.GetFiles(Path.GetDirectoryName(
+                                           Assembly.GetEntryAssembly().Location) +
+                                       "\\Songs"); // toto vyriešilo ten bug ktorý me nechcel dovoliť bindowanie v xaml preview
             // problém bol v tom že sa aplikácia mohla spúšťať z rôznych lokácii keď sa debugova a ked sa vyvýjala, to spôsobovalo že nie vždy exsitoval tento priečino
             // táto chyba sa prejavila až keď som sa snažil spustiť aplikáciu pomocou súboru
 
-            foreach (string path in paths)
+            foreach (var path in paths)
             {
-                string loadedSong = this.loadSong(path);
-                SongModel tmpSongModel = this.processSong(loadedSong);
+                var loadedSong = loadSong(path);
+                var tmpSongModel = processSong(loadedSong);
                 tmpSongModel.name = getName(path);
                 tmpSongModel.number = getSongNumber(path);
                 tmpSongModel.LyricModels = textParser.parseLyric(tmpSongModel);
@@ -63,10 +68,7 @@ public class DataLoader
 
             //sort songs by id
             songs = new ObservableCollection<SongModel>(songs.OrderBy(x => x.number));
-            for (int i = 0; i < songs.Count; i++)
-            {
-                songs[i].id = i;
-            }
+            for (var i = 0; i < songs.Count; i++) songs[i].id = i;
         }
         catch (Exception e)
         {
@@ -78,54 +80,54 @@ public class DataLoader
         return songs;
     }
 
+    /**
+     * zísak meno z názvu súboru
+     */
     private string getName(string song)
     {
-        string[] splitedSong = getFileName(song).Split(".");
+        var splitedSong = getFileName(song).Split(".");
         if (splitedSong.Length > 2)
-        {
             return splitedSong[1].Remove(0, 1);
-        }
-        else
-        {
-            return splitedSong[0];
-        }
+        return splitedSong[0];
     }
 
+    /**
+     * získa číslo piense z názvu súboru
+     */
     private int getSongNumber(string song)
     {
-        string[] splitedSong = getFileName(song).Split(".");
+        var splitedSong = getFileName(song).Split(".");
         if (splitedSong.Length > 2)
-        {
-            return Int32.Parse(splitedSong[0]);
-        }
-        else
-        {
-            return 0;
-        }
+            return int.Parse(splitedSong[0]);
+        return 0;
     }
 
+    /**
+     * získa celé mno súboru
+     */
     private string getFileName(string path)
     {
-        string[] splitedPath = path.Split(@"\");
+        var splitedPath = path.Split(@"\");
         return splitedPath[splitedPath.Length - 1];
     }
 
+    /**
+     * state machina pre spracovanie raw textu
+     */
     private SongModel processSong(string song)
     {
-        SongModel tmpSongModel = new SongModel();
-        string[] splitedSong = song.Split(" ");
-        LyricType stat = LyricType.Verse;
+        var tmpSongModel = new SongModel();
+        var splitedSong = song.Split(" ");
+        var stat = LyricType.Verse;
 
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
 
         //state machine for lyric parsing
-        foreach (string word in splitedSong)
-        {
+        foreach (var word in splitedSong)
             //chceking for type ([V1]...)
             if (word.Contains("[") || word.Contains("]"))
             {
                 if (builder.Length != 0)
-                {
                     switch (stat)
                     {
                         case LyricType.Bridge:
@@ -138,41 +140,28 @@ public class DataLoader
                             tmpSongModel.chorus.Add(builder.ToString());
                             break;
                     }
-                }
 
                 builder.Clear();
 
                 if (word.Contains("C"))
-                {
                     stat = LyricType.Chorus;
-                }
                 else if (word.Contains("B"))
-                {
                     stat = LyricType.Bridge;
-                }
                 else
-                {
                     stat = LyricType.Verse;
-                }
 
                 tmpSongModel.lyricTypeQueue.Add(stat);
             }
             else
             {
                 if (builder.Length == 0)
-                {
                     builder.Append(word);
-                }
                 else
-                {
                     builder.Append(" " + word);
-                }
             }
-        }
 
         //aby sa aj posledna cast piesne nacitala do pamete
         if (builder.Length != 0)
-        {
             switch (stat)
             {
                 case LyricType.Bridge:
@@ -185,40 +174,46 @@ public class DataLoader
                     tmpSongModel.chorus.Add(builder.ToString());
                     break;
             }
-        }
 
         return tmpSongModel;
     }
 
+    /**
+     * Načíta pieseň s otovrením dialógového okna
+     */
     public void loadFile()
     {
-        OpenFileDialog opneFileDialog = new OpenFileDialog();
+        openedFileType = FileType.undefined;
+        var opneFileDialog = new OpenFileDialog();
         opneFileDialog.Filter = "PowerLyric (*.pwly)|*.pwly|Text files (*.txt)|*.txt";
-        if (opneFileDialog.ShowDialog() == true)
-        {
-            loadFileStartUp(opneFileDialog.FileName);
-        }
+        if (opneFileDialog.ShowDialog() == true) loadFileStartUp(opneFileDialog.FileName);
     }
 
+    /**
+     * načíta pieseň alebo playlist pri start-up
+     */
     public void loadFileStartUp(string path)
     {
-        string[] splitedPath = path.Split(@".");
+        var splitedPath = path.Split(@".");
         myFileType = !splitedPath[splitedPath.Length - 1].Contains("txt");
 
         if (myFileType)
         {
-            this.processMyFile(path);
+            processMyFile(path);
         }
         else
         {
             openedFileType = FileType.Song;
-            songModel = this.processSong(loadSong(path));
+            songModel = processSong(loadSong(path));
             songModel.name = getName(path);
             songModel.number = getSongNumber(path);
             songModel.LyricModels = textParser.parseLyric(songModel);
         }
     }
 
+    /**
+     * Správne načíta zadaný súbor.
+     */
     private void processMyFile(string fileName)
     {
         reader = new BinaryReader(File.Open(fileName, FileMode.Open));
@@ -226,28 +221,27 @@ public class DataLoader
         {
             openedFileType = reader.ReadInt32() == constants.MAGICNUMBER_SONG ? FileType.Song : FileType.PlayList;
             if (openedFileType == FileType.Song)
-            {
                 processMyFileSong();
-            }
             else
-            {
                 processMyFilePlayList();
-            }
         }
 
         //Debug.WriteLine(Reader.ReadString());
         reader.Close();
     }
 
+    /**
+     * Načíta pieseň z .ppwly súboru
+     */
     private void processMyFileSong()
     {
         songModel = new SongModel();
         songModel.number = reader.ReadInt32();
         songModel.name = reader.ReadString();
-        int count = reader.ReadInt32();
-        for (int i = 0; i < count; i++)
+        var count = reader.ReadInt32();
+        for (var i = 0; i < count; i++)
         {
-            LyricModel tmp = new LyricModel();
+            var tmp = new LyricModel();
             tmp.text = reader.ReadString();
             tmp.fontSize = reader.ReadInt32();
             tmp.fontFamily = new FontFamily(reader.ReadString());
@@ -258,20 +252,23 @@ public class DataLoader
         }
     }
 
+    /**
+     * Načíta playlist z .pwly súboru
+     */
     private void processMyFilePlayList()
     {
         playlist = new ObservableCollection<SongModel>();
-        int count = reader.ReadInt32();
-        for (int i = 0; i < count; i++)
+        var count = reader.ReadInt32();
+        for (var i = 0; i < count; i++)
         {
-            SongModel tmp = new SongModel();
+            var tmp = new SongModel();
             tmp.id = i;
             tmp.number = reader.ReadInt32();
             tmp.name = reader.ReadString();
-            int count2 = reader.ReadInt32();
-            for (int j = 0; j < count2; j++)
+            var count2 = reader.ReadInt32();
+            for (var j = 0; j < count2; j++)
             {
-                LyricModel tmp2 = new LyricModel();
+                var tmp2 = new LyricModel();
                 tmp2.text = reader.ReadString();
                 tmp2.fontSize = reader.ReadInt32();
                 tmp2.fontFamily = new FontFamily(reader.ReadString());
@@ -285,12 +282,17 @@ public class DataLoader
         }
     }
 
-
+    /**
+     * Vráti aktuálne načítanú songModel
+     */
     public SongModel getSongModel()
     {
         return new SongModel(songModel);
     }
 
+    /**
+     * Vráti akutálne načítaný playlist
+     */
     public ObservableCollection<SongModel> getPlaylist()
     {
         return new ObservableCollection<SongModel>(playlist);

@@ -10,23 +10,23 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="CheckBox">
                         <Grid Width="60"
-                            Height="50"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Margin="0,10,0,0"
-                            Background="{TemplateBinding Background}">
+                              Height="50"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Margin="0,10,0,0"
+                              Background="{TemplateBinding Background}">
                             <StackPanel Orientation="Vertical">
-                                <Image 
+                                <Image
                                     Source="../Images/notLiveIcon.png"
                                     RenderOptions.BitmapScalingMode="Fant"
                                     VerticalAlignment="Top"
-                                    Height="25"/>
+                                    Height="25" />
                                 <Label
                                     Content="Live"
                                     FontSize="14"
                                     Foreground="#c9c8cf"
                                     HorizontalContentAlignment="Center"
-                                    Margin="0,-5,0,0"/>
+                                    Margin="0,-5,0,0" />
                             </StackPanel>
                         </Grid>
                     </ControlTemplate>
@@ -34,8 +34,8 @@
                 </Setter.Value>
             </Setter>
 
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
 
         </Style.Setters>
 
@@ -46,23 +46,23 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="CheckBox">
                             <Grid Width="60"
-                                Height="50"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                Margin="0,10,0,0"
-                                Background="{TemplateBinding Background}">
+                                  Height="50"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Top"
+                                  Margin="0,10,0,0"
+                                  Background="{TemplateBinding Background}">
                                 <StackPanel Orientation="Vertical">
-                                    <Image 
+                                    <Image
                                         Source="../Images/liveIcon.png"
                                         RenderOptions.BitmapScalingMode="Fant"
                                         VerticalAlignment="Top"
-                                        Height="25"/>
+                                        Height="25" />
                                     <Label
                                         Content="Stop"
                                         FontSize="14"
                                         Foreground="Red"
                                         HorizontalContentAlignment="Center"
-                                        Margin="0,-5,0,0"/>
+                                        Margin="0,-5,0,0" />
                                 </StackPanel>
                             </Grid>
                         </ControlTemplate>
@@ -70,7 +70,7 @@
                 </Setter>
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#b9636365"/>
+                <Setter Property="Background" Value="#b9636365" />
             </Trigger>
         </Style.Triggers>
     </Style>

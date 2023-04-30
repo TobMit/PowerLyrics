@@ -1,0 +1,17 @@
+﻿[V1]
+Lorem ipsum dolor sit amet,
+Consectetur adipiscing elit,
+Cras at nisi euismod,
+Pellentesque vitae libero et.
+
+[C1]
+Lorem ipsum, dolor sit amet,
+Consectetur adipiscing elit,
+Vivamus euismod turpis sed,
+Vestibulum ante ipsum primis.
+
+[B1]
+Nullam eget elit a elit,
+Duis in ipsum eu mauris,
+Nam eu metus vel sapien,
+Aliquam eleifend mi vitae.

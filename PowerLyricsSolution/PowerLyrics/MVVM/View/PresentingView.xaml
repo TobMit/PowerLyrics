@@ -3,36 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:PowerLyrics.MVVM.View"
              xmlns:viewModel="clr-namespace:PowerLyrics.MVVM.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="650" d:DesignWidth="1280"
              Background="Transparent">
     <UserControl.DataContext>
-        <viewModel:PresentingViewModel x:Name="presentingDataContext"/>
+        <viewModel:PresentingViewModel x:Name="presentingDataContext" />
     </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
-        
+
         <Border
             Grid.Row="1"
             BorderThickness="0,0,1,0"
             BorderBrush="#898989">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="30" />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" 
-                       Content="LIBRARY" 
+                <Label Grid.Row="0"
+                       Content="LIBRARY"
                        Foreground="#c9c8cf"
                        Background="#414141"
-                       FontWeight="Bold" 
-                       FontSize="15"/>
+                       FontWeight="Bold"
+                       FontSize="15" />
                 <ListView
                     Grid.Row="1"
                     Background="Transparent"
@@ -44,8 +43,8 @@
                     x:Name="ListViewLibrary" />
 
             </Grid>
-           
-            
+
+
         </Border>
         <Border
             Grid.Row="1"
@@ -54,33 +53,31 @@
             BorderBrush="#898989">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="300"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="300" />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Border
                     Grid.Row="0"
-                    BorderThickness="0"
-                    >
+                    BorderThickness="0">
                     <Viewbox Stretch="Uniform">
-                        <ContentControl Content="{Binding LyricContent}"/>
+                        <ContentControl Content="{Binding LyricContent}" />
                     </Viewbox>
                 </Border>
                 <Border
                     Grid.Row="1"
                     BorderThickness="0,1,0,0"
-                    BorderBrush="#898989"
-                    >
+                    BorderBrush="#898989">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="30" />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" 
-                               Content="PLAYLIST" 
+                        <Label Grid.Row="0"
+                               Content="PLAYLIST"
                                Foreground="#c9c8cf"
                                Background="#414141"
-                               FontWeight="Bold" 
-                               FontSize="15"/>
+                               FontWeight="Bold"
+                               FontSize="15" />
                         <ListView
                             Grid.Row="1"
                             Background="Transparent"
@@ -95,7 +92,7 @@
                 </Border>
             </Grid>
         </Border>
-        <ListView 
+        <ListView
             KeyUp="ListViewSlides_OnKeyUp"
             KeyboardNavigation.ControlTabNavigation="none"
             FocusVisualStyle="{x:Null}"

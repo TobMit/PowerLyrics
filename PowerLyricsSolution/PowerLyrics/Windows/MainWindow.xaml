@@ -3,28 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PowerLyrics.Windows"
         xmlns:viewModel="clr-namespace:PowerLyrics.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="PowerLyrics" Height="720" Width="1280"
         MinHeight="650" MinWidth="1100"
-        Background="#474747"
->
+        Background="#474747">
 
     <Window.DataContext>
-        <viewModel:MainViewModel x:Name="myDataContext"/>
+        <viewModel:MainViewModel x:Name="myDataContext" />
     </Window.DataContext>
 
     <Grid>
-        
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition/>
+            <RowDefinition Height="70" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <Border
@@ -33,74 +31,74 @@
             BorderBrush="#898989">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="400" />
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
                         <Button
                             Foreground="White"
                             Style="{StaticResource MenuButtonTheme}"
                             Command="{Binding OpenSongCommand}">
-                            <Image Source="../Images/openIcon.png" 
-                                   Height="21"/>
+                            <Image Source="../Images/openIcon.png"
+                                   Height="21" />
                         </Button>
                         <Label Content="Open"
-                               Style="{StaticResource LabelButtonTheme}"/>
+                               Style="{StaticResource LabelButtonTheme}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1">
                         <Button
                             Foreground="White"
-                            Style="{StaticResource MenuButtonTheme}" 
+                            Style="{StaticResource MenuButtonTheme}"
                             Command="{Binding SaveSongCommand}">
-                            <Image Source="../Images/saveIcon.png" 
-                                   Height="21"/>
+                            <Image Source="../Images/saveIcon.png"
+                                   Height="21" />
                         </Button>
                         <Label Content="Save&#x0a;Song"
                                FontSize="11"
-                               Style="{StaticResource LabelButtonTheme}"/>
+                               Style="{StaticResource LabelButtonTheme}" />
                     </StackPanel>
                     <StackPanel Grid.Column="2"
                                 Visibility="{Binding PresentingButtons}">
                         <Button
                             Foreground="White"
-                            Style="{StaticResource MenuButtonTheme}" 
+                            Style="{StaticResource MenuButtonTheme}"
                             Command="{Binding SavePlaylistCommand}">
-                            <Image Source="../Images/saveIcon.png" 
-                                   Height="21"/>
+                            <Image Source="../Images/saveIcon.png"
+                                   Height="21" />
                         </Button>
                         <Label Content="Save&#x0a;PlayL"
                                FontSize="11"
-                               Style="{StaticResource LabelButtonTheme}"/>
+                               Style="{StaticResource LabelButtonTheme}" />
                     </StackPanel>
                 </Grid>
 
-                <StackPanel Grid.Column="1" 
+                <StackPanel Grid.Column="1"
                             Orientation="Horizontal"
-                            Margin="0,1,0,0" 
+                            Margin="0,1,0,0"
                             HorizontalAlignment="Center">
                     <StackPanel.Resources>
                         <Style TargetType="StackPanel">
-                            <Setter Property="Margin" Value="0,0,10,0"/>
+                            <Setter Property="Margin" Value="0,0,10,0" />
                         </Style>
                     </StackPanel.Resources>
-                    <Grid >
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <RadioButton
                                 Grid.Column="0"
@@ -108,24 +106,24 @@
                                 Style="{StaticResource MainNavigationButtonTheme}"
                                 IsChecked="True"
                                 Command="{Binding SetPresentingPageCommand}">
-                                <Image Source="../Images/playIcon.png"/>
+                                <Image Source="../Images/playIcon.png" />
                             </RadioButton>
                             <RadioButton
                                 Grid.Column="1"
                                 Foreground="White"
                                 Style="{StaticResource MainNavigationButtonTheme}"
                                 Command="{Binding SetEditPageCommand}">
-                                <Image Source="../Images/editIcon.png"/>
+                                <Image Source="../Images/editIcon.png" />
                             </RadioButton>
                             <Button
                                 Grid.Column="3"
                                 Foreground="White"
-                                Style="{StaticResource MenuButtonTheme}" 
+                                Style="{StaticResource MenuButtonTheme}"
                                 Command="{Binding SetAudenceFullScreanCommand}">
                                 <Image Source="../Images/fullscreanIcon.png"
                                        Height="34" />
                             </Button>
-                            
+
                         </Grid>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
@@ -135,32 +133,31 @@
                             </Grid.ColumnDefinitions>
                             <Label Content="Show"
                                    Grid.Column="0"
-                                   Style="{StaticResource LabelButtonTheme}"/>
+                                   Style="{StaticResource LabelButtonTheme}" />
                             <Label Content="Edit"
                                    Grid.Column="1"
-                                   Style="{StaticResource LabelButtonTheme}"/>
+                                   Style="{StaticResource LabelButtonTheme}" />
                             <Label Content="FullSc"
                                    Grid.Column="2"
-                                   Style="{StaticResource LabelButtonTheme}"/>
-                            
+                                   Style="{StaticResource LabelButtonTheme}" />
+
                         </Grid>
 
                     </Grid>
-                    
 
 
                 </StackPanel>
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
-                            Margin="0,1,0,0" 
+                            Margin="0,1,0,0"
                             HorizontalAlignment="Right">
-                    <Grid >
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.25*"/>
-                            <ColumnDefinition Width="0.25*"/>
-                            <ColumnDefinition Width="0.25*"/>
-                            <ColumnDefinition Width="0.25*"/>
-                            <ColumnDefinition Width="0.25*"/>
+                            <ColumnDefinition Width="0.25*" />
+                            <ColumnDefinition Width="0.25*" />
+                            <ColumnDefinition Width="0.25*" />
+                            <ColumnDefinition Width="0.25*" />
+                            <ColumnDefinition Width="0.25*" />
                         </Grid.ColumnDefinitions>
                         <CheckBox Grid.Column="4"
                                   Style="{StaticResource LiveButtonTheme}"
@@ -173,14 +170,14 @@
                             <Button
                                 Foreground="White"
                                 FontSize="14"
-                                Style="{StaticResource MenuButtonTheme}" 
+                                Style="{StaticResource MenuButtonTheme}"
                                 Command="{Binding NextSongInPlaylistCommand}">
-                                <Image Source="../Images/forwardIcon.png" 
-                                       Height="21"/>
+                                <Image Source="../Images/forwardIcon.png"
+                                       Height="21" />
                             </Button>
                             <Label Content="Next&#x0a;Song"
                                    FontSize="11"
-                                   Style="{StaticResource LabelButtonTheme}"/>
+                                   Style="{StaticResource LabelButtonTheme}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="2"
@@ -188,61 +185,60 @@
                             <Button
                                 Foreground="White"
                                 FontSize="14"
-                                Style="{StaticResource MenuButtonTheme}" 
+                                Style="{StaticResource MenuButtonTheme}"
                                 Command="{Binding PrewSongInPlaylistCommand}">
                                 <Image Source="../Images/forwardIcon.png"
                                        Height="21"
-                                       RenderTransformOrigin="0.5,0.5"
-                                >
+                                       RenderTransformOrigin="0.5,0.5">
                                     <Image.RenderTransform>
-                                        <ScaleTransform ScaleX="-1"/>
+                                        <ScaleTransform ScaleX="-1" />
                                     </Image.RenderTransform>
                                 </Image>
                             </Button>
                             <Label Content="Prev&#x0a;Song"
                                    FontSize="11"
-                                   Style="{StaticResource LabelButtonTheme}"/>
+                                   Style="{StaticResource LabelButtonTheme}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="1"
                                     Visibility="{Binding PresentingButtons}">
                             <Button
                                 Foreground="White"
-                                Style="{StaticResource MenuButtonTheme}" 
+                                Style="{StaticResource MenuButtonTheme}"
                                 Command="{Binding RemoveSongFromPlayListCommand}">
-                                <Image Source="../Images/minusIcon.png" 
-                                       Height="21"/>
+                                <Image Source="../Images/minusIcon.png"
+                                       Height="21" />
                             </Button>
                             <Label Content="Remov&#x0a; Song"
                                    FontSize="11"
                                    HorizontalContentAlignment="Center"
-                                   Style="{StaticResource LabelButtonTheme}"/>
+                                   Style="{StaticResource LabelButtonTheme}" />
                         </StackPanel>
-                        
-                        <StackPanel Grid.Column="0" 
+
+                        <StackPanel Grid.Column="0"
                                     Visibility="{Binding PresentingButtons}">
                             <Button
                                 Foreground="White"
-                                Style="{StaticResource MenuButtonTheme}" 
+                                Style="{StaticResource MenuButtonTheme}"
                                 Command="{Binding AddSongToPlayListCommand}">
-                                <Image Source="../Images/plusIcon.png" 
-                                       Height="21"/>
+                                <Image Source="../Images/plusIcon.png"
+                                       Height="21" />
                             </Button>
                             <Label Content="Add&#x0a;Song"
                                    FontSize="11"
-                                   Style="{StaticResource LabelButtonTheme}"/>
+                                   Style="{StaticResource LabelButtonTheme}" />
                         </StackPanel>
                     </Grid>
                 </StackPanel>
 
 
             </Grid>
-            
+
         </Border>
-        <ContentControl 
-            Grid.Row="1" 
+        <ContentControl
+            Grid.Row="1"
             Grid.ColumnSpan="3"
-            Content="{Binding _UserControl}"/>
+            Content="{Binding _UserControl}" />
 
     </Grid>
 </Window>
