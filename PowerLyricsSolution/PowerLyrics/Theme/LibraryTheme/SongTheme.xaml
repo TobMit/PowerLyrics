@@ -31,7 +31,7 @@
                                     Foreground="White" />
                                 <TextBlock
                                     VerticalAlignment="Center"
-                                    Width="130" Text="{Binding name}"
+                                    Width="125" Text="{Binding name}"
                                     Foreground="White"
                                     TextTrimming="CharacterEllipsis"
                                     FontSize="12" />
