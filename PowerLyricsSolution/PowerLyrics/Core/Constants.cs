@@ -26,6 +26,12 @@ public enum FileType
     undefined
 }
 
+public enum SlideContentType
+{
+    Text,
+    Video
+}
+
 internal class constants
 {
     public const int FONT_SIZE = 25;

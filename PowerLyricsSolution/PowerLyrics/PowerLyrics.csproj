@@ -27,6 +27,7 @@
     <None Remove="Images\rightTextIcon.png" />
     <None Remove="Images\saveIcon.png" />
     <None Remove="Images\songIcon.png" />
+    <None Remove="Images\videoIcon.png" />
     <None Remove="Songs\1. Lorem Ipsun.txt" />
     <None Remove="Songs\10. Keď v Teba dúfam.txt" />
     <None Remove="Songs\11. Nádej.txt" />
@@ -112,6 +113,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\songIcon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\videoIcon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

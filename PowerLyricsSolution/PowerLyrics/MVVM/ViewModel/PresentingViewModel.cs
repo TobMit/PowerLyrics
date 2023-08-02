@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
@@ -19,7 +20,7 @@ public class PresentingViewModel : ObservableObjects
 
     private ObservableCollection<Slide> _lyricArray;
 
-    private object _lyricContent;
+    private LyricViewTemplate _lyricContent;
 
     private SongModel _openedSongModel;
 
@@ -44,7 +45,7 @@ public class PresentingViewModel : ObservableObjects
         audieceWindow.Show();
 
         var tesLyricViewTemplate1 =
-            new LyricViewTemplate1("Pre začatie prezentovania stlačte Fullsc tlačídko!");
+            new LyricViewTemplateText("Pre začatie prezentovania stlačte Fullsc tlačídko!");
         LyricContent = tesLyricViewTemplate1;
         inicialiseButtons();
 
@@ -112,13 +113,14 @@ public class PresentingViewModel : ObservableObjects
     /**
      * For audience view and for preview
      */
-    public object LyricContent
+    public LyricViewTemplate LyricContent
     {
         get => _lyricContent;
         set
         {
             _lyricContent = value;
-            audieceWindow.ContentControl.Content = new LyricViewTemplate1((LyricViewTemplate1)LyricContent);
+            //audieceWindow.ContentControl.Content = new LyricViewTemplateText((LyricViewTemplateText)LyricContent);
+            audieceWindow.ContentControl.Content = LyricContent.Clone();
             OnPropertyChanged();
         }
     }
@@ -349,7 +351,7 @@ public class PresentingViewModel : ObservableObjects
         }
         else
         {
-            LyricContent = new LyricViewTemplate1("Pre správne fungovanie potrebujete rozširiť obrazovku.");
+            LyricContent = new LyricViewTemplateText("Pre správne fungovanie potrebujete rozširiť obrazovku.");
         }
     }
 
@@ -371,13 +373,13 @@ public class PresentingViewModel : ObservableObjects
         {
             // pre istotu ak by sa sem dostal nejakou náhodov divider ktorý sa nedá zobraziť
             if (selectedSlide != -1 && lyricArray[selectedSlide].SlideType != SlideType.Divider)
-                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[selectedSlide].UserControl);
+                LyricContent = (LyricViewTemplate)lyricArray[selectedSlide].UserControl.Clone();
             else
-                LyricContent = new LyricViewTemplate1();
+                LyricContent = new LyricViewTemplateText();
         }
         else
         {
-            LyricContent = new LyricViewTemplate1(constants.DEFAULT_TEXT);
+            LyricContent = new LyricViewTemplateText(constants.DEFAULT_TEXT);
         }
     }
 

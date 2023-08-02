@@ -128,13 +128,27 @@ internal class TextParser
     public Slide getSlideFromLyricModel(LyricModel lyricModel)
     {
         var slide = new Slide();
-        slide.UserControl = new LyricViewTemplate1(lyricModel);
-        slide.SlideType = SlideType.Slide;
-        slide.LyricType = lyricModel.LyricType;
-        slide.isSelected = false;
-        slide.labelText = lyricModel.LyricType == LyricType.Undefined
-            ? "Name"
-            : lyricModel.LyricType + " " + lyricModel.serialNuber;
+        if (lyricModel.slideContentType == SlideContentType.Text)
+        {
+            slide.UserControl = new LyricViewTemplateText(lyricModel);
+            slide.SlideType = SlideType.Slide;
+            slide.LyricType = lyricModel.LyricType;
+            slide.isSelected = false;
+            slide.labelText = lyricModel.LyricType == LyricType.Undefined
+                ? "Name"
+                : lyricModel.LyricType + " " + lyricModel.serialNuber;
+        }
+        else
+        {
+            //todo implement for video
+            slide.UserControl = new LyricViewTemplateVideo(lyricModel);
+            slide.SlideType = SlideType.Slide;
+            slide.LyricType = lyricModel.LyricType;
+            slide.isSelected = false;
+            slide.labelText = lyricModel.LyricType == LyricType.Undefined
+                ? "Name"
+                : lyricModel.LyricType + " " + lyricModel.serialNuber;
+        }
         return slide;
     }
 }

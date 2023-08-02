@@ -19,7 +19,7 @@ public class EditViewModel : ObservableObjects
 
     private int _fontSize;
 
-    private LyricViewTemplate1 _lyricContent;
+    private LyricViewTemplate _lyricContent;
 
     private LyricType _lyricType;
 
@@ -117,12 +117,12 @@ public class EditViewModel : ObservableObjects
     /**
      * otvorený slide v prieview
      */
-    public LyricViewTemplate1 LyricContent
+    public LyricViewTemplate LyricContent
     {
         get => _lyricContent;
         set
         {
-            _lyricContent = new LyricViewTemplate1(value);
+            _lyricContent = value == null ? new LyricViewTemplateText() : (LyricViewTemplate)value.Clone();
             OnPropertyChanged();
         }
     }
@@ -136,6 +136,7 @@ public class EditViewModel : ObservableObjects
     public RelayCommand DecreaseFontCommand { get; set; }
     public RelayCommand SetTextAligmentCommand { get; set; }
     public RelayCommand AddSlideCommand { get; set; }
+    public RelayCommand AddVideoSlideCommand { get; set; }
     public RelayCommand RemoveSlidetCommand { get; set; }
     public RelayCommand DuplicateSlideCommand { get; set; }
 
@@ -258,7 +259,14 @@ public class EditViewModel : ObservableObjects
 
         AddSlideCommand = new RelayCommand(o =>
         {
-            openSong.LyricModels.Insert(selectedSlideNumber + 1, new LyricModel());
+            openSong.LyricModels.Insert(selectedSlideNumber + 1, new LyricModel(SlideContentType.Text));
+            openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+            SelectSlide(selectedSlideNumber + 1);
+        });
+
+        AddVideoSlideCommand = new RelayCommand(o =>
+        {
+            openSong.LyricModels.Insert(selectedSlideNumber + 1, new LyricModel(SlideContentType.Video));
             openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
             SelectSlide(selectedSlideNumber + 1);
         });
@@ -303,7 +311,7 @@ public class EditViewModel : ObservableObjects
         if (applyEdit) applyChanges();
 
         selectedSlideNumber = selectedSlide;
-        LyricContent = (LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl;
+        LyricContent = (LyricViewTemplate)openSongSlides[selectedSlideNumber].UserControl;
 
         loadingForEdit = true; // toto je tu kvoli tomu aby som sa nezaciklyl ked nacitavam data
         Text = openSong.LyricModels[selectedSlideNumber].text;
@@ -335,7 +343,7 @@ public class EditViewModel : ObservableObjects
             openSongSlides = tmp;
 
             // to force update
-            LyricContent = (LyricViewTemplate1)openSongSlides[selectedSlideNumber].UserControl;
+            LyricContent = (LyricViewTemplate)openSongSlides[selectedSlideNumber].UserControl;
         }
     }
 

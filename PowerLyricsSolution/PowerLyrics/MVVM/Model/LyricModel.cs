@@ -9,6 +9,18 @@ namespace PowerLyrics.MVVM.Model;
      */
 public class LyricModel
 {
+
+    public LyricModel(SlideContentType type)
+    {
+        text = "";
+        fontSize = constants.FONT_SIZE;
+        fontFamily = constants.DEFAULT_FONT_FAMILY;
+        LyricType = LyricType.Verse;
+        textAligment = constants.DEFAULT_TEXT_ALIGNMENT;
+        slideContentType = type;
+        serialNuber = 0;
+    }
+
     public LyricModel()
     {
         text = "";
@@ -16,6 +28,7 @@ public class LyricModel
         fontFamily = constants.DEFAULT_FONT_FAMILY;
         LyricType = LyricType.Verse;
         textAligment = constants.DEFAULT_TEXT_ALIGNMENT;
+        slideContentType = SlideContentType.Text;
         serialNuber = 0;
     }
 
@@ -29,6 +42,7 @@ public class LyricModel
             LyricType = copy.LyricType;
             textAligment = copy.textAligment;
             serialNuber = copy.serialNuber;
+            slideContentType = copy.slideContentType;
         }
     }
 
@@ -38,4 +52,5 @@ public class LyricModel
     public LyricType LyricType { get; set; }
     public TextAlignment textAligment { get; set; }
     public int serialNuber { get; set; } // in case there are more verses or bridges...
+    public SlideContentType slideContentType { get; set; }
 }

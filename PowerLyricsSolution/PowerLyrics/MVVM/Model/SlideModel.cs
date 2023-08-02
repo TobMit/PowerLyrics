@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using PowerLyrics.Core;
+using PowerLyrics.MVVM.View;
 
 namespace PowerLyrics.MVVM.Model;
 
@@ -31,7 +32,7 @@ public class Slide : ObservableObjects
         isSelected = false;
     }
 
-    public UserControl? UserControl { get; set; }
+    public LyricViewTemplate? UserControl { get; set; }
     public SlideType SlideType { get; set; }
     public LyricType LyricType { get; set; }
     public int id { get; set; }

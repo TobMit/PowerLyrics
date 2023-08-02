@@ -43,6 +43,17 @@
                         Height="25"
 
                         Style="{StaticResource MenuButtonTheme}"
+                        Command="{Binding AddVideoSlideCommand}"
+                        Margin="3,0,0,0">
+                        <Image Source="/Images/videoIcon.png"
+                               Height="18" />
+                    </Button>
+                    <Button
+                        Foreground="White"
+                        Width="25"
+                        Height="25"
+
+                        Style="{StaticResource MenuButtonTheme}"
                         Command="{Binding AddSlideCommand}"
                         Margin="3,0,0,0">
                         <Image Source="/Images/plusIcon.png"

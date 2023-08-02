@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using PowerLyrics.MVVM.Model;
@@ -6,16 +7,16 @@ using PowerLyrics.MVVM.Model;
 namespace PowerLyrics.MVVM.View;
 
 /// <summary>
-///     Interaction logic for LyricViewTemplate1.xaml Toto je zobrazovaný kontent
+///     Interaction logic for LyricViewTemplateText.xaml Toto je zobrazovaný kontent
 /// </summary>
-public partial class LyricViewTemplate1 : UserControl
+public partial class LyricViewTemplateText : LyricViewTemplate
 {
-    public LyricViewTemplate1()
+    public LyricViewTemplateText()
     {
         InitializeComponent();
     }
 
-    public LyricViewTemplate1(LyricViewTemplate1 copy)
+    public LyricViewTemplateText(LyricViewTemplateText copy)
     {
         if (copy != null)
         {
@@ -27,7 +28,7 @@ public partial class LyricViewTemplate1 : UserControl
         }
     }
 
-    public LyricViewTemplate1(LyricModel lyric)
+    public LyricViewTemplateText(LyricModel lyric)
     {
         InitializeComponent();
         text = lyric.text;
@@ -36,7 +37,7 @@ public partial class LyricViewTemplate1 : UserControl
         textAligment = lyric.textAligment;
     }
 
-    public LyricViewTemplate1(string text)
+    public LyricViewTemplateText(string text)
     {
         InitializeComponent();
         this.text = text;
@@ -64,5 +65,10 @@ public partial class LyricViewTemplate1 : UserControl
     {
         get => TextBlock.TextAlignment;
         set => TextBlock.TextAlignment = value;
+    }
+
+    public override object Clone()
+    {
+        return new LyricViewTemplateText(this);
     }
 }
