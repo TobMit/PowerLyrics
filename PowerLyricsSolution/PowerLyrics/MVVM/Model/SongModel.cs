@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using PowerLyrics.Core;
+using PowerLyrics.MVVM.Model.SlideContentModels;
 
 namespace PowerLyrics.MVVM.Model;
 
@@ -19,7 +20,7 @@ public class SongModel : ObservableObjects
         chorus = new ArrayList();
         bridge = new ArrayList();
         lyricTypeQueue = new List<LyricType>();
-        LyricModels = new List<LyricModel>();
+        ContentModels = new List<ContentModel>();
         isSelected = false;
         number = 0;
         name = "New song";
@@ -35,10 +36,10 @@ public class SongModel : ObservableObjects
             lyricTypeQueue = copy.lyricTypeQueue != null
                 ? new List<LyricType>(copy.lyricTypeQueue)
                 : new List<LyricType>();
-            if (copy.LyricModels != null)
+            if (copy.ContentModels != null)
             {
-                LyricModels = new List<LyricModel>();
-                foreach (var lyricModel in copy.LyricModels) LyricModels.Add(new LyricModel(lyricModel));
+                ContentModels = new List<ContentModel>();
+                foreach (var lyricModel in copy.ContentModels) ContentModels.Add((ContentModel)lyricModel.Clone());
             }
 
             id = copy.id;
@@ -79,5 +80,5 @@ public class SongModel : ObservableObjects
         }
     }
 
-    public List<LyricModel> LyricModels { get; set; }
+    public List<ContentModel> ContentModels { get; set; }
 }

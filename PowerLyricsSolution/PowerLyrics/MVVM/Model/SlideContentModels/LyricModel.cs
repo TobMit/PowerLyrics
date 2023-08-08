@@ -2,12 +2,12 @@
 using System.Windows.Media;
 using PowerLyrics.Core;
 
-namespace PowerLyrics.MVVM.Model;
+namespace PowerLyrics.MVVM.Model.SlideContentModels;
 
 /**
      * Poskytuje vešetky potrebné dáta pre vytvorenie slide
      */
-public class LyricModel
+public class LyricModel : ContentModel
 {
 
     public LyricModel(SlideContentType type)
@@ -46,11 +46,13 @@ public class LyricModel
         }
     }
 
+    public override ContentModel Clone()
+    {
+        return new LyricModel(this);
+    }
+
     public string text { get; set; }
     public int fontSize { get; set; }
     public FontFamily fontFamily { get; set; }
-    public LyricType LyricType { get; set; }
     public TextAlignment textAligment { get; set; }
-    public int serialNuber { get; set; } // in case there are more verses or bridges...
-    public SlideContentType slideContentType { get; set; }
 }

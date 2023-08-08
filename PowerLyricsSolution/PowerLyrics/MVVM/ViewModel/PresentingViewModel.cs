@@ -136,7 +136,7 @@ public class PresentingViewModel : ObservableObjects
             _openedSongModel = value;
             //toto je tu kvoli tomu aby sa použil iný parsovač na piesne
             if (selectedSongFromLibrary > -1)
-                lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.LyricModels);
+                lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.ContentModels);
 
             OnPropertyChanged();
         }
@@ -396,7 +396,7 @@ public class PresentingViewModel : ObservableObjects
         {
             case FileType.Song:
                 OpenedSongModel = songsLoader.getSongModel();
-                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
+                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.ContentModels);
                 break;
             case FileType.PlayList:
                 listOfSongsInPlayList = songsLoader.getPlaylist();
@@ -460,13 +460,13 @@ public class PresentingViewModel : ObservableObjects
             else
             {
                 OpenedSongModel = songModel;
-                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
+                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.ContentModels);
             }
         }
         else
         {
             OpenedSongModel = songModel;
-            lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
+            lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.ContentModels);
         }
 
         selectedSongFromLibrary = -1;

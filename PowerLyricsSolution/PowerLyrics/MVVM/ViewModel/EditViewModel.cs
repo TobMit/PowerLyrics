@@ -6,6 +6,7 @@ using PowerLyrics.Core;
 using PowerLyrics.Core.DataHandler;
 using PowerLyrics.Core.TextParser;
 using PowerLyrics.MVVM.Model;
+using PowerLyrics.MVVM.Model.SlideContentModels;
 using PowerLyrics.MVVM.View;
 
 namespace PowerLyrics.MVVM.ViewModel;
@@ -15,6 +16,9 @@ namespace PowerLyrics.MVVM.ViewModel;
  */
 public class EditViewModel : ObservableObjects
 {
+    private readonly DataLoader songsLoader;
+    private readonly DataSaver songsSaver;
+    private readonly TextParser textParser;
     private FontFamily _fontFamily;
 
     private int _fontSize;
@@ -40,9 +44,8 @@ public class EditViewModel : ObservableObjects
 
     private TextAlignment _textAlignment;
     private bool loadingForEdit = true;
-    private readonly DataLoader songsLoader;
-    private readonly DataSaver songsSaver;
-    private readonly TextParser textParser;
+    private Visibility textSlideVisibility;
+    private Visibility videoSlideVisibility;
 
 
     public EditViewModel()
@@ -57,6 +60,32 @@ public class EditViewModel : ObservableObjects
     }
 
     /**
+     * Nástroje pomocou ktorých sa edituje pieseň
+     */
+    public Visibility TextSlideVisibility
+    {
+        get => textSlideVisibility;
+        set
+        {
+            textSlideVisibility = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /**
+     * Nástroje pomocou ktorých sa edituje pieseň
+     */
+    public Visibility VideoSlideVisibility
+    {
+        get => videoSlideVisibility;
+        set
+        {
+            videoSlideVisibility = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /**
      * otvorená pieseň ktorá sa edituje
      */
     public SongModel openSong
@@ -66,7 +95,7 @@ public class EditViewModel : ObservableObjects
         {
             _openSong = new SongModel(value);
             selectedSlideNumber = -1;
-            openSongSlides = textParser.getSlidesFromOpenSong(_openSong.LyricModels);
+            openSongSlides = textParser.getSlidesFromOpenSong(_openSong.ContentModels);
 
             loadingForEdit = true;
             Name = openSong.name;
@@ -259,15 +288,15 @@ public class EditViewModel : ObservableObjects
 
         AddSlideCommand = new RelayCommand(o =>
         {
-            openSong.LyricModels.Insert(selectedSlideNumber + 1, new LyricModel(SlideContentType.Text));
-            openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+            openSong.ContentModels.Insert(selectedSlideNumber + 1, new LyricModel(SlideContentType.Text));
+            openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
             SelectSlide(selectedSlideNumber + 1);
         });
 
         AddVideoSlideCommand = new RelayCommand(o =>
         {
-            openSong.LyricModels.Insert(selectedSlideNumber + 1, new LyricModel(SlideContentType.Video));
-            openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+            openSong.ContentModels.Insert(selectedSlideNumber + 1, new LyricModel(SlideContentType.Video));
+            openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
             SelectSlide(selectedSlideNumber + 1);
         });
 
@@ -276,8 +305,8 @@ public class EditViewModel : ObservableObjects
             // zmeny sa môžu aplikovať iba keď je niečo vybraté
             if (isSelectedSlide())
             {
-                openSong.LyricModels.RemoveAt(selectedSlideNumber);
-                openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+                openSong.ContentModels.RemoveAt(selectedSlideNumber);
+                openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
                 SelectSlide(selectedSlideNumber, false);
             }
         });
@@ -287,9 +316,9 @@ public class EditViewModel : ObservableObjects
             // zmeny sa môžu aplikovať iba keď je niečo vybraté
             if (isSelectedSlide())
             {
-                openSong.LyricModels.Insert(selectedSlideNumber + 1,
-                    new LyricModel(openSong.LyricModels[selectedSlideNumber]));
-                openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+                openSong.ContentModels.Insert(selectedSlideNumber + 1,
+                    openSong.ContentModels[selectedSlideNumber].Clone());
+                openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
                 SelectSlide(selectedSlideNumber + 1);
             }
         });
@@ -314,12 +343,18 @@ public class EditViewModel : ObservableObjects
         LyricContent = (LyricViewTemplate)openSongSlides[selectedSlideNumber].UserControl;
 
         loadingForEdit = true; // toto je tu kvoli tomu aby som sa nezaciklyl ked nacitavam data
-        Text = openSong.LyricModels[selectedSlideNumber].text;
-        Fontfamily = openSong.LyricModels[selectedSlideNumber].fontFamily;
-        FontSize = openSong.LyricModels[selectedSlideNumber].fontSize;
-        TextAlignment = openSong.LyricModels[selectedSlideNumber].textAligment;
-        LyricType = openSong.LyricModels[selectedSlideNumber].LyricType;
-        SerialNuber = openSong.LyricModels[selectedSlideNumber].serialNuber;
+        if (openSong.ContentModels[selectedSlideNumber].GetType() == typeof(LyricModel))
+        {
+            LyricModel lyricModel = (LyricModel)openSong.ContentModels[selectedSlideNumber];
+            Text = lyricModel.text;
+            Fontfamily = lyricModel.fontFamily;
+            FontSize = lyricModel.fontSize;
+            TextAlignment = lyricModel.textAligment;
+            LyricType = lyricModel.LyricType;
+            SerialNuber = lyricModel.serialNuber;
+        }
+        
+        setEditTools(openSong.ContentModels[selectedSlideNumber].slideContentType);
         loadingForEdit = false;
     }
 
@@ -331,14 +366,26 @@ public class EditViewModel : ObservableObjects
         // zmeny sa môžu aplikovať iba keď je niečo vybraté
         if (isSelectedSlide())
         {
-            // prenesenie zmien z view do modelu
-            openSong.LyricModels[selectedSlideNumber].text = Text;
-            openSong.LyricModels[selectedSlideNumber].fontSize = FontSize;
-            openSong.LyricModels[selectedSlideNumber].fontFamily = Fontfamily;
-            openSong.LyricModels[selectedSlideNumber].textAligment = TextAlignment;
-            openSong.LyricModels[selectedSlideNumber].LyricType = LyricType;
-            openSong.LyricModels[selectedSlideNumber].serialNuber = SerialNuber;
-            var tmp = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+            if (openSong.ContentModels[selectedSlideNumber].slideContentType == SlideContentType.Text)
+            {
+                // prenesenie zmien z view do modelu
+                LyricModel lyricModel = new LyricModel();
+                lyricModel.text = Text;
+                lyricModel.fontSize = FontSize;
+                lyricModel.fontFamily = Fontfamily;
+                lyricModel.textAligment = TextAlignment;
+                lyricModel.LyricType = LyricType;
+                lyricModel.serialNuber = SerialNuber;
+
+                openSong.ContentModels[selectedSlideNumber] = lyricModel;
+            }
+            else
+            {
+                //todo add impl
+            }
+
+
+            var tmp = textParser.getSlidesFromOpenSong(openSong.ContentModels);
             tmp[selectedSlideNumber].isSelected = true;
             openSongSlides = tmp;
 
@@ -376,13 +423,30 @@ public class EditViewModel : ObservableObjects
                 var oldId = openSong.id;
                 openSong = songsLoader.getSongModel();
                 openSong.id = oldId;
-                openSongSlides = textParser.getSlidesFromOpenSong(openSong.LyricModels);
+                openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
                 break;
             case FileType.PlayList:
                 MessageBox.Show("You are trying open playlist in edit-page!\nIn edit-page zou can open only SONGS.",
                     "Open song", MessageBoxButton.OK, MessageBoxImage.Warning);
                 break;
-            default:
+        }
+    }
+
+    /**
+     * Vyberie správne nástroje na edit podľa typu slide
+     */
+    private void setEditTools(SlideContentType type)
+    {
+        VideoSlideVisibility = Visibility.Collapsed;
+        TextSlideVisibility = Visibility.Collapsed;
+
+        switch (type)
+        {
+            case SlideContentType.Text:
+                TextSlideVisibility = Visibility.Visible;
+                break;
+            case SlideContentType.Video:
+                VideoSlideVisibility = Visibility.Visible;
                 break;
         }
     }

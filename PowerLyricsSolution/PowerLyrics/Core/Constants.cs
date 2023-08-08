@@ -10,7 +10,7 @@ public enum LyricType
     Verse,
     Chorus,
     Bridge,
-    Undefined
+    Undefined //TODO add prechorus
 }
 
 public enum SlideType

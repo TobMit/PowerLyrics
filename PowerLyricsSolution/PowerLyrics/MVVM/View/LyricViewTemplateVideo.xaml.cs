@@ -1,4 +1,4 @@
-﻿using PowerLyrics.MVVM.Model;
+﻿using PowerLyrics.MVVM.Model.SlideContentModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,51 +31,21 @@ namespace PowerLyrics.MVVM.View
             if (copy != null)
             {
                 InitializeComponent();
-                text = copy.text;
-                fontSize = copy.fontSize;
-                if (copy.fontFamily != null) fontFamily = copy.fontFamily;
-                textAligment = copy.textAligment;
+                
             }
         }
 
-        public LyricViewTemplateVideo(LyricModel lyric)
+        public LyricViewTemplateVideo(VideoModel video)
         {
             InitializeComponent();
-            text = lyric.text;
-            fontSize = lyric.fontSize;
-            fontFamily = lyric.fontFamily;
-            textAligment = lyric.textAligment;
+            
         }
 
         public LyricViewTemplateVideo(string text)
         {
             InitializeComponent();
-            this.text = text;
         }
 
-        public string text
-        {
-            get => TextBlock.Text;
-            set => TextBlock.Text = value;
-        }
-
-        public FontFamily fontFamily
-        {
-            get => TextBlock.FontFamily;
-            set => TextBlock.FontFamily = value;
-        }
-
-        public double fontSize
-        {
-            get => TextBlock.FontSize;
-            set => TextBlock.FontSize = value;
-        }
-
-        public TextAlignment textAligment
-        {
-            get => TextBlock.TextAlignment;
-            set => TextBlock.TextAlignment = value;
-        }
         public override object Clone()
         {
             return new LyricViewTemplateVideo(this);
