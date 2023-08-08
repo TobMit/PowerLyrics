@@ -118,9 +118,21 @@ public class PresentingViewModel : ObservableObjects
         get => _lyricContent;
         set
         {
-            _lyricContent = value;
-            //audieceWindow.ContentControl.Content = new LyricViewTemplateText((LyricViewTemplateText)LyricContent);
-            audieceWindow.ContentControl.Content = LyricContent.Clone();
+            if (value.GetType() == SlideContentType.Video)
+            {
+                var videoPrew = (LyricViewTemplateVideo) value.Clone();
+                var videoAudience = (LyricViewTemplateVideo) value.Clone();
+                videoPrew.videoPlayerPlay();
+                videoAudience.videoPlayerPlay();
+                _lyricContent = videoPrew;
+                videoAudience.IsMuted = false;
+                audieceWindow.ContentControl.Content = videoAudience;
+            }
+            else
+            {
+                _lyricContent = value;
+                audieceWindow.ContentControl.Content = value.Clone();
+            }
             OnPropertyChanged();
         }
     }

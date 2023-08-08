@@ -310,7 +310,32 @@
                     </Border>
                 </StackPanel>
                 <!-- Binding enum https://www.youtube.com/watch?v=Bp5LFXjwtQ0 -->
-
+                <StackPanel Orientation="Horizontal" Visibility="{Binding VideoSlideVisibility}">
+                    <Border
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        BorderBrush="#c9c8cf"
+                        Margin="3">
+                        <Label
+                            Padding="2"
+                            Content="{Binding VideoName}"
+                            FontSize="20"
+                            Width="339"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Margin="0,0,0,2" />
+                    </Border>
+                    <Button
+                        Foreground="White"
+                        Width="30"
+                        Height="35"
+                        Style="{StaticResource MenuButtonTheme}"
+                        Command="{Binding OpenVideoCommand}"
+                        Margin="3,0,0,0">
+                        <Image Source="/Images/openIcon.png"
+                               Height="25" />
+                    </Button>
+                </StackPanel>
 
             </StackPanel>
         </Border>

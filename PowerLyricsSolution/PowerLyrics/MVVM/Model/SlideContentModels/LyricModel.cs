@@ -10,17 +10,6 @@ namespace PowerLyrics.MVVM.Model.SlideContentModels;
 public class LyricModel : ContentModel
 {
 
-    public LyricModel(SlideContentType type)
-    {
-        text = "";
-        fontSize = constants.FONT_SIZE;
-        fontFamily = constants.DEFAULT_FONT_FAMILY;
-        LyricType = LyricType.Verse;
-        textAligment = constants.DEFAULT_TEXT_ALIGNMENT;
-        slideContentType = type;
-        serialNuber = 0;
-    }
-
     public LyricModel()
     {
         text = "";

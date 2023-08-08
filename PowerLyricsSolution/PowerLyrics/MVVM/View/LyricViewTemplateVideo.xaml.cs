@@ -1,54 +1,87 @@
-﻿using PowerLyrics.MVVM.Model.SlideContentModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Timers;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using PowerLyrics.Core;
+using PowerLyrics.MVVM.Model.SlideContentModels;
 
-namespace PowerLyrics.MVVM.View
+namespace PowerLyrics.MVVM.View;
+
+/// <summary>
+///     Interaction logic for LyricViewTemplateVideo.xaml
+/// </summary>
+public partial class LyricViewTemplateVideo : LyricViewTemplate
 {
-    /// <summary>
-    /// Interaction logic for LyricViewTemplateVideo.xaml
-    /// </summary>
-    public partial class LyricViewTemplateVideo : LyricViewTemplate
+    public LyricViewTemplateVideo()
     {
-        public LyricViewTemplateVideo()
+        InitializeComponent();
+        IsMuted = true;
+        this.prepareForPreview();
+    }
+
+    public LyricViewTemplateVideo(LyricViewTemplateVideo copy)
+    {
+        if (copy != null)
         {
             InitializeComponent();
+            IsMuted = copy.IsMuted;
+            Source = copy.Source;
+            this.prepareForPreview();
         }
+    }
 
-        public LyricViewTemplateVideo(LyricViewTemplateVideo copy)
+    public LyricViewTemplateVideo(VideoModel video)
+    {
+        InitializeComponent();
+        Source = video.SourceAdress;
+        IsMuted = true;
+        this.prepareForPreview();
+    }
+
+    private void prepareForPreview()
+    {
+        this.videoPlayer.Position = TimeSpan.FromSeconds(1);
+        this.videoPlayer.Play();
+        this.videoPlayer.Stop();
+    }
+
+    public string Source
+    {
+        get => videoPlayer.Source.AbsolutePath;
+        set
         {
-            if (copy != null)
+            if (value != null)
             {
-                InitializeComponent();
-                
+                videoPlayer.Source = new Uri(value);
             }
         }
+    }
 
-        public LyricViewTemplateVideo(VideoModel video)
-        {
-            InitializeComponent();
-            
-        }
+    public bool IsMuted
+    {
+        get => videoPlayer.IsMuted;
+        set => videoPlayer.IsMuted = value;
+    }
 
-        public LyricViewTemplateVideo(string text)
-        {
-            InitializeComponent();
-        }
+    public void videoPlayerPlay()
+    {
+        this.videoPlayer.Position = TimeSpan.Zero;
+        this.videoPlayer.Play();
+    }
 
-        public override object Clone()
-        {
-            return new LyricViewTemplateVideo(this);
-        }
+    public void videoPlayerStop()
+    {
+        this.videoPlayer.Stop();
+    }
+
+    public override LyricViewTemplate Clone()
+    {
+        return new LyricViewTemplateVideo(this);
+    }
+
+    public override SlideContentType GetType()
+    {
+        return SlideContentType.Video;
     }
 }

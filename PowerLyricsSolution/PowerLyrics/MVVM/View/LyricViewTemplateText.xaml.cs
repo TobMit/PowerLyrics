@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using PowerLyrics.Core;
 using PowerLyrics.MVVM.Model.SlideContentModels;
 
 namespace PowerLyrics.MVVM.View;
@@ -67,8 +68,13 @@ public partial class LyricViewTemplateText : LyricViewTemplate
         set => TextBlock.TextAlignment = value;
     }
 
-    public override object Clone()
+    public override LyricViewTemplate Clone()
     {
         return new LyricViewTemplateText(this);
+    }
+
+    public override SlideContentType GetType()
+    {
+        return SlideContentType.Text;
     }
 }

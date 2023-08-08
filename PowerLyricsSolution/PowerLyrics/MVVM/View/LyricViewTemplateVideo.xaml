@@ -6,16 +6,17 @@
                         xmlns:local="clr-namespace:PowerLyrics.MVVM.View"
                         mc:Ignorable="d" 
                         d:DesignHeight="300" d:DesignWidth="400">
-    <Grid Background="Yellow"
+    <Grid Background="Black"
           Width="400"
           Height="300">
-        <TextBlock HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Foreground="White"
-                   FontSize="25"
-                   TextAlignment="Center"
-                   Width="350"
-                   TextWrapping="Wrap"
-                   Name="TextBlock" />
+        <MediaElement Name="videoPlayer" 
+                      LoadedBehavior="Manual"
+                      Visibility="Visible"
+                      ScrubbingEnabled="True"
+                      IsMuted="True"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Stretch="Uniform"
+                      />
     </Grid>
 </local:LyricViewTemplate>

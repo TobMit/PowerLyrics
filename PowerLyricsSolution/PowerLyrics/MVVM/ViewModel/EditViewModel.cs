@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
+using Microsoft.Win32;
 using PowerLyrics.Core;
 using PowerLyrics.Core.DataHandler;
 using PowerLyrics.Core.TextParser;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.Model.SlideContentModels;
 using PowerLyrics.MVVM.View;
+using PowerLyrics.Windows;
 
 namespace PowerLyrics.MVVM.ViewModel;
 
@@ -19,28 +22,21 @@ public class EditViewModel : ObservableObjects
     private readonly DataLoader songsLoader;
     private readonly DataSaver songsSaver;
     private readonly TextParser textParser;
+    
     private FontFamily _fontFamily;
-
     private int _fontSize;
-
     private LyricViewTemplate _lyricContent;
-
     private LyricType _lyricType;
-
     private string _name;
-
     private int _number;
+    private int _serialNuber;
+    private string _text;
+    private string _videoName;
 
 
     private SongModel _openSong;
-
     private ObservableCollection<Slide> _openSongSlides;
-
     private int _selectedSlideNumber = -1;
-
-    private int _serialNuber;
-
-    private string _text;
 
     private TextAlignment _textAlignment;
     private bool loadingForEdit = true;
@@ -151,7 +147,23 @@ public class EditViewModel : ObservableObjects
         get => _lyricContent;
         set
         {
+            if (value == null)
+            {
+                _lyricContent = new LyricViewTemplateText();
+            }
+            else if (value.GetType() == SlideContentType.Video)
+            {
+                var videoPrew = (LyricViewTemplateVideo)value.Clone();
+                videoPrew.videoPlayerPlay();
+                videoPrew.IsMuted = false;
+                _lyricContent = videoPrew;
+            }
+            else
+            {
+                _lyricContent = value;
+            }
             _lyricContent = value == null ? new LyricViewTemplateText() : (LyricViewTemplate)value.Clone();
+            
             OnPropertyChanged();
         }
     }
@@ -168,6 +180,7 @@ public class EditViewModel : ObservableObjects
     public RelayCommand AddVideoSlideCommand { get; set; }
     public RelayCommand RemoveSlidetCommand { get; set; }
     public RelayCommand DuplicateSlideCommand { get; set; }
+    public RelayCommand OpenVideoCommand{ get; set; }
 
     public string Text
     {
@@ -262,6 +275,22 @@ public class EditViewModel : ObservableObjects
         }
     }
 
+    public string VideoName
+    {
+        get
+        {
+            if (_videoName == null) return "";
+            var splitedSong = _videoName.Split("\\");
+            return splitedSong[splitedSong.Length - 1];
+        }
+        set
+        {
+            _videoName = value;
+            if (!loadingForEdit) applyChanges();
+            OnPropertyChanged();
+        }
+    }
+
     /**
      * Inicializuje ovaldanie pomocu tlačidiel
      */
@@ -288,14 +317,14 @@ public class EditViewModel : ObservableObjects
 
         AddSlideCommand = new RelayCommand(o =>
         {
-            openSong.ContentModels.Insert(selectedSlideNumber + 1, new LyricModel(SlideContentType.Text));
+            openSong.ContentModels.Insert(selectedSlideNumber + 1, new LyricModel());
             openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
             SelectSlide(selectedSlideNumber + 1);
         });
 
         AddVideoSlideCommand = new RelayCommand(o =>
         {
-            openSong.ContentModels.Insert(selectedSlideNumber + 1, new LyricModel(SlideContentType.Video));
+            openSong.ContentModels.Insert(selectedSlideNumber + 1, new VideoModel());
             openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
             SelectSlide(selectedSlideNumber + 1);
         });
@@ -321,6 +350,13 @@ public class EditViewModel : ObservableObjects
                 openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
                 SelectSlide(selectedSlideNumber + 1);
             }
+        });
+
+        OpenVideoCommand = new RelayCommand(o =>
+        {
+            var opneFileDialog = new OpenFileDialog();
+            opneFileDialog.Filter = "Video (*.mp4)|*.mp4";
+            if (opneFileDialog.ShowDialog() == true) VideoName = opneFileDialog.FileName;
         });
     }
 
@@ -353,6 +389,11 @@ public class EditViewModel : ObservableObjects
             LyricType = lyricModel.LyricType;
             SerialNuber = lyricModel.serialNuber;
         }
+        else
+        {
+            VideoModel lyricModel = (VideoModel)openSong.ContentModels[selectedSlideNumber];
+            VideoName = lyricModel.SourceAdress;
+        }
         
         setEditTools(openSong.ContentModels[selectedSlideNumber].slideContentType);
         loadingForEdit = false;
@@ -381,7 +422,10 @@ public class EditViewModel : ObservableObjects
             }
             else
             {
-                //todo add impl
+                VideoModel video = new VideoModel();
+                //tuto takto pristupujem aby som mal celú adresu nie len názov
+                video.SourceAdress = _videoName;
+                openSong.ContentModels[selectedSlideNumber] = video;
             }
 
 
