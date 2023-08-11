@@ -10,7 +10,7 @@ public enum LyricType
     Verse,
     Chorus,
     Bridge,
-    Undefined
+    Undefined //TODO add prechorus
 }
 
 public enum SlideType
@@ -24,6 +24,12 @@ public enum FileType
     Song,
     PlayList,
     undefined
+}
+
+public enum SlideContentType
+{
+    Text,
+    Video
 }
 
 internal class constants

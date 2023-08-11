@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
@@ -19,7 +20,7 @@ public class PresentingViewModel : ObservableObjects
 
     private ObservableCollection<Slide> _lyricArray;
 
-    private object _lyricContent;
+    private LyricViewTemplate _lyricContent;
 
     private SongModel _openedSongModel;
 
@@ -44,7 +45,7 @@ public class PresentingViewModel : ObservableObjects
         audieceWindow.Show();
 
         var tesLyricViewTemplate1 =
-            new LyricViewTemplate1("Pre začatie prezentovania stlačte Fullsc tlačídko!");
+            new LyricViewTemplateText("Pre začatie prezentovania stlačte Fullsc tlačídko!");
         LyricContent = tesLyricViewTemplate1;
         inicialiseButtons();
 
@@ -112,13 +113,26 @@ public class PresentingViewModel : ObservableObjects
     /**
      * For audience view and for preview
      */
-    public object LyricContent
+    public LyricViewTemplate LyricContent
     {
         get => _lyricContent;
         set
         {
-            _lyricContent = value;
-            audieceWindow.ContentControl.Content = new LyricViewTemplate1((LyricViewTemplate1)LyricContent);
+            if (value.GetType() == SlideContentType.Video)
+            {
+                var videoPrew = (LyricViewTemplateVideo) value.Clone();
+                var videoAudience = (LyricViewTemplateVideo) value.Clone();
+                videoPrew.videoPlayerPlay();
+                videoAudience.videoPlayerPlay();
+                _lyricContent = videoPrew;
+                videoAudience.IsMuted = false;
+                audieceWindow.ContentControl.Content = videoAudience;
+            }
+            else
+            {
+                _lyricContent = value;
+                audieceWindow.ContentControl.Content = value.Clone();
+            }
             OnPropertyChanged();
         }
     }
@@ -134,7 +148,7 @@ public class PresentingViewModel : ObservableObjects
             _openedSongModel = value;
             //toto je tu kvoli tomu aby sa použil iný parsovač na piesne
             if (selectedSongFromLibrary > -1)
-                lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.LyricModels);
+                lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.ContentModels);
 
             OnPropertyChanged();
         }
@@ -349,7 +363,7 @@ public class PresentingViewModel : ObservableObjects
         }
         else
         {
-            LyricContent = new LyricViewTemplate1("Pre správne fungovanie potrebujete rozširiť obrazovku.");
+            LyricContent = new LyricViewTemplateText("Pre správne fungovanie potrebujete rozširiť obrazovku.");
         }
     }
 
@@ -371,13 +385,13 @@ public class PresentingViewModel : ObservableObjects
         {
             // pre istotu ak by sa sem dostal nejakou náhodov divider ktorý sa nedá zobraziť
             if (selectedSlide != -1 && lyricArray[selectedSlide].SlideType != SlideType.Divider)
-                LyricContent = new LyricViewTemplate1((LyricViewTemplate1)lyricArray[selectedSlide].UserControl);
+                LyricContent = (LyricViewTemplate)lyricArray[selectedSlide].UserControl.Clone();
             else
-                LyricContent = new LyricViewTemplate1();
+                LyricContent = new LyricViewTemplateText();
         }
         else
         {
-            LyricContent = new LyricViewTemplate1(constants.DEFAULT_TEXT);
+            LyricContent = new LyricViewTemplateText(constants.DEFAULT_TEXT);
         }
     }
 
@@ -394,7 +408,7 @@ public class PresentingViewModel : ObservableObjects
         {
             case FileType.Song:
                 OpenedSongModel = songsLoader.getSongModel();
-                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
+                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.ContentModels);
                 break;
             case FileType.PlayList:
                 listOfSongsInPlayList = songsLoader.getPlaylist();
@@ -458,13 +472,13 @@ public class PresentingViewModel : ObservableObjects
             else
             {
                 OpenedSongModel = songModel;
-                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
+                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.ContentModels);
             }
         }
         else
         {
             OpenedSongModel = songModel;
-            lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.LyricModels);
+            lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.ContentModels);
         }
 
         selectedSongFromLibrary = -1;

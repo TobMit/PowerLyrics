@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using PowerLyrics.MVVM.Model;
+using PowerLyrics.MVVM.Model.SlideContentModels;
 using PowerLyrics.MVVM.View;
 
 namespace PowerLyrics.Core.TextParser;
@@ -10,9 +11,9 @@ internal class TextParser
     /**
          * Rozdelý text z listov do LyricType
          */
-    public List<LyricModel> parseLyric(SongModel songModel)
+    public List<ContentModel> parseLyric(SongModel songModel)
     {
-        var tmpSlides = new List<LyricModel>();
+        var tmpSlides = new List<ContentModel>();
         var verse = 0;
         var bridge = 0;
         var chorus = 0;
@@ -54,7 +55,7 @@ internal class TextParser
     /**
          * Vytvorí z listu LyricModel kolekciu slide pre pieseň
          */
-    public ObservableCollection<Slide> getSlidesFromOpenSong(List<LyricModel> song)
+    public ObservableCollection<Slide> getSlidesFromOpenSong(List<ContentModel> song)
     {
         var tmp = new ObservableCollection<Slide>();
         var id = 0;
@@ -107,7 +108,7 @@ internal class TextParser
             id++;
 
             // parse song and add slides
-            foreach (var lyricModel in song.LyricModels)
+            foreach (var lyricModel in song.ContentModels)
             {
                 var slide = getSlideFromLyricModel(lyricModel);
                 slide.id = id;
@@ -125,16 +126,30 @@ internal class TextParser
     /**
          * Vytvorí Slide z LyricModel
          */
-    public Slide getSlideFromLyricModel(LyricModel lyricModel)
+    public Slide getSlideFromLyricModel(ContentModel contentModel)
     {
         var slide = new Slide();
-        slide.UserControl = new LyricViewTemplate1(lyricModel);
-        slide.SlideType = SlideType.Slide;
-        slide.LyricType = lyricModel.LyricType;
-        slide.isSelected = false;
-        slide.labelText = lyricModel.LyricType == LyricType.Undefined
-            ? "Name"
-            : lyricModel.LyricType + " " + lyricModel.serialNuber;
+        if (contentModel.slideContentType == SlideContentType.Text)
+        {
+            slide.UserControl = new LyricViewTemplateText((LyricModel)contentModel);
+            slide.SlideType = SlideType.Slide;
+            slide.LyricType = contentModel.LyricType;
+            slide.isSelected = false;
+            slide.labelText = contentModel.LyricType == LyricType.Undefined
+                ? "Name"
+                : contentModel.LyricType + " " + contentModel.serialNuber;
+        }
+        else
+        {
+            //todo implement for video
+            slide.UserControl = new LyricViewTemplateVideo((VideoModel)contentModel);
+            slide.SlideType = SlideType.Slide;
+            slide.LyricType = contentModel.LyricType;
+            slide.isSelected = false;
+            slide.labelText = contentModel.LyricType == LyricType.Undefined
+                ? "Name"
+                : contentModel.LyricType + " " + contentModel.serialNuber;
+        }
         return slide;
     }
 }

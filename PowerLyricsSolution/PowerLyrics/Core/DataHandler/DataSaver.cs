@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using Microsoft.Win32;
 using PowerLyrics.MVVM.Model;
+using PowerLyrics.MVVM.Model.SlideContentModels;
 
 namespace PowerLyrics.Core.DataHandler;
 
@@ -25,7 +26,7 @@ internal class DataSaver
             writer.Write(constants.MAGICNUMBER_SONG); // magic number (PWLY)
             writer.Write(openedSongModel.number);
             writer.Write(openedSongModel.name);
-            writeLyricModel(openedSongModel.LyricModels);
+            writeLyricModel(openedSongModel.ContentModels);
             writer.Close();
         }
     }
@@ -48,7 +49,7 @@ internal class DataSaver
             {
                 writer.Write(songModel.number);
                 writer.Write(songModel.name);
-                writeLyricModel(songModel.LyricModels);
+                writeLyricModel(songModel.ContentModels);
             }
 
             writer.Close();
@@ -58,17 +59,21 @@ internal class DataSaver
     /**
          * Zapíše do súboru LyricModel
          */
-    private void writeLyricModel(List<LyricModel> lyricModels)
+    private void writeLyricModel(List<ContentModel> contentModels)
     {
-        writer.Write(lyricModels.Count);
-        foreach (var lyricModel in lyricModels)
+        writer.Write(contentModels.Count);
+        foreach (var contentModel in contentModels)
         {
-            writer.Write(lyricModel.text);
-            writer.Write(lyricModel.fontSize);
-            writer.Write(lyricModel.fontFamily.ToString());
-            writer.Write(lyricModel.LyricType.ToString());
-            writer.Write(lyricModel.textAligment.ToString());
-            writer.Write(lyricModel.serialNuber);
+            if (contentModel.GetType() == typeof(LyricModel))
+            {
+                LyricModel lyricModel = (LyricModel) contentModel;
+                writer.Write(lyricModel.text);
+                writer.Write(lyricModel.fontSize);
+                writer.Write(lyricModel.fontFamily.ToString());
+                writer.Write(lyricModel.LyricType.ToString());
+                writer.Write(lyricModel.textAligment.ToString());
+                writer.Write(lyricModel.serialNuber);
+            }
         }
     }
 }

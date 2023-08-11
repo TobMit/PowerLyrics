@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Media;
 using Microsoft.Win32;
 using PowerLyrics.MVVM.Model;
+using PowerLyrics.MVVM.Model.SlideContentModels;
 
 namespace PowerLyrics.Core.DataHandler;
 
@@ -62,7 +63,7 @@ public class DataLoader
                 var tmpSongModel = processSong(loadedSong);
                 tmpSongModel.name = getName(path);
                 tmpSongModel.number = getSongNumber(path);
-                tmpSongModel.LyricModels = textParser.parseLyric(tmpSongModel);
+                tmpSongModel.ContentModels = textParser.parseLyric(tmpSongModel);
                 songs.Add(tmpSongModel);
             }
 
@@ -207,7 +208,7 @@ public class DataLoader
             songModel = processSong(loadSong(path));
             songModel.name = getName(path);
             songModel.number = getSongNumber(path);
-            songModel.LyricModels = textParser.parseLyric(songModel);
+            songModel.ContentModels = textParser.parseLyric(songModel);
         }
     }
 
@@ -248,7 +249,7 @@ public class DataLoader
             tmp.LyricType = (LyricType)Enum.Parse(typeof(LyricType), reader.ReadString());
             tmp.textAligment = (TextAlignment)Enum.Parse(typeof(TextAlignment), reader.ReadString());
             tmp.serialNuber = reader.ReadInt32();
-            songModel.LyricModels.Add(tmp);
+            songModel.ContentModels.Add(tmp);
         }
     }
 
@@ -275,7 +276,7 @@ public class DataLoader
                 tmp2.LyricType = (LyricType)Enum.Parse(typeof(LyricType), reader.ReadString());
                 tmp2.textAligment = (TextAlignment)Enum.Parse(typeof(TextAlignment), reader.ReadString());
                 tmp2.serialNuber = reader.ReadInt32();
-                tmp.LyricModels.Add(tmp2);
+                tmp.ContentModels.Add(tmp2);
             }
 
             playlist.Add(tmp);
