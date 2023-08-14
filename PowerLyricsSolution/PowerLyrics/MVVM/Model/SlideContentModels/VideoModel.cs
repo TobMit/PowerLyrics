@@ -14,7 +14,7 @@ namespace PowerLyrics.MVVM.Model.SlideContentModels
         public VideoModel()
         {
             slideContentType = SlideContentType.Video;
-            SourceAdress = "D:\\WinSubory\\Videos\\HG-meme-Je mi to tak luto.mp4";
+            SourceAdress = "PowerLyrics\\Images\\No media.mp4";
         }
 
         public VideoModel(VideoModel clone)

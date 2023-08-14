@@ -127,6 +127,7 @@ public class PresentingViewModel : ObservableObjects
                 _lyricContent = videoPrew;
                 videoAudience.IsMuted = false;
                 audieceWindow.ContentControl.Content = videoAudience;
+                videoAudience.IsMuted = true;
             }
             else
             {
