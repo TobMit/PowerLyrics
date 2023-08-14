@@ -61,7 +61,7 @@
                     Grid.Row="0"
                     BorderThickness="0">
                     <Viewbox Stretch="Uniform">
-                        <ContentControl Content="{Binding LyricContent}" />
+                        <ContentPresenter Content="{Binding LyricContent}" RenderOptions.BitmapScalingMode="Fant" />
                     </Viewbox>
                 </Border>
                 <Border

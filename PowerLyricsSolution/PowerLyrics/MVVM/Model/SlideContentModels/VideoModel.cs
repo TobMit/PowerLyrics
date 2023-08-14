@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -14,7 +16,8 @@ namespace PowerLyrics.MVVM.Model.SlideContentModels
         public VideoModel()
         {
             slideContentType = SlideContentType.Video;
-            SourceAdress = "PowerLyrics\\Images\\No media.mp4";
+            SourceAdress = Path.GetDirectoryName(
+                Assembly.GetEntryAssembly().Location) + "\\Images\\No media.mp4";
         }
 
         public VideoModel(VideoModel clone)

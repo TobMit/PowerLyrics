@@ -13,11 +13,12 @@ namespace PowerLyrics.MVVM.View;
 /// </summary>
 public partial class LyricViewTemplateVideo : LyricViewTemplate
 {
+    private string source;
     public LyricViewTemplateVideo()
     {
         InitializeComponent();
         IsMuted = true;
-        //this.prepareForPreview();
+        this.prepareForPreview();
     }
 
     public LyricViewTemplateVideo(LyricViewTemplateVideo copy)
@@ -27,7 +28,7 @@ public partial class LyricViewTemplateVideo : LyricViewTemplate
             InitializeComponent();
             IsMuted = copy.IsMuted;
             Source = copy.Source;
-            //this.prepareForPreview();
+            this.prepareForPreview();
         }
     }
 
@@ -36,24 +37,25 @@ public partial class LyricViewTemplateVideo : LyricViewTemplate
         InitializeComponent();
         Source = video.SourceAdress;
         IsMuted = true;
-        //this.prepareForPreview();
+        this.prepareForPreview();
     }
 
     private void prepareForPreview()
     {
-        //this.videoPlayer.Position = TimeSpan.FromSeconds(1);
-       // this.videoPlayer.Play();
-        //this.videoPlayer.Stop();
+        this.videoPlayer.Position = TimeSpan.FromSeconds(1);
+        this.videoPlayer.Play();
+        this.videoPlayer.Stop();
     }
 
     public string Source
     {
-        get => videoPlayer.Source.AbsolutePath;
+        get => source;
         set
         {
             if (value != null)
             {
                 videoPlayer.Source = new Uri(value);
+                source = value;
             }
         }
     }
