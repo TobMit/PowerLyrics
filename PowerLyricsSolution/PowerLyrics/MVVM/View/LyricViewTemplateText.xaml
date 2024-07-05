@@ -8,7 +8,9 @@
              d:DesignHeight="300" d:DesignWidth="400">
     <Grid Background="Black"
           MinWidth="400"
-          MinHeight="300">
+          MinHeight="300"
+          Name="Grid"
+          >
         <TextBlock HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Foreground="White"

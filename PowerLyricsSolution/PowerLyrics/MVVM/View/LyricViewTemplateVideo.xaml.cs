@@ -13,6 +13,7 @@ namespace PowerLyrics.MVVM.View;
 /// </summary>
 public partial class LyricViewTemplateVideo : LyricViewTemplate
 {
+    private string source;
     public LyricViewTemplateVideo()
     {
         InitializeComponent();
@@ -48,12 +49,13 @@ public partial class LyricViewTemplateVideo : LyricViewTemplate
 
     public string Source
     {
-        get => videoPlayer.Source.AbsolutePath;
+        get => source;
         set
         {
             if (value != null)
             {
                 videoPlayer.Source = new Uri(value);
+                source = value;
             }
         }
     }

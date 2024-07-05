@@ -20,6 +20,7 @@
     <None Remove="Images\leftTextIcon.png" />
     <None Remove="Images\liveIcon.png" />
     <None Remove="Images\lyricIcon.png" />
+    <None Remove="Images\No media.mp4" />
     <None Remove="Images\notLiveIcon.png" />
     <None Remove="Images\openIcon.png" />
     <None Remove="Images\playIcon.png" />
@@ -94,6 +95,9 @@
     <None Remove="Images\minusIcon.png" />
     <Resource Include="Images\minusIcon.png" />
     <None Remove="Images\fullscreanIcon.png" />
+    <EmbeddedResource Include="Images\No media.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Songs\1. Lorem Ipsun.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>

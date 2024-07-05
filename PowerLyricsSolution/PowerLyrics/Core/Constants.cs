@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
+using WpfScreenHelper;
 
 namespace PowerLyrics.Core;
 
@@ -34,7 +36,7 @@ public enum SlideContentType
 
 internal class constants
 {
-    public const int FONT_SIZE = 25;
+    public const int FONT_SIZE = 50;
 
     //public static string DEFAULT_TEXT = "Mládežka " + DateTime.Now.ToString("dd.MM.yyyy");
     public static string DEFAULT_TEXT = "Ahojte!\n" + DateTime.Now.ToString("dd.MM.yyyy");

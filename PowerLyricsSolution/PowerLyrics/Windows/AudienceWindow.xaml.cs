@@ -16,6 +16,12 @@ public partial class AudiencWindow : Window
         InitializeComponent();
         //this.Left = System.Windows.SystemParameters.WorkArea.Right - this.Width; // set window to right side of screen
         WindowState = WindowState.Minimized;
+        if (Screen.AllScreens.ToArray().Length > 1)
+        {
+            var dimensions = Screen.AllScreens.ToArray()[1].WorkingArea;
+            this.Width = dimensions.Size.Width;
+            this.Height = dimensions.Size.Height;
+        }
     }
 
     private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
