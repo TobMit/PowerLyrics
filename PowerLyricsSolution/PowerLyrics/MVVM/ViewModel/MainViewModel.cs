@@ -1,12 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using PowerLyrics.Core;
+using PowerLyrics.Core.PresentingCore;
 using PowerLyrics.MVVM.View;
 
 namespace PowerLyrics.MVVM.ViewModel;
 
 public class MainViewModel : ObservableObjects
 {
+    private readonly PresentingCore _core;
+
     private Visibility _editingButtons;
     private readonly EditView _editView;
     private readonly EditViewModel _editViewModel;
@@ -22,6 +25,7 @@ public class MainViewModel : ObservableObjects
     public MainViewModel()
     {
         inicialiseButtons();
+        _core = new(this, _presentingViewModel);
         _presentingView = new PresentingView();
         _presentingViewModel = _presentingView.getDataContext();
         _presentingViewModel.PresentingView = _presentingView;
@@ -125,89 +129,91 @@ public class MainViewModel : ObservableObjects
     {
         SetAudenceFullScreanCommand = new RelayCommand(o => { _presentingViewModel.SetAudienceFullScreanCommand(); });
 
-        GoLiveCommand = new RelayCommand(o => { _presentingViewModel.GoLive((bool)o); });
+        GoLiveCommand = new RelayCommand(o => { _core.GoLive((bool)o); });
 
         AddSongToPlayListCommand = new RelayCommand(o =>
         {
-            if (presenting)
-                _presentingViewModel.AddSongToPlayList();
-            else
-                MessageBox.Show("You can use this button only in SHOW-PAGE", "Button", MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
+            if (buttonCheck(presenting))
+                _core.AddSongToPlayList();
         });
         RemoveSongFromPlayListCommand = new RelayCommand(o =>
         {
-            if (presenting)
-                _presentingViewModel.RemoveSongFromPlayList();
-            else
-                MessageBox.Show("You can use this button only in SHOW-PAGE", "Buttong", MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
+            if (buttonCheck(presenting))
+                _core.RemoveSongFromPlayList();
         });
         NextSongInPlaylistCommand = new RelayCommand(o =>
         {
-            if (presenting)
-                _presentingViewModel.NextSongInPlaylist();
-            else
-                MessageBox.Show("You can use this button only in SHOW-PAGE", "Button", MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
+            if (buttonCheck(presenting))
+                _core.NextSongInPlaylist();
         });
         PrewSongInPlaylistCommand = new RelayCommand(o =>
         {
-            if (presenting)
-                _presentingViewModel.PrevSongInPlaylist();
-            else
-                MessageBox.Show("You can use this button only in SHOW-PAGE", "Button", MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
+            if (buttonCheck(presenting))
+                _core.PrevSongInPlaylist();
         });
         SetPresentingPageCommand = new RelayCommand(o =>
         {
             _UserControl = _presentingView;
             presenting = true;
-            _presentingViewModel.applayEdit(_editViewModel.getEditedSong());
+            _core.applayEdit(_editViewModel.getEditedSong());
         });
         SetEditPageCommand = new RelayCommand(o =>
         {
             _UserControl = _editView;
+            //todo fix
             _presentingViewModel.selectedSlide =
                 -1; // aby ked sa preklikne do edit page a zrusi zdielanie tak aby nenabehol slide
             presenting = false;
-            _editViewModel.openSong = _presentingViewModel.getOpenSong();
+            _editViewModel.openSong = _core.getOpenSong();
         });
         OpenSongCommand = new RelayCommand(o =>
         {
             if (presenting)
-                _presentingViewModel.OpenSong(null);
+                _core.OpenSong(null);
             else
                 _editViewModel.OpenSong(null);
         });
         SaveSongCommand = new RelayCommand(o =>
         {
             if (presenting)
-                _presentingViewModel.SaveSong();
+                _core.SaveSong();
             else
                 _editViewModel.SaveSong();
         });
         SavePlaylistCommand = new RelayCommand(o =>
         {
-            if (presenting)
-                _presentingViewModel.SavePlaylist();
-            else
-                MessageBox.Show("You can use this button only in SHOW-PAGE", "Button", MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
+            if (buttonCheck(presenting))
+                _core.SavePlaylist();
         });
     }
 
-    /**
-         * načítanie piesne pri spustení
-         */
+    /// <summary>
+    /// If we can use button in this view it throws error
+    /// </summary>
+    /// <param name="pPresenting"></param>
+    /// <returns></returns>
+    private bool buttonCheck(bool pPresenting){
+        if (!pPresenting)
+        {
+            MessageBox.Show("You can use this button only in SHOW-PAGE", "Button", MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Open song from start up
+    /// </summary>
+    /// <param name="path"></param>
     public void openSongOnStartup(string path)
     {
         _presentingViewModel.OpenSong(path);
     }
 
-    /**
-         * Zatvorí audience okno
-         */
+    /// <summary>
+    /// Close audience window
+    /// </summary>
     public void closeWindow()
     {
         _presentingViewModel.closeWindow();
