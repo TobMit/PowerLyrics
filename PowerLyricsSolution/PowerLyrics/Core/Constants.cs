@@ -38,6 +38,7 @@ public enum PresseningFrom
 {
     None,
     Library,
+    File,
     PlayList
 }
 

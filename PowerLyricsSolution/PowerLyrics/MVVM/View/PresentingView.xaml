@@ -102,7 +102,7 @@
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             Grid.Column="1"
             Background="#5c5c5c"
-            ItemsSource="{Binding lyricArray}"
+            ItemsSource="{Binding DisplayedSlides}"
             ItemContainerStyle="{StaticResource SlidesTheme}"
             SelectedIndex="{Binding SelectedSlide, Mode=OneWay}"
             FlowDirection="LeftToRight"

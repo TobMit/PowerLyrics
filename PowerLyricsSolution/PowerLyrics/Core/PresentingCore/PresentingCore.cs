@@ -22,6 +22,7 @@ public class PresentingCore
     private readonly TextParser.TextParser _textParser;
 
     private int _selectedSlide;
+    private SongModel? _openedSongModel;
 
     public PresseningFrom PresentingState
     {
@@ -34,6 +35,25 @@ public class PresentingCore
             if (value != PresseningFrom.Library)
             {
                 //_libraryCore.DeselectSong();
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Opened song
+    /// </summary>
+    public SongModel? OpenedSongModel
+    {
+        get => _openedSongModel;
+        set
+        {
+            _openedSongModel = value;
+            //If is opened from theese is used text parser to get slides from Library must be used different one
+            if (PresentingState is PresseningFrom.None or PresseningFrom.Library or PresseningFrom.File 
+                && _openedSongModel is not null)
+            {
+                _presentingViewModel.DisplayedSlides =
+                    _textParser.getSlidesFromOpenSong(_openedSongModel.ContentModels);
             }
         }
     }
@@ -120,7 +140,10 @@ public class PresentingCore
     /// <exception cref="NotImplementedException"></exception>
     public void ApplayEdit(SongModel getEditedSong)
     {
-        throw new NotImplementedException();
+        if (PresentingState is PresseningFrom.None or PresseningFrom.Library)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 
@@ -131,7 +154,7 @@ public class PresentingCore
     /// <exception cref="NotImplementedException"></exception>
     public SongModel GetOpenSong()
     {
-        return _presentingViewModel.OpenedSongModel != null ? new SongModel(_presentingViewModel.OpenedSongModel) : new SongModel();
+        return OpenedSongModel != null ? new SongModel(OpenedSongModel) : new SongModel();
     }
 
     /// <summary>
@@ -149,7 +172,7 @@ public class PresentingCore
     /// </summary>
     public void SaveSong()
     {
-        if (_presentingViewModel.OpenedSongModel != null) _songsSaver.saveSong(_presentingViewModel.OpenedSongModel);
+        if (OpenedSongModel != null) _songsSaver.saveSong(OpenedSongModel);
     }
 
     /// <summary>
@@ -168,7 +191,7 @@ public class PresentingCore
     public void SelectSongFromLibrary(int index)
     {
         PresentingState = PresseningFrom.Library;
-        _presentingViewModel.OpenedSongModel = _libraryCore.GetSong(index);
+        OpenedSongModel = _libraryCore.GetSong(index);
         SetPriviewControlToBlank();
     }
 
