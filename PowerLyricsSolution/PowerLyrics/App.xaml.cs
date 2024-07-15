@@ -15,9 +15,9 @@ public partial class App : Application
         currentDomain.UnhandledException += MyHandler;
     }
 
-    /**
-         * hadle výnimky
-         */
+    /// <summary>
+    /// Handle výnimku
+    /// </summary>
     private static void MyHandler(object sender, UnhandledExceptionEventArgs args)
     {
         var e = (Exception)args.ExceptionObject;
@@ -25,9 +25,9 @@ public partial class App : Application
             MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
-    /**
-         * otvorenie aplikácie aj pomocou súboru
-         */
+    /// <summary>
+    /// Otvorenie aplikácie po otvorení súboru
+    /// </summary>
     private void App_OnStartup(object sender, StartupEventArgs e)
     {
         var mainWindow = new MainWindow();

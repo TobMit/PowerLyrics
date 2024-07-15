@@ -75,34 +75,34 @@ public class MainViewModel : ObservableObjects
         }
     }
 
-    /**
-         * Set audience window full screan
-         */
+    /// <summary>
+    /// Set audience window full screen
+    /// </summary>
     public RelayCommand SetAudenceFullScreanCommand { get; set; }
 
-    /**
-         * Set status to live
-         */
+    /// <summary>
+    /// Set status to live
+    /// </summary>
     public RelayCommand GoLiveCommand { get; set; }
 
-    /**
-         * Add song from library to playlist
-         */
+    /// <summary>
+    /// Add song from library to playlist
+    /// </summary>
     public RelayCommand AddSongToPlayListCommand { get; set; }
 
-    /**
-         * Remove song from playlist
-         */
+    /// <summary>
+    /// Remove song from playlist
+    /// </summary>
     public RelayCommand RemoveSongFromPlayListCommand { get; set; }
 
-    /**
-         * Fast forward selected slide to first slide on next song
-         */
+    /// <summary>
+    /// Fast forward selected slide to first slide on next song
+    /// </summary>
     public RelayCommand NextSongInPlaylistCommand { get; set; }
 
-    /**
-         * Fast rewind selected slide to first slide previous song
-         */
+    /// <summary>
+    /// Fast rewind selected slide to first slide previous song
+    /// </summary>
     public RelayCommand PrewSongInPlaylistCommand { get; set; }
 
     public RelayCommand SetPresentingPageCommand { get; set; }
@@ -122,9 +122,9 @@ public class MainViewModel : ObservableObjects
         }
     }
 
-    /**
-         * Inicializácia tlačidiel
-         */
+    /// <summary>
+    /// Button init
+    /// </summary>
     private void inicialiseButtons()
     {
         SetAudenceFullScreanCommand = new RelayCommand(o => { _presentingViewModel.SetAudienceFullScreanCommand(); });
@@ -161,7 +161,7 @@ public class MainViewModel : ObservableObjects
         {
             _UserControl = _editView;
             //todo fix
-            _presentingViewModel.selectedSlide =
+            _presentingViewModel.SelectedSlide =
                 -1; // aby ked sa preklikne do edit page a zrusi zdielanie tak aby nenabehol slide
             presenting = false;
             _editViewModel.openSong = _core.getOpenSong();

@@ -62,10 +62,10 @@ public class PresentingViewModel : ObservableObjects
 
     public PresentingView PresentingView { get; set; }
 
-    /**
-     * Slide ktorý je aktuálne vybratý
-     */
-    public int selectedSlide
+    /// <summary>
+    /// Slide ktorý je aktuálne vybratý
+    /// </summary>
+    public int SelectedSlide
     {
         get => _selectedSlide;
         set
@@ -204,7 +204,7 @@ public class PresentingViewModel : ObservableObjects
     {
         SelectSlideCommand = new RelayCommand(o =>
         {
-            selectedSlide = int.Parse(o.ToString());
+            SelectedSlide = int.Parse(o.ToString());
             if (lyricArray[0].SlideType == SlideType.Divider) handleClickSelectSlidePlaylist();
 
             actualSlidePreviewControl();
@@ -214,7 +214,7 @@ public class PresentingViewModel : ObservableObjects
         {
             selectedSongFromLibrary = int.Parse(o.ToString());
             OpenedSongModel = new SongModel(listOfSongs[selectedSongFromLibrary]);
-            selectedSlide = -1;
+            SelectedSlide = -1;
             SelectedSongFromPlaylist = -1;
             actualSlidePreviewControl();
         });
@@ -281,7 +281,7 @@ public class PresentingViewModel : ObservableObjects
                 SelectedSongFromPlaylist = SelectedSongFromPlaylist; // aby som forsol označenie playlistu
             if (listOfSongsInPlayList.Count <= 0)
             {
-                selectedSlide = -1;
+                SelectedSlide = -1;
             }
             actualSlidePreviewControl();
         }
@@ -325,11 +325,11 @@ public class PresentingViewModel : ObservableObjects
     {
         if (keyEvent.Key == Key.Right)
         {
-            if (selectedSlide < lyricArray.Count - 1)
+            if (SelectedSlide < lyricArray.Count - 1)
             {
                 // ak je prvy divider zobrazuje sa playlist
                 if (lyricArray[0].SlideType != SlideType.Divider)
-                    selectedSlide++;
+                    SelectedSlide++;
                 else
                     handleNextSelectSlidePlaylist();
 
@@ -338,11 +338,11 @@ public class PresentingViewModel : ObservableObjects
         }
         else if (keyEvent.Key == Key.Left)
         {
-            if (selectedSlide > 0)
+            if (SelectedSlide > 0)
             {
                 // ak je prvy divider zobrazuje sa playlist
                 if (lyricArray[0].SlideType != SlideType.Divider)
-                    selectedSlide--;
+                    SelectedSlide--;
                 else
                     handlePrevSelectSlidePlaylist();
 
@@ -384,8 +384,8 @@ public class PresentingViewModel : ObservableObjects
         if (isLive)
         {
             // pre istotu ak by sa sem dostal nejakou náhodov divider ktorý sa nedá zobraziť
-            if (selectedSlide != -1 && lyricArray[selectedSlide].SlideType != SlideType.Divider)
-                LyricContent = (LyricViewTemplate)lyricArray[selectedSlide].UserControl.Clone();
+            if (SelectedSlide != -1 && lyricArray[SelectedSlide].SlideType != SlideType.Divider)
+                LyricContent = (LyricViewTemplate)lyricArray[SelectedSlide].UserControl.Clone();
             else
                 LyricContent = new LyricViewTemplateText();
         }
@@ -499,7 +499,7 @@ public class PresentingViewModel : ObservableObjects
      */
     private void handleSelectPlaylist()
     {
-        selectedSlide = SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfFirstSlide;
+        SelectedSlide = SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfFirstSlide;
     }
 
     /**
@@ -508,8 +508,8 @@ public class PresentingViewModel : ObservableObjects
     private void handleNextSelectSlidePlaylist()
     {
         selectedSongFromLibrary = -1;
-        if (selectedSlide < SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfLastSlide)
-            selectedSlide++;
+        if (SelectedSlide < SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfLastSlide)
+            SelectedSlide++;
         else
             NextSongInPlaylist();
     }
@@ -520,8 +520,8 @@ public class PresentingViewModel : ObservableObjects
     private void handlePrevSelectSlidePlaylist()
     {
         selectedSongFromLibrary = -1;
-        if (selectedSlide > SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfFirstSlide)
-            selectedSlide--;
+        if (SelectedSlide > SlideSongIndexingModelList[SelectedSongFromPlaylist].indexOfFirstSlide)
+            SelectedSlide--;
         else
             PrevSongInPlaylist();
     }
@@ -532,12 +532,12 @@ public class PresentingViewModel : ObservableObjects
     private void handleClickSelectSlidePlaylist()
     {
         for (var i = 0; i < SlideSongIndexingModelList.Count; i++)
-            if (selectedSlide >= SlideSongIndexingModelList[i].indexOfFirstSlide &&
-                selectedSlide <= SlideSongIndexingModelList[i].indexOfLastSlide)
+            if (SelectedSlide >= SlideSongIndexingModelList[i].indexOfFirstSlide &&
+                SelectedSlide <= SlideSongIndexingModelList[i].indexOfLastSlide)
             {
-                var tmpSelectedSlide = selectedSlide;
+                var tmpSelectedSlide = SelectedSlide;
                 SelectedSongFromPlaylist = i;
-                selectedSlide = tmpSelectedSlide;
+                SelectedSlide = tmpSelectedSlide;
                 selectedSongFromLibrary = -1;
                 OpenedSongModel = new SongModel(listOfSongsInPlayList[SelectedSongFromPlaylist]);
                 break;
