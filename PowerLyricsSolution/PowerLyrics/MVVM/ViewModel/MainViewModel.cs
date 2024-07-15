@@ -156,7 +156,7 @@ public class MainViewModel : ObservableObjects
         {
             _UserControl = _presentingView;
             presenting = true;
-            _core.applayEdit(_editViewModel.getEditedSong());
+            _core.ApplayEdit(_editViewModel.getEditedSong());
         });
         SetEditPageCommand = new RelayCommand(o =>
         {
@@ -165,7 +165,7 @@ public class MainViewModel : ObservableObjects
             _presentingViewModel.SelectedSlide =
                 -1; // aby ked sa preklikne do edit page a zrusi zdielanie tak aby nenabehol slide
             presenting = false;
-            _editViewModel.openSong = _core.getOpenSong();
+            _editViewModel.openSong = _core.GetOpenSong();
         });
         OpenSongCommand = new RelayCommand(o =>
         {

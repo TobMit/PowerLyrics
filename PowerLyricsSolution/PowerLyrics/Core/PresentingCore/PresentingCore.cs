@@ -118,7 +118,7 @@ public class PresentingCore
     /// </summary>
     /// <param name="getEditedSong">Editovaná pieseň</param>
     /// <exception cref="NotImplementedException"></exception>
-    public void applayEdit(SongModel getEditedSong)
+    public void ApplayEdit(SongModel getEditedSong)
     {
         throw new NotImplementedException();
     }
@@ -129,9 +129,9 @@ public class PresentingCore
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public SongModel getOpenSong()
+    public SongModel GetOpenSong()
     {
-        throw new NotImplementedException();
+        return _presentingViewModel.OpenedSongModel != null ? new SongModel(_presentingViewModel.OpenedSongModel) : new SongModel();
     }
 
     /// <summary>
@@ -147,10 +147,9 @@ public class PresentingCore
     /// <summary>
     /// Uloží pieseň do súboru
     /// </summary>
-    /// <exception cref="NotImplementedException"></exception>
     public void SaveSong()
     {
-        throw new NotImplementedException();
+        if (_presentingViewModel.OpenedSongModel != null) _songsSaver.saveSong(_presentingViewModel.OpenedSongModel);
     }
 
     /// <summary>
