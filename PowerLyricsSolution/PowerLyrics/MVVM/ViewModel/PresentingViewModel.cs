@@ -16,6 +16,7 @@ namespace PowerLyrics.MVVM.ViewModel;
 
 public class PresentingViewModel : ObservableObjects
 {
+    private ObservableCollection<SongModel> _listOfSongs;
     private ObservableCollection<SongModel> _listOfSongsInPlayList;
 
     private ObservableCollection<Slide> _lyricArray;
@@ -33,7 +34,7 @@ public class PresentingViewModel : ObservableObjects
     private int selectedSongFromLibrary = -1;
     private readonly List<SlideSongIndexingModel> SlideSongIndexingModelList;
 
-    private readonly DataLoader songsLoader;
+    //private readonly DataLoader songsLoader;
     private readonly DataSaver songsSaver;
     private readonly TextParser textParser;
 
@@ -49,9 +50,9 @@ public class PresentingViewModel : ObservableObjects
         LyricContent = tesLyricViewTemplate1;
         inicialiseButtons();
 
-        songsLoader = new DataLoader();
+        //songsLoader = new DataLoader();
         songsSaver = new DataSaver();
-        listOfSongs = songsLoader.getSongs();
+        ListOfSongs = new();
         _listOfSongsInPlayList = new ObservableCollection<SongModel>();
 
 
@@ -181,8 +182,16 @@ public class PresentingViewModel : ObservableObjects
      * Select song from playlist
      */
     public RelayCommand SelectPlaylistSongCommand { get; set; }
-
-    public ObservableCollection<SongModel> listOfSongs { get; set; }
+    
+    public ObservableCollection<SongModel> ListOfSongs
+    {
+        get => _listOfSongs;
+        set
+        {
+            _listOfSongs = value;
+            OnPropertyChanged();
+        }
+    }
 
     /**
      * Piesne ktoré sa nachadzajú v playliste
@@ -213,7 +222,7 @@ public class PresentingViewModel : ObservableObjects
         SelectLibrarySongCommand = new RelayCommand(o =>
         {
             selectedSongFromLibrary = int.Parse(o.ToString());
-            OpenedSongModel = new SongModel(listOfSongs[selectedSongFromLibrary]);
+            OpenedSongModel = new SongModel(ListOfSongs[selectedSongFromLibrary]);
             SelectedSlide = -1;
             SelectedSongFromPlaylist = -1;
             actualSlidePreviewControl();
@@ -294,7 +303,7 @@ public class PresentingViewModel : ObservableObjects
     {
         if (selectedSongFromLibrary != -1)
         {
-            listOfSongsInPlayList.Add(new SongModel(listOfSongs[selectedSongFromLibrary]));
+            listOfSongsInPlayList.Add(new SongModel(ListOfSongs[selectedSongFromLibrary]));
             listOfSongsInPlayList[listOfSongsInPlayList.Count - 1].id =
                 listOfSongsInPlayList.Count - 1; //aby som vedel spravne mazat z listu
 
@@ -400,26 +409,26 @@ public class PresentingViewModel : ObservableObjects
      */
     public void OpenSong(string? path)
     {
-        if (path != null)
-            songsLoader.loadFileStartUp(path);
-        else
-            songsLoader.loadFile();
-        switch (songsLoader.openedFileType)
-        {
-            case FileType.Song:
-                OpenedSongModel = songsLoader.getSongModel();
-                lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.ContentModels);
-                break;
-            case FileType.PlayList:
-                listOfSongsInPlayList = songsLoader.getPlaylist();
-                SlideSongIndexingModelList.Clear();
-                lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
-                SelectedSongFromPlaylist = 0;
-                handleSelectPlaylist();
-                break;
-            default:
-                break;
-        }
+        // if (path != null)
+        //     songsLoader.loadFileStartUp(path);
+        // else
+        //     songsLoader.loadFile();
+        // switch (songsLoader.openedFileType)
+        // {
+        //     case FileType.Song:
+        //         OpenedSongModel = songsLoader.getSongModel();
+        //         lyricArray = textParser.getSlidesFromOpenSong(OpenedSongModel.ContentModels);
+        //         break;
+        //     case FileType.PlayList:
+        //         listOfSongsInPlayList = songsLoader.getPlaylist();
+        //         SlideSongIndexingModelList.Clear();
+        //         lyricArray = textParser.getSlidesFromOpenSong(listOfSongsInPlayList, SlideSongIndexingModelList);
+        //         SelectedSongFromPlaylist = 0;
+        //         handleSelectPlaylist();
+        //         break;
+        //     default:
+        //         break;
+        // }
     }
 
     /**

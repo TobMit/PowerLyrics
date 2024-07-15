@@ -35,7 +35,7 @@
                 <ListView
                     Grid.Row="1"
                     Background="Transparent"
-                    ItemsSource="{Binding listOfSongs}"
+                    ItemsSource="{Binding ListOfSongs}"
                     ItemContainerStyle="{StaticResource SongLibraryTheme}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     HorizontalAlignment="Stretch"

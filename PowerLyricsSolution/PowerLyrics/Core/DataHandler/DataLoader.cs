@@ -46,7 +46,7 @@ public class DataLoader
     /**
      * Získa piesne pre knižnicu
      */
-    public ObservableCollection<SongModel> getSongs()
+    public ObservableCollection<SongModel> GetSongs()
     {
         var songs = new ObservableCollection<SongModel>();
         try

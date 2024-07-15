@@ -34,6 +34,13 @@ public enum SlideContentType
     Video
 }
 
+public enum PresseningFrom
+{
+    None,
+    Library,
+    PlayList
+}
+
 internal class constants
 {
     public const int FONT_SIZE = 50;

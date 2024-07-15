@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PowerLyrics.Core.DataHandler;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.ViewModel;
 
@@ -11,9 +12,26 @@ public class PresentingCore
 {
     private MainViewModel _mainViewModel;
     private PresentingViewModel _presentingViewModel;
+    private LibraryCore.LibraryCore _libraryCore;
+
+    private PresseningFrom _presentingState;
+    
+    private readonly DataLoader _songsLoader;
+    private readonly DataSaver _songsSaver;
+    private readonly TextParser.TextParser _textParser;
 
     private int _selectedSlide;
 
+    public PresseningFrom PresentingState
+    {
+        get => _presentingState;
+        set
+        {
+            _presentingState = value;
+            _selectedSlide = -1;
+        }
+    }
+    
     public int SelectedSlide
     {
         get => _selectedSlide;
@@ -24,8 +42,23 @@ public class PresentingCore
     {
         _mainViewModel = pMainViewModel;
         _presentingViewModel = pPresentingViewModel;
+        _libraryCore = new(_presentingViewModel);
         
-        _selectedSlide = -1;
+        _songsLoader = new();
+        _songsSaver = new();
+        _textParser = new();
+
+
+        InitCore();
+    }
+
+    /// <summary>
+    /// Init core to the default start up state
+    /// </summary>
+    private void InitCore()
+    {
+        PresentingState = PresseningFrom.None;
+        _libraryCore.InitLibrary(_songsLoader);
     }
 
     /// <summary>

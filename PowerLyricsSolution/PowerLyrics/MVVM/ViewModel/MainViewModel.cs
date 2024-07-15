@@ -25,12 +25,12 @@ public class MainViewModel : ObservableObjects
     public MainViewModel()
     {
         inicialiseButtons();
-        _core = new(this, _presentingViewModel);
         _presentingView = new PresentingView();
         _presentingViewModel = _presentingView.getDataContext();
         _presentingViewModel.PresentingView = _presentingView;
         _editView = new EditView();
         _editViewModel = _editView.getDataContext();
+        _core = new(this, _presentingViewModel);
         presenting = true;
 
         _userControl = _presentingView;
@@ -208,7 +208,7 @@ public class MainViewModel : ObservableObjects
     /// <param name="path"></param>
     public void openSongOnStartup(string path)
     {
-        _presentingViewModel.OpenSong(path);
+        _core.OpenSong(path);
     }
 
     /// <summary>
