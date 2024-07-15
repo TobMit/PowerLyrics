@@ -140,7 +140,11 @@ public class PresentingCore
     /// <exception cref="NotImplementedException"></exception>
     public void ApplayEdit(SongModel getEditedSong)
     {
-        if (PresentingState is PresseningFrom.None or PresseningFrom.Library)
+        if (PresentingState is PresseningFrom.None or PresseningFrom.Library or PresseningFrom.File)
+        {
+            OpenedSongModel = getEditedSong;
+        }
+        else
         {
             throw new NotImplementedException();
         }
