@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PowerLyrics.Core.DataHandler;
 using PowerLyrics.MVVM.Model;
+using PowerLyrics.MVVM.View;
 using PowerLyrics.MVVM.ViewModel;
 
 namespace PowerLyrics.Core.PresentingCore;
@@ -29,6 +30,11 @@ public class PresentingCore
         {
             _presentingState = value;
             _selectedSlide = -1;
+            
+            if (value != PresseningFrom.Library)
+            {
+                //_libraryCore.DeselectSong();
+            }
         }
     }
     
@@ -154,5 +160,24 @@ public class PresentingCore
     public void SavePlaylist()
     {
         throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Get song from library and set PreviewControl to blank
+    /// </summary>
+    /// <param name="index">Index of the song</param>
+    public void SelectSongFromLibrary(int index)
+    {
+        PresentingState = PresseningFrom.Library;
+        _presentingViewModel.OpenedSongModel = _libraryCore.GetSong(index);
+        SetPriviewControlToBlank();
+    }
+
+    /// <summary>
+    /// Blank screen for the preview control
+    /// </summary>
+    public void SetPriviewControlToBlank()
+    {
+        _presentingViewModel.LyricContent = new LyricViewTemplateText();
     }
 }

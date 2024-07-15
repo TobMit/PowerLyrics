@@ -1,4 +1,5 @@
 ﻿using PowerLyrics.Core.DataHandler;
+using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.ViewModel;
 
 namespace PowerLyrics.Core.PresentingCore.LibraryCore;
@@ -20,6 +21,25 @@ public class LibraryCore
     /// <param name="pLoader">Load the library</param>
     public void InitLibrary(DataLoader pLoader)
     {
-        _presentingViewModel.ListOfSongs = pLoader.GetSongs();
+        _presentingViewModel.ListOfLibrarySongs = pLoader.GetSongs();
+    }
+
+    //todo vyriešiť selected from library aby sa zrušilo vyznačenie
+    /// <summary>
+    /// When song is no longer selected from library is needed to by deselect
+    /// </summary>
+    public void DeselectSong()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    /// <summary>
+    /// Get selected song from library
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns>Selected Song</returns>
+    public SongModel GetSong(int index)
+    {
+        return new(_presentingViewModel.ListOfLibrarySongs[index]);
     }
 }

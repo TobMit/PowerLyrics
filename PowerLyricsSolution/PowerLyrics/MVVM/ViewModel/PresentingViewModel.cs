@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using PowerLyrics.Core;
 using PowerLyrics.Core.DataHandler;
+using PowerLyrics.Core.PresentingCore;
 using PowerLyrics.Core.TextParser;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
@@ -16,7 +17,8 @@ namespace PowerLyrics.MVVM.ViewModel;
 
 public class PresentingViewModel : ObservableObjects
 {
-    private ObservableCollection<SongModel> _listOfSongs;
+    public PresentingCore PresentingCore;
+    private ObservableCollection<SongModel> _listOfLibrarySongs;
     private ObservableCollection<SongModel> _listOfSongsInPlayList;
 
     private ObservableCollection<Slide> _lyricArray;
@@ -52,7 +54,7 @@ public class PresentingViewModel : ObservableObjects
 
         //songsLoader = new DataLoader();
         songsSaver = new DataSaver();
-        ListOfSongs = new();
+        ListOfLibrarySongs = new();
         _listOfSongsInPlayList = new ObservableCollection<SongModel>();
 
 
@@ -147,9 +149,10 @@ public class PresentingViewModel : ObservableObjects
         set
         {
             _openedSongModel = value;
+            lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.ContentModels);
             //toto je tu kvoli tomu aby sa použil iný parsovač na piesne
-            if (selectedSongFromLibrary > -1)
-                lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.ContentModels);
+            //if (selectedSongFromLibrary > -1)
+            //    lyricArray = textParser.getSlidesFromOpenSong(_openedSongModel.ContentModels);
 
             OnPropertyChanged();
         }
@@ -183,12 +186,12 @@ public class PresentingViewModel : ObservableObjects
      */
     public RelayCommand SelectPlaylistSongCommand { get; set; }
     
-    public ObservableCollection<SongModel> ListOfSongs
+    public ObservableCollection<SongModel> ListOfLibrarySongs
     {
-        get => _listOfSongs;
+        get => _listOfLibrarySongs;
         set
         {
-            _listOfSongs = value;
+            _listOfLibrarySongs = value;
             OnPropertyChanged();
         }
     }
@@ -221,11 +224,12 @@ public class PresentingViewModel : ObservableObjects
 
         SelectLibrarySongCommand = new RelayCommand(o =>
         {
-            selectedSongFromLibrary = int.Parse(o.ToString());
-            OpenedSongModel = new SongModel(ListOfSongs[selectedSongFromLibrary]);
-            SelectedSlide = -1;
-            SelectedSongFromPlaylist = -1;
-            actualSlidePreviewControl();
+            PresentingCore.SelectSongFromLibrary(int.Parse(o.ToString()));
+            //selectedSongFromLibrary = int.Parse(o.ToString());
+            //OpenedSongModel = new SongModel(ListOfLibrarySongs[selectedSongFromLibrary]);
+            //SelectedSlide = -1;
+            //SelectedSongFromPlaylist = -1;
+            //actualSlidePreviewControl();
         });
 
         SelectPlaylistSongCommand = new RelayCommand(o =>
@@ -303,7 +307,7 @@ public class PresentingViewModel : ObservableObjects
     {
         if (selectedSongFromLibrary != -1)
         {
-            listOfSongsInPlayList.Add(new SongModel(ListOfSongs[selectedSongFromLibrary]));
+            listOfSongsInPlayList.Add(new SongModel(ListOfLibrarySongs[selectedSongFromLibrary]));
             listOfSongsInPlayList[listOfSongsInPlayList.Count - 1].id =
                 listOfSongsInPlayList.Count - 1; //aby som vedel spravne mazat z listu
 

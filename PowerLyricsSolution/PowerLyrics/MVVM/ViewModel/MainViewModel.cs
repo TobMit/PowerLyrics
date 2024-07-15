@@ -31,6 +31,7 @@ public class MainViewModel : ObservableObjects
         _editView = new EditView();
         _editViewModel = _editView.getDataContext();
         _core = new(this, _presentingViewModel);
+        _presentingViewModel.PresentingCore = _core;
         presenting = true;
 
         _userControl = _presentingView;
