@@ -47,7 +47,7 @@ public class PresentingViewModel : ObservableObjects
         audieceWindow = new AudiencWindow();
         audieceWindow.Show();
         
-        inicialiseButtons();
+        InitialiseButtons();
 
         //songsLoader = new DataLoader();
         songsSaver = new DataSaver();
@@ -83,6 +83,8 @@ public class PresentingViewModel : ObservableObjects
             {
                 _selectedSlide = value;
             }
+
+            PresentingCore.SelectedSlide = value;
 
             OnPropertyChanged();
         }
@@ -206,10 +208,10 @@ public class PresentingViewModel : ObservableObjects
         }
     }
 
-    /**
-     * Inicializácie funkcionality tlačidiel
-     */
-    private void inicialiseButtons()
+    /// <summary>
+    /// Button init
+    /// </summary>
+    private void InitialiseButtons()
     {
         SelectSlideCommand = new RelayCommand(o =>
         {

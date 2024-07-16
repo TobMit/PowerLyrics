@@ -111,6 +111,7 @@ public class PresentingCore
         {
             PresentingState = PresseningFrom.PlayList;
             _presentingViewModel.DisplayedSlides = _playListCore.AddSong(OpenedSongModel);
+            //todo set selected song form the playlist as the one selected
         }
         else
         {
