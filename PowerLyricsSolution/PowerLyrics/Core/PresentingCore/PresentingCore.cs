@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using PowerLyrics.Core.DataHandler;
+using PowerLyrics.Core.PresentingCore.PlaylistCore;
 using PowerLyrics.MVVM.Model;
 using PowerLyrics.MVVM.View;
 using PowerLyrics.MVVM.ViewModel;
@@ -14,12 +16,12 @@ public class PresentingCore
     private MainViewModel _mainViewModel;
     private PresentingViewModel _presentingViewModel;
     private LibraryCore.LibraryCore _libraryCore;
+    private PlayListCore _playListCore;
 
     private PresseningFrom _presentingState;
     
     private readonly DataLoader _songsLoader;
     private readonly DataSaver _songsSaver;
-    private readonly TextParser.TextParser _textParser;
 
     private int _selectedSlide;
     private SongModel? _openedSongModel;
@@ -53,7 +55,7 @@ public class PresentingCore
                 && _openedSongModel is not null)
             {
                 _presentingViewModel.DisplayedSlides =
-                    _textParser.getSlidesFromOpenSong(_openedSongModel.ContentModels);
+                    TextParser.TextParser.getSlidesFromOpenSong(_openedSongModel.ContentModels);
             }
         }
     }
@@ -69,10 +71,10 @@ public class PresentingCore
         _mainViewModel = pMainViewModel;
         _presentingViewModel = pPresentingViewModel;
         _libraryCore = new(_presentingViewModel);
+        _playListCore = new(_presentingViewModel);
         
         _songsLoader = new();
         _songsSaver = new();
-        _textParser = new();
 
 
         InitCore();
@@ -85,6 +87,8 @@ public class PresentingCore
     {
         PresentingState = PresseningFrom.None;
         _libraryCore.InitLibrary(_songsLoader);
+        
+        _presentingViewModel.LyricContent = new LyricViewTemplateText("Pre začatie prezentovania stlačte Fullsc tlačídko!");;
     }
 
     /// <summary>
@@ -103,7 +107,16 @@ public class PresentingCore
     /// <exception cref="NotImplementedException"></exception>
     public void AddSongToPlayList()
     {
-        throw new NotImplementedException();
+        if (OpenedSongModel is not null && PresentingState is PresseningFrom.Library or PresseningFrom.File)
+        {
+            PresentingState = PresseningFrom.PlayList;
+            _presentingViewModel.DisplayedSlides = _playListCore.AddSong(OpenedSongModel);
+        }
+        else
+        {
+            MessageBox.Show("Nemôžeš pridať pieseň z playlistu do playlistu", "Pridanie piesne do playlistu", MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+        }
     }
 
     /// <summary>

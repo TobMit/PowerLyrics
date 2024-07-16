@@ -83,7 +83,7 @@
                             Grid.Row="1"
                             Background="Transparent"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                            ItemsSource="{Binding listOfSongsInPlayList}"
+                            ItemsSource="{Binding ListOfPlaylistSongs}"
                             ItemContainerStyle="{StaticResource SongPlayListTheme}"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"

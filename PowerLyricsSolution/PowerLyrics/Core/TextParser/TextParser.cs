@@ -11,7 +11,7 @@ internal class TextParser
     /**
          * Rozdelý text z listov do LyricType
          */
-    public List<ContentModel> parseLyric(SongModel songModel)
+    public static List<ContentModel> parseLyric(SongModel songModel)
     {
         var tmpSlides = new List<ContentModel>();
         var verse = 0;
@@ -55,7 +55,7 @@ internal class TextParser
     /**
          * Vytvorí z listu LyricModel kolekciu slide pre pieseň
          */
-    public ObservableCollection<Slide> getSlidesFromOpenSong(List<ContentModel> song)
+    public static ObservableCollection<Slide> getSlidesFromOpenSong(List<ContentModel> song)
     {
         var tmp = new ObservableCollection<Slide>();
         var id = 0;
@@ -72,10 +72,13 @@ internal class TextParser
         return tmp;
     }
 
-    /**
-         * Vytvorí z listu LyricModel kolekciu slide pre playlist
-         */
-    public ObservableCollection<Slide> getSlidesFromOpenSong(ObservableCollection<SongModel> listOfSong,
+    /// <summary>
+    /// Create slides from an array of song
+    /// </summary>
+    /// <param name="listOfSong">Array of song that from slides are created</param>
+    /// <param name="slideSongIndexing">Empty array of star and end idex of all returned array</param>
+    /// <returns>Array of slides</returns>
+    public static ObservableCollection<Slide> getSlidesFromOpenSong(ObservableCollection<SongModel> listOfSong,
         List<SlideSongIndexingModel> slideSongIndexing)
     {
         var tmp = new ObservableCollection<Slide>();
@@ -126,7 +129,7 @@ internal class TextParser
     /**
          * Vytvorí Slide z LyricModel
          */
-    public Slide getSlideFromLyricModel(ContentModel contentModel)
+    public static Slide getSlideFromLyricModel(ContentModel contentModel)
     {
         var slide = new Slide();
         if (contentModel.slideContentType == SlideContentType.Text)

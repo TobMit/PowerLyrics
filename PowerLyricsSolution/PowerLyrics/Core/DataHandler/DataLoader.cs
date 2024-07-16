@@ -23,12 +23,10 @@ public class DataLoader
     private ObservableCollection<SongModel> playlist;
     private BinaryReader reader;
     private SongModel songModel;
-    private readonly TextParser.TextParser textParser;
 
     public DataLoader()
     {
         _regex = new Regex(@"\s+");
-        textParser = new TextParser.TextParser();
         openedFileType = FileType.undefined;
     }
 
@@ -63,7 +61,7 @@ public class DataLoader
                 var tmpSongModel = processSong(loadedSong);
                 tmpSongModel.name = getName(path);
                 tmpSongModel.number = getSongNumber(path);
-                tmpSongModel.ContentModels = textParser.parseLyric(tmpSongModel);
+                tmpSongModel.ContentModels = TextParser.TextParser.parseLyric(tmpSongModel);
                 songs.Add(tmpSongModel);
             }
 
@@ -208,7 +206,7 @@ public class DataLoader
             songModel = processSong(loadSong(path));
             songModel.name = getName(path);
             songModel.number = getSongNumber(path);
-            songModel.ContentModels = textParser.parseLyric(songModel);
+            songModel.ContentModels = TextParser.TextParser.parseLyric(songModel);
         }
     }
 

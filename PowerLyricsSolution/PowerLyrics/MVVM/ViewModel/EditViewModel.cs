@@ -21,7 +21,6 @@ public class EditViewModel : ObservableObjects
 {
     private readonly DataLoader songsLoader;
     private readonly DataSaver songsSaver;
-    private readonly TextParser textParser;
     
     private FontFamily _fontFamily;
     private int _fontSize;
@@ -46,7 +45,6 @@ public class EditViewModel : ObservableObjects
 
     public EditViewModel()
     {
-        textParser = new TextParser();
         openSongSlides = new ObservableCollection<Slide>();
         openSong = new SongModel();
         _fontFamily = constants.DEFAULT_FONT_FAMILY;
@@ -91,7 +89,7 @@ public class EditViewModel : ObservableObjects
         {
             _openSong = new SongModel(value);
             selectedSlideNumber = -1;
-            openSongSlides = textParser.getSlidesFromOpenSong(_openSong.ContentModels);
+            openSongSlides = TextParser.getSlidesFromOpenSong(_openSong.ContentModels);
 
             loadingForEdit = true;
             Name = openSong.name;
@@ -318,14 +316,14 @@ public class EditViewModel : ObservableObjects
         AddSlideCommand = new RelayCommand(o =>
         {
             openSong.ContentModels.Insert(selectedSlideNumber + 1, new LyricModel());
-            openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
+            openSongSlides = TextParser.getSlidesFromOpenSong(openSong.ContentModels);
             SelectSlide(selectedSlideNumber + 1);
         });
 
         AddVideoSlideCommand = new RelayCommand(o =>
         {
             openSong.ContentModels.Insert(selectedSlideNumber + 1, new VideoModel());
-            openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
+            openSongSlides = TextParser.getSlidesFromOpenSong(openSong.ContentModels);
             SelectSlide(selectedSlideNumber + 1);
         });
 
@@ -335,7 +333,7 @@ public class EditViewModel : ObservableObjects
             if (isSelectedSlide())
             {
                 openSong.ContentModels.RemoveAt(selectedSlideNumber);
-                openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
+                openSongSlides = TextParser.getSlidesFromOpenSong(openSong.ContentModels);
                 SelectSlide(selectedSlideNumber, false);
             }
         });
@@ -347,7 +345,7 @@ public class EditViewModel : ObservableObjects
             {
                 openSong.ContentModels.Insert(selectedSlideNumber + 1,
                     openSong.ContentModels[selectedSlideNumber].Clone());
-                openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
+                openSongSlides = TextParser.getSlidesFromOpenSong(openSong.ContentModels);
                 SelectSlide(selectedSlideNumber + 1);
             }
         });
@@ -429,7 +427,7 @@ public class EditViewModel : ObservableObjects
             }
 
 
-            var tmp = textParser.getSlidesFromOpenSong(openSong.ContentModels);
+            var tmp = TextParser.getSlidesFromOpenSong(openSong.ContentModels);
             tmp[selectedSlideNumber].isSelected = true;
             openSongSlides = tmp;
 
@@ -467,7 +465,7 @@ public class EditViewModel : ObservableObjects
                 var oldId = openSong.id;
                 openSong = songsLoader.getSongModel();
                 openSong.id = oldId;
-                openSongSlides = textParser.getSlidesFromOpenSong(openSong.ContentModels);
+                openSongSlides = TextParser.getSlidesFromOpenSong(openSong.ContentModels);
                 break;
             case FileType.PlayList:
                 MessageBox.Show("You are trying open playlist in edit-page!\nIn edit-page zou can open only SONGS.",
